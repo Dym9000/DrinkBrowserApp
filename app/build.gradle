@@ -1,0 +1,91 @@
+import dependencies.deps.Dependencies
+import dependencies.DefaultConfig
+import dependencies.App
+import dependencies.deps.AnnotationProcessing
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
+}
+
+android {
+    compileSdkVersion DefaultConfig.compileSdkVersion
+    buildToolsVersion DefaultConfig.buildToolsVersion
+
+    defaultConfig {
+        applicationId App.applicationId
+        minSdkVersion DefaultConfig.minSdkVersion
+        targetSdkVersion DefaultConfig.targetSdkVersion
+        versionCode DefaultConfig.versionCode
+        versionName DefaultConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility DefaultConfig.java_version
+        targetCompatibility DefaultConfig.java_version
+    }
+    kotlinOptions {
+        jvmTarget = DefaultConfig.java_version
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+}
+
+dependencies {
+
+    implementation Dependencies.kotlin_standard_library
+    implementation Dependencies.ktx_core
+    implementation Dependencies.appcompat
+    implementation Dependencies.material_design
+    implementation Dependencies.constraintlayout
+
+    //TEST
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //DEPENDENCY INJECTION
+    implementation Dependencies.hilt_android
+    implementation Dependencies.hilt_navigation
+    kapt AnnotationProcessing.hilt_compiler
+
+    //ROOM
+    implementation Dependencies.room_runtime
+    implementation Dependencies.room_ktx
+    kapt AnnotationProcessing.room_compiler
+
+    //VIEW MODEL, LIVEDATA, LIFECYCLE
+    implementation Dependencies.viewModel
+    implementation Dependencies.liveData
+    kapt AnnotationProcessing.lifecycle_compiler
+
+    //NAVIGATION
+    implementation Dependencies.navigation_fragment
+    implementation Dependencies.navigation_ui
+
+    //COROUTINES
+    implementation Dependencies.coroutines
+    implementation Dependencies.coroutines_android
+
+    //LEAK CANARY
+    implementation Dependencies.leak_canary
+
+    //RETROFIT, GSON
+    implementation Dependencies.retrofit
+    implementation Dependencies.gson_retrofit
+
+}
