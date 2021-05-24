@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.network.model
+package com.example.drinkbrowserapp.network.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -17,4 +17,4 @@ data class IngredientRaw(
     @Expose
     var idDrink: String? = null
 
-): NetworkModel()
+) : GenericNetworkModel
