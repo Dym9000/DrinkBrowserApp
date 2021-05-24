@@ -17,4 +17,4 @@ data class IngredientRaw(
     @Expose
     var idDrink: String? = null
 
-) : GenericNetworkModel
+)

@@ -4,18 +4,19 @@ import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.network.responses.DrinkSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface DrinkService {
 
-    @GET("{key}/search.php??s={query}")
+    @GET("{key}/search.php")
     fun getDrinksByName(
         @Path ("key") key: String,
-        @Path ("query") query: String
+        @Query("s") query: String
     ): LiveData<GenericApiResponse<DrinkSearchResponse>>
 
-    @GET("{key}/filter.php?i={query}")
+    @GET("/{key}/filter.php")
     fun getDrinksByIngredientName(
         @Path ("key") key: String,
-        @Path ("query") query: String
+        @Query ("i") query: String
     ): LiveData<GenericApiResponse<DrinkSearchResponse>>
 }

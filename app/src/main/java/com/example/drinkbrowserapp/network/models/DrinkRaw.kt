@@ -165,4 +165,4 @@ data class DrinkRaw(
     @Expose
     var strImageAttribution: String? = null
 
-): GenericNetworkModel
+)
