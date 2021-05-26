@@ -20,4 +20,5 @@ interface DrinkService {
         @Path("key") key: String,
         @Query("i") query: String
     ): LiveData<GenericApiResponse<DrinkSearchByIngredientResponse>>
+
 }

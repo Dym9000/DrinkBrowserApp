@@ -20,14 +20,14 @@ import kotlinx.coroutines.launch
 
 abstract class NetworkBoundResource<RequestType, ResultType> {
 
-    private val result = MediatorLiveData<DataState<ResultType>>()
+    protected val result = MediatorLiveData<DataState<ResultType>>()
 
-    init{
+    init {
         result.value = DataState.loading(null)
 
-        GlobalScope.launch(IO){
+        GlobalScope.launch(IO) {
             val apiResponse = makeRequestCall()
-            result.addSource(apiResponse){
+            result.addSource(apiResponse) {
                 result.removeSource(apiResponse)
                 handleRequestCall(it)
             }
@@ -35,8 +35,8 @@ abstract class NetworkBoundResource<RequestType, ResultType> {
 
     }
 
-    private fun handleRequestCall(apiResponse: GenericApiResponse<RequestType>){
-        when (apiResponse){
+    private fun handleRequestCall(apiResponse: GenericApiResponse<RequestType>) {
+        when (apiResponse) {
             is ApiSuccessResponse ->
                 onSuccessResponse(apiResponse)
             is ApiEmptyResponse ->
@@ -47,11 +47,11 @@ abstract class NetworkBoundResource<RequestType, ResultType> {
         }
     }
 
-    abstract fun onFailureResponse(message: String)
+    protected abstract fun onFailureResponse(message: String)
 
-    abstract fun onSuccessResponse(response: GenericApiResponse<RequestType>)
+    protected abstract fun onSuccessResponse(response: ApiSuccessResponse<RequestType>)
 
-    abstract suspend fun makeRequestCall():LiveData<GenericApiResponse<RequestType>>
+    protected abstract suspend fun makeRequestCall(): LiveData<GenericApiResponse<RequestType>>
 
     fun returnAsLiveData() = result as LiveData<DataState<ResultType>>
 }
