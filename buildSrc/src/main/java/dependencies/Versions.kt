@@ -33,4 +33,21 @@ object Versions {
 
     //LEAK CANARY
     const val leak_canary = "2.7"
+
+    //UNIT TESTING
+    const val junit5_plugin = "1.7.1.1"
+    const val junit_jupiter = "5.7.0"
+
+    //MOCKITO
+    const val mockito = "2.25.0"
+
+    //INSTRUMENTATION AND UI TESTING
+    const val junit4 = "4.13.2"
+
+    //ANDROIDX
+    const val test_androidx_ext = "1.1.2"
+    const val test_androidx_espresso_core = "3.3.0"
+
+    //GLIDE
+    const val glide = "4.12.0"
 }

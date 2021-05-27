@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="item_list_title_text_size">26sp</dimen>
+    <dimen name="item_list_text_size">16sp</dimen>
+    <dimen name="elevation_normal">10dp</dimen>
+    <dimen name="corner_radius_normal">4dp</dimen>
+</resources>

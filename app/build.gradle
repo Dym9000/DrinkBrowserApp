@@ -1,7 +1,8 @@
-import dependencies.deps.Dependencies
-import dependencies.DefaultConfig
 import dependencies.App
+import dependencies.DefaultConfig
 import dependencies.deps.AnnotationProcessing
+import dependencies.deps.Dependencies
+import dependencies.deps.Testing
 
 plugins {
     id 'com.android.application'
@@ -9,6 +10,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
+    id 'de.mannodermaus.android-junit5'
 }
 
 android {
@@ -21,8 +23,9 @@ android {
         targetSdkVersion DefaultConfig.targetSdkVersion
         versionCode DefaultConfig.versionCode
         versionName DefaultConfig.versionName
+        buildConfigField("String", "API_KEY", API_KEY)
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner Testing.android_junit_runner
     }
 
     buildTypes {
@@ -52,11 +55,21 @@ dependencies {
     implementation Dependencies.appcompat
     implementation Dependencies.material_design
     implementation Dependencies.constraintlayout
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //TEST
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation Testing.junit4
+    androidTestImplementation Testing.test_androidx_ext
+    androidTestImplementation Testing.test_androidx_espresso_core
+
+    //UNIT TESTING
+    testImplementation Testing.junit_jupiter_api
+    testImplementation Testing.junit_jupiter_params
+    testRuntimeOnly Testing.junit_jupiter_engine
+
+    //MOCKITO
+    testImplementation Testing.mockito
 
     //DEPENDENCY INJECTION
     implementation Dependencies.hilt_android
@@ -87,5 +100,9 @@ dependencies {
     //RETROFIT, GSON
     implementation Dependencies.retrofit
     implementation Dependencies.gson_retrofit
+
+    //GLIDE
+    implementation Dependencies.glide
+    annotationProcessor AnnotationProcessing.glide_compiler
 
 }

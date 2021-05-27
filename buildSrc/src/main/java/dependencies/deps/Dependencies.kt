@@ -37,4 +37,7 @@ object Dependencies {
 
     //LEAK CANARY
     val leak_canary = "com.squareup.leakcanary:leakcanary-android:${Versions.leak_canary}"
+
+    //GLIDE
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 }
