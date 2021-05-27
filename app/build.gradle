@@ -101,4 +101,8 @@ dependencies {
     implementation Dependencies.retrofit
     implementation Dependencies.gson_retrofit
 
+    //GLIDE
+    implementation Dependencies.glide
+    annotationProcessor AnnotationProcessing.glide_compiler
+
 }

@@ -47,4 +47,7 @@ object Versions {
     //ANDROIDX
     const val test_androidx_ext = "1.1.2"
     const val test_androidx_espresso_core = "3.3.0"
+
+    //GLIDE
+    const val glide = "4.12.0"
 }
