@@ -9,7 +9,9 @@ import com.example.drinkbrowserapp.network.responses.DrinkSearchByIngredientResp
 import com.example.drinkbrowserapp.network.responses.DrinkSearchByNameResponse
 import com.example.drinkbrowserapp.util.DataState
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DrinkRepository @Inject constructor(private val retrofitObject: DrinkService) {
 
     fun getDrinksByName(drinkName: String, key: String): LiveData<DataState<List<DrinkRaw>>> {

@@ -9,8 +9,10 @@ import com.example.drinkbrowserapp.network.api.ApiSuccessResponse
 import com.example.drinkbrowserapp.network.api.GenericApiResponse
 import com.example.drinkbrowserapp.util.DataState
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  *Abstract class providing methods for network services and databases
@@ -26,10 +28,12 @@ abstract class NetworkBoundResource<RequestType, ResultType> {
         result.value = DataState.loading(null)
 
         GlobalScope.launch(IO) {
-            val apiResponse = makeRequestCall()
-            result.addSource(apiResponse) {
-                result.removeSource(apiResponse)
-                handleRequestCall(it)
+            withContext(Main){
+                val apiResponse = makeRequestCall()
+                result.addSource(apiResponse) {
+                    result.removeSource(apiResponse)
+                    handleRequestCall(it)
+                }
             }
         }
 
