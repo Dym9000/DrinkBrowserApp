@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.network.api.ApiSuccessResponse
 import com.example.drinkbrowserapp.network.api.DrinkService
 import com.example.drinkbrowserapp.network.models.DrinkRaw
-import com.example.drinkbrowserapp.network.models.IngredientRaw
-import com.example.drinkbrowserapp.network.responses.DrinkSearchByIngredientResponse
-import com.example.drinkbrowserapp.network.responses.DrinkSearchByNameResponse
+import com.example.drinkbrowserapp.network.models.FilterSearchRaw
+import com.example.drinkbrowserapp.network.responses.FilterSearchResponse
+import com.example.drinkbrowserapp.network.responses.SearchByNameDrinkResponse
 import com.example.drinkbrowserapp.util.DataState
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,12 +15,12 @@ import javax.inject.Singleton
 class DrinkRepository @Inject constructor(private val retrofitObject: DrinkService) {
 
     fun getDrinksByName(drinkName: String, key: String): LiveData<DataState<List<DrinkRaw>>> {
-        return object : NetworkBoundResource<DrinkSearchByNameResponse, List<DrinkRaw>>() {
+        return object : NetworkBoundResource<SearchByNameDrinkResponse, List<DrinkRaw>>() {
             override fun onFailureResponse(message: String) {
                 result.value = DataState.error(data = null, errorMessage = message)
             }
 
-            override fun onSuccessResponse(response: ApiSuccessResponse<DrinkSearchByNameResponse>) {
+            override fun onSuccessResponse(response: ApiSuccessResponse<SearchByNameDrinkResponse>) {
                 result.value = DataState.success(data = response.body.drinks)
             }
 
@@ -32,14 +32,14 @@ class DrinkRepository @Inject constructor(private val retrofitObject: DrinkServi
     fun getDrinksByIngredient(
         ingredientName: String,
         key: String
-    ): LiveData<DataState<List<IngredientRaw>>> {
+    ): LiveData<DataState<List<FilterSearchRaw>>> {
         return object :
-            NetworkBoundResource<DrinkSearchByIngredientResponse, List<IngredientRaw>>() {
+            NetworkBoundResource<FilterSearchResponse, List<FilterSearchRaw>>() {
             override fun onFailureResponse(message: String) {
                 result.value = DataState.error(data = null, errorMessage = message)
             }
 
-            override fun onSuccessResponse(response: ApiSuccessResponse<DrinkSearchByIngredientResponse>) {
+            override fun onSuccessResponse(response: ApiSuccessResponse<FilterSearchResponse>) {
                 result.value = DataState.success(data = response.body.drinks)
             }
 

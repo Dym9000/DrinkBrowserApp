@@ -10,15 +10,15 @@ import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
 import com.example.drinkbrowserapp.network.models.DrinkRaw
 
 class SearchListAdapter(private val requestManager: RequestManager) :
-    ListAdapter<DrinkRaw, SearchListAdapter.BaseViewHolder>(BaseDiffCallback()) {
+    ListAdapter<DrinkRaw, SearchListAdapter.SearchByNameViewHolder>(SearchByNameDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchByNameViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchByNameBinding.inflate(layoutInflater, parent, false)
-        return BaseViewHolder(binding, requestManager)
+        return SearchByNameViewHolder(binding, requestManager)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchByNameViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
@@ -33,10 +33,11 @@ class SearchListAdapter(private val requestManager: RequestManager) :
         }
     }
 
-    class BaseViewHolder constructor(
+    class SearchByNameViewHolder constructor(
         private val binding: ItemSearchByNameBinding,
         private val requestManager: RequestManager
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: DrinkRaw) {
             binding.drinkName.text = item.drinkName
             binding.drinkAlcoholic.text = item.strAlcoholic
@@ -50,7 +51,7 @@ class SearchListAdapter(private val requestManager: RequestManager) :
     }
 }
 
-class BaseDiffCallback : DiffUtil.ItemCallback<DrinkRaw>() {
+class SearchByNameDiffCallback : DiffUtil.ItemCallback<DrinkRaw>() {
     override fun areItemsTheSame(oldItem: DrinkRaw, newItem: DrinkRaw): Boolean {
         return oldItem.idDrink == newItem.idDrink
     }

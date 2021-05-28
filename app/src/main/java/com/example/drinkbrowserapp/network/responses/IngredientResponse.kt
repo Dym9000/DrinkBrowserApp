@@ -4,13 +4,12 @@ import com.example.drinkbrowserapp.network.models.IngredientRaw
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class DrinkSearchByIngredientResponse(
+class IngredientResponse (
     @SerializedName("drinks")
     @Expose
-    var drinks: List<IngredientRaw>
+    var ingredients: List<IngredientRaw>
 ) {
     override fun toString(): String {
-        return "DrinkSearchByIngredientResponse(drinks=$drinks)"
+        return "DrinkSearchByIngredientResponse(drinks=$ingredients)"
     }
 }
-

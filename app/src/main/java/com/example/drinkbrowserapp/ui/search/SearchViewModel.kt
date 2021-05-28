@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.drinkbrowserapp.network.models.DrinkRaw
-import com.example.drinkbrowserapp.network.models.IngredientRaw
+import com.example.drinkbrowserapp.network.models.FilterSearchRaw
 import com.example.drinkbrowserapp.repository.DrinkRepository
 import com.example.drinkbrowserapp.util.Constants
 import com.example.drinkbrowserapp.util.DataState
@@ -28,7 +28,7 @@ class SearchViewModel @Inject constructor(private val drinkRepository: DrinkRepo
             }
     }
 
-    val drinksByIngredient: LiveData<DataState<List<IngredientRaw>>> = Transformations
+    val drinksByIngredient: LiveData<DataState<List<FilterSearchRaw>>> = Transformations
         .switchMap(drinkNameQuery){
             it?.let {
                 drinkRepository.getDrinksByIngredient(it, Constants.API_TOKEN_KEY)
