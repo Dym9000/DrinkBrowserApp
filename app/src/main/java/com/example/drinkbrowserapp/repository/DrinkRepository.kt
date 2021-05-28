@@ -44,7 +44,7 @@ class DrinkRepository @Inject constructor(private val retrofitObject: DrinkServi
             }
 
             override suspend fun makeRequestCall() =
-                retrofitObject.getDrinksByIngredientName(key = key, query = ingredientName)
+                retrofitObject.getDrinksByIngredient(key = key, query = ingredientName)
         }.returnAsLiveData()
     }
 
