@@ -22,6 +22,17 @@ class SearchListAdapter(private val requestManager: RequestManager) :
         holder.bind(getItem(position))
     }
 
+    fun preloadImages(
+        requestManager: RequestManager,
+        list: List<DrinkRaw>
+    ){
+        for(drink in list){
+            requestManager
+                .load(drink.strDrinkThumb)
+                .preload()
+        }
+    }
+
     class BaseViewHolder constructor(
         private val binding: ItemSearchByNameBinding,
         private val requestManager: RequestManager
