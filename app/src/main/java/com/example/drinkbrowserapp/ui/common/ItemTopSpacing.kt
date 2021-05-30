@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.util
+package com.example.drinkbrowserapp.ui.common
 
 import android.graphics.Rect
 import android.view.View

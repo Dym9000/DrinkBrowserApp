@@ -28,7 +28,7 @@ abstract class NetworkBoundResource<RequestType, ResultType> {
         result.value = DataState.loading(null)
 
         GlobalScope.launch(IO) {
-            withContext(Main){
+            withContext(Main) {
                 val apiResponse = makeRequestCall()
                 result.addSource(apiResponse) {
                     result.removeSource(apiResponse)

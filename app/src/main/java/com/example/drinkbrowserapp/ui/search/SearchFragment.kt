@@ -14,7 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentSearchBinding
-import com.example.drinkbrowserapp.util.ItemTopSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTopSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
         searchViewModel.drinksByName.observe(viewLifecycleOwner, {
 
             it?.data?.let { data ->
-                recyclerViewAdapter.apply{
+                recyclerViewAdapter.apply {
 //                    preloadImages(requestManager as RequestManager, data)
                     recyclerViewAdapter.submitList(data.toList())
                 }

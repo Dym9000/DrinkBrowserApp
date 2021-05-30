@@ -1,6 +1,6 @@
 package com.example.drinkbrowserapp.network.responses
 
-import com.example.drinkbrowserapp.network.models.FilterSearchRaw
+import com.example.drinkbrowserapp.network.dto.FilterSearchRaw
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

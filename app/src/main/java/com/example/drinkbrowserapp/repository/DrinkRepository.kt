@@ -3,8 +3,8 @@ package com.example.drinkbrowserapp.repository
 import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.network.api.ApiSuccessResponse
 import com.example.drinkbrowserapp.network.api.DrinkService
-import com.example.drinkbrowserapp.network.models.DrinkRaw
-import com.example.drinkbrowserapp.network.models.FilterSearchRaw
+import com.example.drinkbrowserapp.network.dto.DrinkRaw
+import com.example.drinkbrowserapp.network.dto.FilterSearchRaw
 import com.example.drinkbrowserapp.network.responses.FilterSearchResponse
 import com.example.drinkbrowserapp.network.responses.SearchByNameDrinkResponse
 import com.example.drinkbrowserapp.util.DataState

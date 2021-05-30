@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
-import com.example.drinkbrowserapp.network.models.DrinkRaw
+import com.example.drinkbrowserapp.network.dto.DrinkRaw
 
 class SearchListAdapter(private val requestManager: RequestManager) :
     ListAdapter<DrinkRaw, SearchListAdapter.SearchByNameViewHolder>(SearchByNameDiffCallback()) {
@@ -25,8 +25,8 @@ class SearchListAdapter(private val requestManager: RequestManager) :
     fun preloadImages(
         requestManager: RequestManager,
         list: List<DrinkRaw>
-    ){
-        for(drink in list){
+    ) {
+        for (drink in list) {
             requestManager
                 .load(drink.strDrinkThumb)
                 .preload()

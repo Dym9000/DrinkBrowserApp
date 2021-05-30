@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.network.models
+package com.example.drinkbrowserapp.network.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
