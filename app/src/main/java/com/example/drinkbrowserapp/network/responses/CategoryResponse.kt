@@ -1,16 +1,15 @@
 package com.example.drinkbrowserapp.network.responses
 
-import com.example.drinkbrowserapp.network.models.IngredientRaw
+import com.example.drinkbrowserapp.network.dto.CategoryRaw
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class DrinkSearchByIngredientResponse(
+class CategoryResponse(
     @SerializedName("drinks")
     @Expose
-    var drinks: List<IngredientRaw>
+    var categories: List<CategoryRaw>
 ) {
     override fun toString(): String {
-        return "DrinkSearchByIngredientResponse(drinks=$drinks)"
+        return "DrinkSearchByIngredientResponse(drinks=$categories)"
     }
 }
-

@@ -1,9 +1,9 @@
-package com.example.drinkbrowserapp.network.models
+package com.example.drinkbrowserapp.network.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class IngredientRaw(
+data class FilterSearchRaw(
 
     @SerializedName("strDrink")
     @Expose
@@ -15,6 +15,6 @@ data class IngredientRaw(
 
     @SerializedName("idDrink")
     @Expose
-    var idDrink: String? = null
+    var idDrink: Int? = null
 
 )
