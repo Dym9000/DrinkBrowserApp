@@ -1,6 +1,7 @@
 package com.example.drinkbrowserapp.persistence.dao
 
 import androidx.lifecycle.LiveData
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.drinkbrowserapp.persistence.entity.AlcoholContentDb
@@ -12,13 +13,14 @@ import com.example.drinkbrowserapp.persistence.entity.IngredientDb
 /**
  *      DAO for working with filters
  */
+@Dao
 interface FilterDao {
 
     /**
      *      CategoryDb
      */
     @Insert
-    suspend fun saveCategories(categories: List<CategoryDb>): Long
+    suspend fun saveCategories(categories: List<CategoryDb>)
 
     @Query("Delete from categories")
     suspend fun clearCategories()
@@ -30,7 +32,7 @@ interface FilterDao {
      *      IngredientDb
      */
     @Insert
-    suspend fun saveIngredients(ingredients: List<IngredientDb>): Long
+    suspend fun saveIngredients(ingredients: List<IngredientDb>)
 
     @Query("Delete from ingredients")
     suspend fun clearIngredients()
@@ -42,7 +44,7 @@ interface FilterDao {
      *      GlassDb
      */
     @Insert
-    suspend fun saveGlasses(glasses: List<GlassDb>): Long
+    suspend fun saveGlasses(glasses: List<GlassDb>)
 
     @Query("Delete from glasses")
     suspend fun clearGlasses()
@@ -54,7 +56,7 @@ interface FilterDao {
      *      AlcoholContentDb
      */
     @Insert
-    suspend fun saveAlcoholContents(alcoholContents: List<AlcoholContentDb>): Long
+    suspend fun saveAlcoholContents(alcoholContents: List<AlcoholContentDb>)
 
     @Query("Delete from alcohol_contents")
     suspend fun clearAlcoholContents()

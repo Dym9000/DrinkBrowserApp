@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
-import com.example.drinkbrowserapp.network.dto.DrinkRaw
+import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 
 class SearchListAdapter(private val requestManager: RequestManager) :
-    ListAdapter<DrinkRaw, SearchListAdapter.SearchByNameViewHolder>(SearchByNameDiffCallback()) {
+    ListAdapter<DrinkDb, SearchListAdapter.SearchByNameViewHolder>(SearchByNameDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchByNameViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,11 +24,11 @@ class SearchListAdapter(private val requestManager: RequestManager) :
 
     fun preloadImages(
         requestManager: RequestManager,
-        list: List<DrinkRaw>
+        list: List<DrinkDb>
     ) {
         for (drink in list) {
             requestManager
-                .load(drink.strDrinkThumb)
+                .load(drink.imageUrl)
                 .preload()
         }
     }
@@ -38,25 +38,25 @@ class SearchListAdapter(private val requestManager: RequestManager) :
         private val requestManager: RequestManager
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: DrinkRaw) {
-            binding.drinkName.text = item.drinkName
-            binding.drinkAlcoholic.text = item.strAlcoholic
-            binding.drinkCategory.text = item.strCategory
+        fun bind(item: DrinkDb) {
+            binding.drinkName.text = item.name
+            binding.drinkAlcoholic.text = item.alcoholContent
+            binding.drinkCategory.text = item.category
 
             requestManager
-                .load(item.strDrinkThumb)
+                .load(item.imageUrl)
                 .into(binding.drinkImage)
 
         }
     }
 }
 
-class SearchByNameDiffCallback : DiffUtil.ItemCallback<DrinkRaw>() {
-    override fun areItemsTheSame(oldItem: DrinkRaw, newItem: DrinkRaw): Boolean {
-        return oldItem.idDrink == newItem.idDrink
+class SearchByNameDiffCallback : DiffUtil.ItemCallback<DrinkDb>() {
+    override fun areItemsTheSame(oldItem: DrinkDb, newItem: DrinkDb): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: DrinkRaw, newItem: DrinkRaw): Boolean {
+    override fun areContentsTheSame(oldItem: DrinkDb, newItem: DrinkDb): Boolean {
         return oldItem.equals(newItem)
     }
 }
