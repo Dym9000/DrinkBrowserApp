@@ -4,7 +4,7 @@ import com.example.drinkbrowserapp.network.dto.DrinkRaw
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.util.mapper.GenericMapper
 
-class DrinkDtoMapper: GenericMapper<DrinkRaw, DrinkDb>() {
+class DrinkDtoMapper : GenericMapper<DrinkRaw, DrinkDb>() {
     override fun mapFrom(input: DrinkRaw): DrinkDb {
         return DrinkDb(
             input.idDrink ?: -1,

@@ -4,7 +4,7 @@ import com.example.drinkbrowserapp.network.dto.IngredientRaw
 import com.example.drinkbrowserapp.persistence.entity.IngredientDb
 import com.example.drinkbrowserapp.util.mapper.GenericMapper
 
-class IngredientDtoMapper: GenericMapper<IngredientRaw, IngredientDb>() {
+class IngredientDtoMapper : GenericMapper<IngredientRaw, IngredientDb>() {
     override fun mapFrom(input: IngredientRaw): IngredientDb {
         return IngredientDb(input.strIngredient1.orEmpty())
     }
