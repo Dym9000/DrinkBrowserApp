@@ -3,8 +3,11 @@ package com.example.drinkbrowserapp.network.mapper.database
 import com.example.drinkbrowserapp.network.dto.DrinkRaw
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.util.mapper.GenericMapper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DrinkDtoMapper : GenericMapper<DrinkRaw, DrinkDb>() {
+@Singleton
+class DrinkDtoMapper @Inject constructor() : GenericMapper<DrinkRaw, DrinkDb>() {
     override fun mapFrom(input: DrinkRaw): DrinkDb {
         return DrinkDb(
             input.idDrink ?: -1,

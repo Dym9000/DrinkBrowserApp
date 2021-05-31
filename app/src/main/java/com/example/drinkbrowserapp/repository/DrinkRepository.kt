@@ -1,6 +1,5 @@
 package com.example.drinkbrowserapp.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.network.api.ApiSuccessResponse
 import com.example.drinkbrowserapp.network.api.DrinkService
@@ -24,7 +23,7 @@ class DrinkRepository @Inject constructor(private val retrofitObject: DrinkServi
             }
 
             override fun onSuccessResponse(response: ApiSuccessResponse<SearchByNameDrinkResponse>) {
-                Log.d("MainActivity", response.body.drinks.toString())
+//                Log.d("MainActivity", response.body.drinks.toString())
                 result.value = DataState.success(data = mappper.mapFromList(response.body.drinks))
             }
 

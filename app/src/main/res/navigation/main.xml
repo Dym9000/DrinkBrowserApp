@@ -9,6 +9,6 @@
         android:id="@+id/searchFragment2"
         android:name="com.example.drinkbrowserapp.ui.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search"/>
+        tools:layout="@layout/fragment_display_list"/>
 
 </navigation>

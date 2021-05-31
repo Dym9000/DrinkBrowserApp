@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
-import com.example.drinkbrowserapp.databinding.FragmentSearchBinding
+import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
-    private lateinit var binding: FragmentSearchBinding
+    private lateinit var binding: FragmentDisplayListBinding
     private lateinit var recyclerViewAdapter: SearchListAdapter
     private var requestManager: RequestManager? = null
 
@@ -31,12 +31,13 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_display_list, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
-        searchViewModel.setDrinkNameQuery("russian")
+        searchViewModel.setDrinkNameQuery("white")
 
         setGlide()
         setRecyclerView()
@@ -75,7 +76,7 @@ class SearchFragment : Fragment() {
                 recyclerViewAdapter.apply {
 //                    preloadImages(requestManager as RequestManager, data)
                     recyclerViewAdapter.submitList(data.toList())
-                    for(item in data) {
+                    for (item in data) {
                         Log.d("MainActivity", "${item.name} ${item.category} ${item.imageUrl}")
                     }
                 }

@@ -3,8 +3,11 @@ package com.example.drinkbrowserapp.persistence.mapper
 import com.example.drinkbrowserapp.domain.DrinkDomain
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.util.mapper.GenericMapper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DrinkDbMapper: GenericMapper<DrinkDb, DrinkDomain>(){
+@Singleton
+class DrinkDbMapper @Inject constructor() : GenericMapper<DrinkDb, DrinkDomain>() {
 
     override fun mapFrom(input: DrinkDb): DrinkDomain {
         val ingredients = mapIngredientsFrom(input)
@@ -31,37 +34,37 @@ class DrinkDbMapper: GenericMapper<DrinkDb, DrinkDomain>(){
             input.glass,
             input.englishInstruction,
             input.imageUrl,
-            input.ingredients[0]?.ingredient?.orEmpty(),
-            input.ingredients[1]?.ingredient?.orEmpty(),
-            input.ingredients[2]?.ingredient?.orEmpty(),
-            input.ingredients[3]?.ingredient?.orEmpty(),
-            input.ingredients[4]?.ingredient?.orEmpty(),
-            input.ingredients[5]?.ingredient?.orEmpty(),
-            input.ingredients[6]?.ingredient?.orEmpty(),
-            input.ingredients[7]?.ingredient?.orEmpty(),
-            input.ingredients[8]?.ingredient?.orEmpty(),
-            input.ingredients[9]?.ingredient?.orEmpty(),
-            input.ingredients[10]?.ingredient?.orEmpty(),
-            input.ingredients[11]?.ingredient?.orEmpty(),
-            input.ingredients[12]?.ingredient?.orEmpty(),
-            input.ingredients[13]?.ingredient?.orEmpty(),
-            input.ingredients[14]?.ingredient?.orEmpty(),
-            input.measures[0]?.measure?.orEmpty(),
-            input.measures[1]?.measure?.orEmpty(),
-            input.measures[2]?.measure?.orEmpty(),
-            input.measures[3]?.measure?.orEmpty(),
-            input.measures[4]?.measure?.orEmpty(),
-            input.measures[5]?.measure?.orEmpty(),
-            input.measures[6]?.measure?.orEmpty(),
-            input.measures[7]?.measure?.orEmpty(),
-            input.measures[8]?.measure?.orEmpty(),
-            input.measures[9]?.measure?.orEmpty(),
-            input.measures[10]?.measure?.orEmpty(),
-            input.measures[11]?.measure?.orEmpty(),
-            input.measures[12]?.measure?.orEmpty(),
-            input.measures[13]?.measure?.orEmpty(),
-            input.measures[14]?.measure?.orEmpty()
-            )
+            input.ingredients[0].ingredient.orEmpty(),
+            input.ingredients[1].ingredient.orEmpty(),
+            input.ingredients[2].ingredient.orEmpty(),
+            input.ingredients[3].ingredient.orEmpty(),
+            input.ingredients[4].ingredient.orEmpty(),
+            input.ingredients[5].ingredient.orEmpty(),
+            input.ingredients[6].ingredient.orEmpty(),
+            input.ingredients[7].ingredient.orEmpty(),
+            input.ingredients[8].ingredient.orEmpty(),
+            input.ingredients[9].ingredient.orEmpty(),
+            input.ingredients[10].ingredient.orEmpty(),
+            input.ingredients[11].ingredient.orEmpty(),
+            input.ingredients[12].ingredient.orEmpty(),
+            input.ingredients[13].ingredient.orEmpty(),
+            input.ingredients[14].ingredient.orEmpty(),
+            input.measures[0].measure.orEmpty(),
+            input.measures[1].measure.orEmpty(),
+            input.measures[2].measure.orEmpty(),
+            input.measures[3].measure.orEmpty(),
+            input.measures[4].measure.orEmpty(),
+            input.measures[5].measure.orEmpty(),
+            input.measures[6].measure.orEmpty(),
+            input.measures[7].measure.orEmpty(),
+            input.measures[8].measure.orEmpty(),
+            input.measures[9].measure.orEmpty(),
+            input.measures[10].measure.orEmpty(),
+            input.measures[11].measure.orEmpty(),
+            input.measures[12].measure.orEmpty(),
+            input.measures[13].measure.orEmpty(),
+            input.measures[14].measure.orEmpty()
+        )
     }
 
     private fun mapIngredientsFrom(input: DrinkDb): List<DrinkDomain.Ingredient> {
@@ -86,7 +89,7 @@ class DrinkDbMapper: GenericMapper<DrinkDb, DrinkDomain>(){
         }
     }
 
-    private fun mapMeasuresFrom(input: DrinkDb): List<DrinkDomain.Measure>{
+    private fun mapMeasuresFrom(input: DrinkDb): List<DrinkDomain.Measure> {
         return mutableListOf(
             DrinkDomain.Measure(input.measure1),
             DrinkDomain.Measure(input.measure2),
