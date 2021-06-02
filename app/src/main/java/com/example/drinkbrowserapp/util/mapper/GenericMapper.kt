@@ -1,8 +1,8 @@
 package com.example.drinkbrowserapp.util.mapper
 
 abstract class GenericMapper<I, O> {
-    fun mapFromList(input: List<I>?): List<O>? {
-        return input?.map {
+    fun mapFromList(input: List<I>): List<O> {
+        return input.map {
             mapFrom(it)
         }
     }
