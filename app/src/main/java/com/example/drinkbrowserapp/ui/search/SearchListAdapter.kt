@@ -57,6 +57,6 @@ class SearchByNameDiffCallback : DiffUtil.ItemCallback<DrinkDb>() {
     }
 
     override fun areContentsTheSame(oldItem: DrinkDb, newItem: DrinkDb): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == newItem
     }
 }

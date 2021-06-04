@@ -1,7 +1,6 @@
 package com.example.drinkbrowserapp.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,11 +36,11 @@ class SearchFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
-        searchViewModel.setDrinkNameQuery("white")
+//        searchViewModel.setDrinkNameQuery("white")
 
-        setGlide()
-        setRecyclerView()
-        setObservers()
+//        setGlide()
+//        setRecyclerView()
+//        setObservers()
 
         return binding.root
 
@@ -69,20 +68,20 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun setObservers() {
-        searchViewModel.drinksByName.observe(viewLifecycleOwner, {
-
-            it?.data?.let { data ->
-                recyclerViewAdapter.apply {
-//                    preloadImages(requestManager as RequestManager, data)
-                    recyclerViewAdapter.submitList(data.toList())
-                    for (item in data) {
-                        Log.d("MainActivity", "${item.name} ${item.category} ${item.imageUrl}")
-                    }
-                }
-            }
-        })
-    }
+//    private fun setObservers() {
+//        searchViewModel.drinksByName.observe(viewLifecycleOwner, {
+//
+//            it?.data?.let { data ->
+//                recyclerViewAdapter.apply {
+////                    preloadImages(requestManager as RequestManager, data)
+//                    recyclerViewAdapter.submitList(data.toList())
+//                    for (item in data) {
+//                        Log.d("MainActivity", "${item.name} ${item.category} ${item.imageUrl}")
+//                    }
+//                }
+//            }
+//        })
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

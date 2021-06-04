@@ -31,10 +31,10 @@ class FiltersRepository @Inject constructor(
             }
 
             override fun shouldGetNewDataFromNetwork(data: List<IngredientDb>?): Boolean {
-                return data == null
+                return (data == null || data.isEmpty())
             }
 
-            override suspend fun makeRequestCall(): LiveData<GenericApiResponse<IngredientResponse>> {
+            override fun makeRequestCall(): LiveData<GenericApiResponse<IngredientResponse>> {
                 return drinkService.getIngredients(key, query)
             }
 

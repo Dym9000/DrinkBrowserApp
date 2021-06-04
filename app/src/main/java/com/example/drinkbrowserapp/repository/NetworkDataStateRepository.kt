@@ -33,11 +33,11 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         result.addSource(databaseSource){
             result.removeSource(databaseSource)
             if(shouldGetNewDataFromNetwork(it)){
-                GlobalScope.launch(IO) {
-                    withContext(Main) {
+//                GlobalScope.launch(IO) {
+//                    withContext(Main) {
                         getDataFromNetwork(databaseSource)
-                    }
-                }
+//                    }
+//                }
             }
             else{
                 result.addSource(databaseSource){
@@ -48,7 +48,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         }
     }
 
-    private suspend fun getDataFromNetwork(databaseSource: LiveData<CacheList>){
+    private fun getDataFromNetwork(databaseSource: LiveData<CacheList>){
         val response = makeRequestCall()
         result.addSource(databaseSource){
             cacheList ->
@@ -108,7 +108,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
 
     protected abstract fun shouldGetNewDataFromNetwork(data: CacheList?): Boolean
 
-    protected abstract suspend fun makeRequestCall(): LiveData<GenericApiResponse<NetworkResponse>>
+    protected abstract fun makeRequestCall(): LiveData<GenericApiResponse<NetworkResponse>>
 
     protected abstract fun loadDataFromDatabase(): LiveData<CacheList>
 

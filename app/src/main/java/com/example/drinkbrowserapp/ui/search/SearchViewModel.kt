@@ -1,14 +1,7 @@
 package com.example.drinkbrowserapp.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.drinkbrowserapp.network.dto.FilterSearchRaw
-import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.repository.DrinkRepository
-import com.example.drinkbrowserapp.util.Constants
-import com.example.drinkbrowserapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,36 +9,36 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val drinkRepository: DrinkRepository) :
     ViewModel() {
 
-    private val _drinkNameQuery = MutableLiveData<String?>()
-    val drinkNameQuery: LiveData<String?>
-        get() = _drinkNameQuery
-
-    var mSearchFilter: SearchFilter = SearchFilter.DRINK
-
-    val drinksByName: LiveData<DataState<List<DrinkDb>>> = Transformations
-        .switchMap(drinkNameQuery) {
-            it?.let {
-                drinkRepository.getDrinksByName(it, Constants.API_TOKEN_KEY)
-            }
-        }
-
-    val drinksByIngredient: LiveData<DataState<List<FilterSearchRaw>>> = Transformations
-        .switchMap(drinkNameQuery) {
-            it?.let {
-                drinkRepository.getDrinksByIngredient(it, Constants.API_TOKEN_KEY)
-            }
-        }
-
-    fun setDrinkNameQuery(query: String?) {
-        if (query != _drinkNameQuery.value)
-            _drinkNameQuery.value = query
-    }
-
-    fun onFilterClick(filter: String) {
-        when (filter) {
-            "drink" -> mSearchFilter = SearchFilter.DRINK
-            "ingredient" -> mSearchFilter = SearchFilter.INGREDIENT
-        }
-    }
+//    private val _drinkNameQuery = MutableLiveData<String?>()
+//    val drinkNameQuery: LiveData<String?>
+//        get() = _drinkNameQuery
+//
+//    var mSearchFilter: SearchFilter = SearchFilter.DRINK
+//
+//    val drinksByName: LiveData<DataState<List<DrinkDb>>> = Transformations
+//        .switchMap(drinkNameQuery) {
+//            it?.let {
+//                drinkRepository.getDrinksByName(it, Constants.API_TOKEN_KEY)
+//            }
+//        }
+//
+//    val drinksByIngredient: LiveData<DataState<List<FilterSearchRaw>>> = Transformations
+//        .switchMap(drinkNameQuery) {
+//            it?.let {
+//                drinkRepository.getDrinksByIngredient(it, Constants.API_TOKEN_KEY)
+//            }
+//        }
+//
+//    fun setDrinkNameQuery(query: String?) {
+//        if (query != _drinkNameQuery.value)
+//            _drinkNameQuery.value = query
+//    }
+//
+//    fun onFilterClick(filter: String) {
+//        when (filter) {
+//            "drink" -> mSearchFilter = SearchFilter.DRINK
+//            "ingredient" -> mSearchFilter = SearchFilter.INGREDIENT
+//        }
+//    }
 
 }
