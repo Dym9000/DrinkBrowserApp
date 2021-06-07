@@ -10,8 +10,8 @@ import com.bumptech.glide.RequestManager
 import com.example.drinkbrowserapp.databinding.CarouselListBinding
 import com.example.drinkbrowserapp.domain.FilterDomain
 
-class FiltersAdapter(private val requestManager: RequestManager)
-    : ListAdapter<FilterDomain, FiltersAdapter.FiltersViewHolder>(FiltersDiffCallback()){
+class FiltersAdapter(private val requestManager: RequestManager) :
+    ListAdapter<FilterDomain, FiltersAdapter.FiltersViewHolder>(FiltersDiffCallback()) {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
@@ -25,14 +25,15 @@ class FiltersAdapter(private val requestManager: RequestManager)
         holder.bind(getItem(position))
     }
 
-    inner class FiltersViewHolder(private val binding: CarouselListBinding)
-        : RecyclerView.ViewHolder(binding.root){
+    inner class FiltersViewHolder(private val binding: CarouselListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: FilterDomain){
+        fun bind(item: FilterDomain) {
             val childLayoutManager = LinearLayoutManager(
-                binding.carouselRecView.context, RecyclerView.HORIZONTAL, false)
+                binding.carouselRecView.context, RecyclerView.HORIZONTAL, false
+            )
 
-            childLayoutManager.initialPrefetchItemCount = 100
+            childLayoutManager.initialPrefetchItemCount = 4
 
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {
@@ -46,7 +47,7 @@ class FiltersAdapter(private val requestManager: RequestManager)
     }
 }
 
-class FiltersDiffCallback: DiffUtil.ItemCallback<FilterDomain>(){
+class FiltersDiffCallback : DiffUtil.ItemCallback<FilterDomain>() {
     override fun areItemsTheSame(oldItem: FilterDomain, newItem: FilterDomain): Boolean {
         return oldItem.name == newItem.name
     }

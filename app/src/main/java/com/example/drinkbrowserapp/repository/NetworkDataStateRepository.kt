@@ -8,6 +8,7 @@ import com.example.drinkbrowserapp.network.api.ApiErrorResponse
 import com.example.drinkbrowserapp.network.api.ApiSuccessResponse
 import com.example.drinkbrowserapp.network.api.GenericApiResponse
 import com.example.drinkbrowserapp.util.DataState
+import com.example.drinkbrowserapp.util.mapper.GenericMapper
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +21,10 @@ import kotlinx.coroutines.withContext
  * NetworkResponse is an object requested from network
  */
 
-abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList> {
+abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList,
+        NetworkModel, CacheModel, DomainModel>(
+    val dtoMapper: GenericMapper<NetworkModel, CacheModel>,
+    val cacheMapper: GenericMapper<CacheModel, DomainModel>) {
 
     protected val result = MediatorLiveData<DataState<DomainList>>()
 
@@ -30,31 +34,28 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         @Suppress("LeakingThis")
         val databaseSource = loadDataFromDatabase()
 
-        result.addSource(databaseSource){
+        result.addSource(databaseSource) {
             result.removeSource(databaseSource)
-            if(shouldGetNewDataFromNetwork(it)){
+            if (shouldGetNewDataFromNetwork(it)) {
 //                GlobalScope.launch(IO) {
 //                    withContext(Main) {
-                        getDataFromNetwork(databaseSource)
+                getDataFromNetwork(databaseSource)
 //                    }
 //                }
-            }
-            else{
-                result.addSource(databaseSource){
-                        cacheList ->
+            } else {
+                result.addSource(databaseSource) { cacheList ->
                     setValue(DataState.success(mapToDomain(cacheList)))
                 }
             }
         }
     }
 
-    private fun getDataFromNetwork(databaseSource: LiveData<CacheList>){
+    private fun getDataFromNetwork(databaseSource: LiveData<CacheList>) {
         val response = makeRequestCall()
-        result.addSource(databaseSource){
-            cacheList ->
+        result.addSource(databaseSource) { cacheList ->
             setValue(DataState.loading(mapToDomain(cacheList)))
         }
-        result.addSource(response){
+        result.addSource(response) {
             result.apply {
                 removeSource(databaseSource)
                 removeSource(response)
@@ -64,12 +65,15 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
 
     }
 
-    private fun setValue(newData: DataState<DomainList>){
+    private fun setValue(newData: DataState<DomainList>) {
         if (result.value != newData)
-        result.value = newData
+            result.value = newData
     }
 
-    private fun handleRequestCall(apiResponse: GenericApiResponse<NetworkResponse>, databaseSource: LiveData<CacheList>) {
+    private fun handleRequestCall(
+        apiResponse: GenericApiResponse<NetworkResponse>,
+        databaseSource: LiveData<CacheList>
+    ) {
         when (apiResponse) {
             is ApiSuccessResponse ->
                 onSuccessResponse(apiResponse, databaseSource)
@@ -81,25 +85,26 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         }
     }
 
-    private fun onSuccessResponse(response: ApiSuccessResponse<NetworkResponse>, databaseSource: LiveData<CacheList>){
+    private fun onSuccessResponse(
+        response: ApiSuccessResponse<NetworkResponse>,
+        databaseSource: LiveData<CacheList>
+    ) {
         GlobalScope.launch {
-            withContext(IO){
+            withContext(IO) {
                 saveDataToDatabase(response.body)
             }
-            withContext(Main){
-                    result.addSource(databaseSource){
-                            cacheList ->
-                        setValue(DataState.success(mapToDomain(cacheList)))
-                    }
+            withContext(Main) {
+                result.addSource(databaseSource) { cacheList ->
+                    setValue(DataState.success(mapToDomain(cacheList)))
+                }
             }
         }
     }
 
-    private fun onFailureResponse(errorMessage: String, databaseSource: LiveData<CacheList>){
+    private fun onFailureResponse(errorMessage: String, databaseSource: LiveData<CacheList>) {
         GlobalScope.launch {
-            withContext(Main){
-                result.addSource(databaseSource){
-                        cacheList ->
+            withContext(Main) {
+                result.addSource(databaseSource) { cacheList ->
                     setValue(DataState.error(mapToDomain(cacheList), errorMessage))
                 }
             }

@@ -14,7 +14,6 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
-import com.example.drinkbrowserapp.domain.FilterDomain
 import com.example.drinkbrowserapp.ui.common.ItemTopSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,14 +65,10 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    private fun setObservers(){
-//        filtersViewModel.filters.observe(viewLifecycleOwner,{
-//            filterDomainList ->
-//                recyclerViewAdapter.submitList(filterDomainList)
-//        })
-
-        filtersViewModel.ingredients.observe(viewLifecycleOwner,{
-            recyclerViewAdapter.submitList(listOf(FilterDomain("ingredients", it)))
+    private fun setObservers() {
+        filtersViewModel.filters.observe(viewLifecycleOwner, { filterDomainList ->
+            recyclerViewAdapter.submitList(filterDomainList)
+            recyclerViewAdapter.notifyDataSetChanged()
         })
     }
 

@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
  * T is type of the object in the list
  * V is type of the view data binding
  */
-abstract class GenericListAdapter<T, V: ViewDataBinding>(diffCallback: DiffUtil.ItemCallback<T>):
-    ListAdapter<T, GenericViewHolder<V>>(diffCallback){
+abstract class GenericListAdapter<T, V : ViewDataBinding>(diffCallback: DiffUtil.ItemCallback<T>) :
+    ListAdapter<T, GenericViewHolder<V>>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<V> {
         val binding = createBinding(parent)

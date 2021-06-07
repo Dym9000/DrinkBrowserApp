@@ -10,8 +10,10 @@ import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.CarouselListItemBinding
 import com.example.drinkbrowserapp.domain.FilterDomainCriteria
 
-class SingleFilterAdapter(private val requestManager: RequestManager):
-ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(SingleFilterDiffCallback()){
+class SingleFilterAdapter(private val requestManager: RequestManager) :
+    ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(
+        SingleFilterDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleFilterViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,9 +25,9 @@ ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(Si
         holder.bind(getItem(position))
     }
 
-    inner class SingleFilterViewHolder(private val binding: CarouselListItemBinding)
-        :RecyclerView.ViewHolder(binding.root){
-        fun bind(item: FilterDomainCriteria){
+    inner class SingleFilterViewHolder(private val binding: CarouselListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: FilterDomainCriteria) {
             binding.carouselItemTitle.text = item.name
 
             requestManager
@@ -35,7 +37,7 @@ ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(Si
     }
 }
 
-class SingleFilterDiffCallback: DiffUtil.ItemCallback<FilterDomainCriteria>(){
+class SingleFilterDiffCallback : DiffUtil.ItemCallback<FilterDomainCriteria>() {
     override fun areItemsTheSame(
         oldItem: FilterDomainCriteria,
         newItem: FilterDomainCriteria

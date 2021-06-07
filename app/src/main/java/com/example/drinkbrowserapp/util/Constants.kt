@@ -11,4 +11,5 @@ object Constants {
 
     // QUERY FOR FILTERS
     const val FILTERS_QUERY = "list"
+    const val LOADING = "LOADING"
 }
