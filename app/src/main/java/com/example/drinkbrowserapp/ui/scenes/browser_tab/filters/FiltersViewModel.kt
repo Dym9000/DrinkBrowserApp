@@ -1,6 +1,8 @@
 package com.example.drinkbrowserapp.ui.scenes.browser_tab.filters
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.drinkbrowserapp.domain.FilterDomain
 import com.example.drinkbrowserapp.domain.FilterDomainCriteria
@@ -31,6 +33,12 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
     private val mFiltersCurrentList = mutableListOf<FilterDomain>()
 
     val filters = MediatorLiveData<List<FilterDomain>>()
+
+    private val _itemClickedName = MutableLiveData<String>()
+    val itemClickedName:LiveData<String>
+    get(){
+        return _itemClickedName
+    }
 
     init {
         setFiltersSources()
@@ -94,5 +102,9 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
         ) {
             filters.value = mFiltersCurrentList
         }
+    }
+
+    fun onItemClicked(item:FilterDomainCriteria){
+        _itemClickedName.value = item.name
     }
 }

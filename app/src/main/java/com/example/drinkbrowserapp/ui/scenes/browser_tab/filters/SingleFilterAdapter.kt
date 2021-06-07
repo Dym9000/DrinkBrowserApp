@@ -10,7 +10,8 @@ import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.CarouselListItemBinding
 import com.example.drinkbrowserapp.domain.FilterDomainCriteria
 
-class SingleFilterAdapter(private val requestManager: RequestManager) :
+class SingleFilterAdapter(private val requestManager: RequestManager,
+private val onSingleFilterClickListener: OnSingleFilterClickListener) :
     ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(
         SingleFilterDiffCallback()
     ) {
@@ -29,6 +30,8 @@ class SingleFilterAdapter(private val requestManager: RequestManager) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FilterDomainCriteria) {
             binding.carouselItemTitle.text = item.name
+            binding.item = item
+            binding.onClickListener = onSingleFilterClickListener
 
             requestManager
                 .load(R.drawable.outline_liquor_black_48)
@@ -51,4 +54,8 @@ class SingleFilterDiffCallback : DiffUtil.ItemCallback<FilterDomainCriteria>() {
     ): Boolean {
         return oldItem.name == newItem.name
     }
+}
+
+class OnSingleFilterClickListener(val clickListener: (item: FilterDomainCriteria) -> Unit){
+    fun onClick(filterClicked: FilterDomainCriteria) = clickListener(filterClicked)
 }
