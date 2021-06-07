@@ -31,7 +31,7 @@ class SingleFilterAdapter(private val requestManager: RequestManager) :
             binding.carouselItemTitle.text = item.name
 
             requestManager
-                .load(R.drawable.ic_launcher_background)
+                .load(R.drawable.outline_liquor_black_48)
                 .into(binding.carouselItemImage)
         }
     }

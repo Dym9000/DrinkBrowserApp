@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,7 +13,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
-import com.example.drinkbrowserapp.ui.common.ItemTopSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +33,7 @@ class FiltersFragment : Fragment() {
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+//        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         setGlide()
         setRecyclerView()
@@ -57,7 +56,7 @@ class FiltersFragment : Fragment() {
     private fun setRecyclerView() {
         recyclerViewAdapter = FiltersAdapter(requestManager as RequestManager)
         val manager = LinearLayoutManager(activity)
-        val itemDecorationSpacing = ItemTopSpacing(30)
+        val itemDecorationSpacing = ItemTopBottomSpacing(50)
         filtersBinding.drinksListRecView.apply {
             layoutManager = manager
             adapter = recyclerViewAdapter

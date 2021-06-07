@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.drinkbrowserapp.databinding.CarouselListBinding
 import com.example.drinkbrowserapp.domain.FilterDomain
+import com.example.drinkbrowserapp.ui.common.ItemSideSpacing
 
 class FiltersAdapter(private val requestManager: RequestManager) :
     ListAdapter<FilterDomain, FiltersAdapter.FiltersViewHolder>(FiltersDiffCallback()) {
@@ -33,10 +34,12 @@ class FiltersAdapter(private val requestManager: RequestManager) :
                 binding.carouselRecView.context, RecyclerView.HORIZONTAL, false
             )
 
-            childLayoutManager.initialPrefetchItemCount = 4
+            childLayoutManager.initialPrefetchItemCount = 100
+            val itemDecoratorSideSpacing = ItemSideSpacing(30)
 
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {
+                addItemDecoration(itemDecoratorSideSpacing)
                 adapter = SingleFilterAdapter(requestManager).apply {
                     submitList(item.filterDomainCriteria.data)
                 }

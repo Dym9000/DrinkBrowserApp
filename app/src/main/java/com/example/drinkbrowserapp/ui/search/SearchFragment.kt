@@ -14,7 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
-import com.example.drinkbrowserapp.ui.common.ItemTopSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,7 +60,7 @@ class SearchFragment : Fragment() {
     private fun setRecyclerView() {
         recyclerViewAdapter = SearchListAdapter(requestManager as RequestManager)
         val manager = LinearLayoutManager(activity)
-        val itemDecorationSpacing = ItemTopSpacing(30)
+        val itemDecorationSpacing = ItemTopBottomSpacing(30)
         binding.drinksListRecView.apply {
             layoutManager = manager
             adapter = recyclerViewAdapter
