@@ -11,7 +11,8 @@ import com.example.drinkbrowserapp.databinding.CarouselListItemBinding
 import com.example.drinkbrowserapp.domain.FilterDomainCriteria
 
 class SingleFilterAdapter(private val requestManager: RequestManager,
-private val onSingleFilterClickListener: OnSingleFilterClickListener) :
+private val onSingleFilterClickListener: OnSingleFilterClickListener,
+private val filterTitle: String) :
     ListAdapter<FilterDomainCriteria, SingleFilterAdapter.SingleFilterViewHolder>(
         SingleFilterDiffCallback()
     ) {
@@ -30,6 +31,7 @@ private val onSingleFilterClickListener: OnSingleFilterClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FilterDomainCriteria) {
             binding.carouselItemTitle.text = item.name
+            binding.filterTitle = filterTitle
             binding.item = item
             binding.onClickListener = onSingleFilterClickListener
 
@@ -56,6 +58,6 @@ class SingleFilterDiffCallback : DiffUtil.ItemCallback<FilterDomainCriteria>() {
     }
 }
 
-class OnSingleFilterClickListener(val clickListener: (item: FilterDomainCriteria) -> Unit){
-    fun onClick(filterClicked: FilterDomainCriteria) = clickListener(filterClicked)
+class OnSingleFilterClickListener(val clickListener: (filterTitle: String, item: FilterDomainCriteria) -> Unit){
+    fun onClick(filterTitle: String, filterClicked: FilterDomainCriteria) = clickListener(filterTitle, filterClicked)
 }

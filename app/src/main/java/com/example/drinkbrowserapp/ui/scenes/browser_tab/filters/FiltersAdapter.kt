@@ -41,7 +41,7 @@ class FiltersAdapter(private val requestManager: RequestManager,
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {
                 addItemDecoration(itemDecoratorSideSpacing)
-                adapter = SingleFilterAdapter(requestManager, onSingleFilterClickListener).apply {
+                adapter = SingleFilterAdapter(requestManager, onSingleFilterClickListener, item.name).apply {
                     submitList(item.filterDomainCriteria.data)
                 }
                 layoutManager = childLayoutManager

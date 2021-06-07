@@ -15,7 +15,6 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
-import com.example.drinkbrowserapp.domain.FilterDomainCriteria
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +35,7 @@ class FiltersFragment : Fragment() {
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         setGlide()
         setRecyclerView()
@@ -58,9 +57,8 @@ class FiltersFragment : Fragment() {
 
     private fun setRecyclerView() {
         recyclerViewAdapter = FiltersAdapter(requestManager as RequestManager,
-            OnSingleFilterClickListener {
-                item: FilterDomainCriteria ->
-                filtersViewModel.onItemClicked(item)
+            OnSingleFilterClickListener {title, item ->
+                filtersViewModel.onItemClicked(title, item)
         })
         val manager = LinearLayoutManager(activity)
         val itemDecorationSpacing = ItemTopBottomSpacing(50)
@@ -79,7 +77,7 @@ class FiltersFragment : Fragment() {
 
         filtersViewModel.itemClickedName.observe(viewLifecycleOwner, {
             itemClickedName ->
-                Log.d("MainActivity", "ITEM $itemClickedName CLICKED")
+                Log.d("MainActivity", "ITEM ${itemClickedName.values} ${itemClickedName.entries} CLICKED")
         })
     }
 
