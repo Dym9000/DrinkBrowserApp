@@ -21,13 +21,12 @@ import kotlinx.coroutines.withContext
  * NetworkResponse is an object requested from network
  */
 
-abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList,
-        NetworkModel, CacheModel, DomainModel>(
+abstract class NetworkDataStateRepository<NetworkResponse, DomainModel, CacheModel, NetworkModel>(
     val dtoMapper: GenericMapper<NetworkModel, CacheModel>,
     val cacheMapper: GenericMapper<CacheModel, DomainModel>
 ) {
 
-    protected val result = MediatorLiveData<DataState<DomainList>>()
+    protected val result = MediatorLiveData<DataState<List<DomainModel>>>()
 
     init {
         result.value = DataState.loading(null)
@@ -51,7 +50,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         }
     }
 
-    private fun getDataFromNetwork(databaseSource: LiveData<CacheList>) {
+    private fun getDataFromNetwork(databaseSource: LiveData<List<CacheModel>>) {
         val response = makeRequestCall()
         result.addSource(databaseSource) { cacheList ->
             setValue(DataState.loading(mapToDomain(cacheList)))
@@ -66,14 +65,14 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
 
     }
 
-    private fun setValue(newData: DataState<DomainList>) {
+    private fun setValue(newData: DataState<List<DomainModel>>) {
         if (result.value != newData)
             result.value = newData
     }
 
     private fun handleRequestCall(
         apiResponse: GenericApiResponse<NetworkResponse>,
-        databaseSource: LiveData<CacheList>
+        databaseSource: LiveData<List<CacheModel>>
     ) {
         when (apiResponse) {
             is ApiSuccessResponse ->
@@ -88,7 +87,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
 
     private fun onSuccessResponse(
         response: ApiSuccessResponse<NetworkResponse>,
-        databaseSource: LiveData<CacheList>
+        databaseSource: LiveData<List<CacheModel>>
     ) {
         GlobalScope.launch {
             withContext(IO) {
@@ -102,7 +101,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         }
     }
 
-    private fun onFailureResponse(errorMessage: String, databaseSource: LiveData<CacheList>) {
+    private fun onFailureResponse(errorMessage: String, databaseSource: LiveData<List<CacheModel>>) {
         GlobalScope.launch {
             withContext(Main) {
                 result.addSource(databaseSource) { cacheList ->
@@ -112,17 +111,17 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList
         }
     }
 
-    protected abstract fun shouldGetNewDataFromNetwork(data: CacheList?): Boolean
+    protected abstract fun shouldGetNewDataFromNetwork(data: List<CacheModel>?): Boolean
 
     protected abstract fun makeRequestCall(): LiveData<GenericApiResponse<NetworkResponse>>
 
-    protected abstract fun loadDataFromDatabase(): LiveData<CacheList>
+    protected abstract fun loadDataFromDatabase(): LiveData<List<CacheModel>>
 
     protected abstract suspend fun saveDataToDatabase(response: NetworkResponse)
 
-    protected abstract fun mapToDomain(data: CacheList): DomainList
+    protected abstract fun mapToDomain(data: List<CacheModel>): List<DomainModel>
 
-    protected abstract fun mapToCache(data: NetworkResponse): CacheList
+    protected abstract fun mapToCache(data: NetworkResponse): List<CacheModel>
 
-    fun returnAsLiveData() = result as LiveData<DataState<DomainList>>
+    fun returnAsLiveData() = result as LiveData<DataState<List<DomainModel>>>
 }

@@ -29,8 +29,8 @@ class FilterResultRepository @Inject constructor(
 
     fun getIngredients(key: String, ingredient: String)
             : LiveData<DataState<List<FilterSearchDomain>>> {
-        return object : NetworkDataStateRepository<FilterSearchResponse, List<FilterSearchDomain>,
-                List<FilterSearchDb>, FilterSearchRaw, FilterSearchDb, FilterSearchDomain>
+        return object : NetworkDataStateRepository<FilterSearchResponse, FilterSearchDomain,
+                FilterSearchDb, FilterSearchRaw>
             (dtoMapper = FilterSearchDtoMapper(), cacheMapper = FilterSearchDbMapper()) {
 
             override fun shouldGetNewDataFromNetwork(data: List<FilterSearchDb>?): Boolean {

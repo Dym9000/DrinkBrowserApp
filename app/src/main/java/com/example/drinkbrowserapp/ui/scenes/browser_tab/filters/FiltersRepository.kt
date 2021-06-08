@@ -49,8 +49,8 @@ class FiltersRepository @Inject constructor(
         query: String
     ): LiveData<DataState<List<FilterDomainCriteria>>> {
         return object :
-            NetworkDataStateRepository<IngredientResponse, List<FilterDomainCriteria>,
-                    List<IngredientDb>, IngredientRaw, IngredientDb, FilterDomainCriteria>(
+            NetworkDataStateRepository<IngredientResponse, FilterDomainCriteria,
+                    IngredientDb, IngredientRaw>(
                 dtoMapper = IngredientDtoMapper(), cacheMapper = IngredientDbMapper()
             ) {
 
@@ -82,8 +82,8 @@ class FiltersRepository @Inject constructor(
 
     fun getCategories(key: String, query: String): LiveData<DataState<List<FilterDomainCriteria>>> {
         return object :
-            NetworkDataStateRepository<CategoryResponse, List<FilterDomainCriteria>, List<CategoryDb>,
-                    CategoryRaw, CategoryDb, FilterDomainCriteria>(
+            NetworkDataStateRepository<CategoryResponse, FilterDomainCriteria, CategoryDb,
+                    CategoryRaw>(
                 dtoMapper = CategoryDtoMapper(), cacheMapper = CategoryDbMapper()
             ) {
             override fun shouldGetNewDataFromNetwork(data: List<CategoryDb>?): Boolean {
@@ -114,8 +114,7 @@ class FiltersRepository @Inject constructor(
 
     fun getGlasses(key: String, query: String): LiveData<DataState<List<FilterDomainCriteria>>> {
         return object :
-            NetworkDataStateRepository<GlassResponse, List<FilterDomainCriteria>, List<GlassDb>,
-                    GlassRaw, GlassDb, FilterDomainCriteria>(
+            NetworkDataStateRepository<GlassResponse, FilterDomainCriteria, GlassDb, GlassRaw>(
                 dtoMapper = GlassDtoMapper(), cacheMapper = GlassDbMapper()
             ) {
             override fun shouldGetNewDataFromNetwork(data: List<GlassDb>?): Boolean {
@@ -149,8 +148,8 @@ class FiltersRepository @Inject constructor(
         query: String
     ): LiveData<DataState<List<FilterDomainCriteria>>> {
         return object :
-            NetworkDataStateRepository<AlcoholContentResponse, List<FilterDomainCriteria>, List<AlcoholContentDb>,
-                    AlcoholContentRaw, AlcoholContentDb, FilterDomainCriteria>(
+            NetworkDataStateRepository<AlcoholContentResponse, FilterDomainCriteria, AlcoholContentDb,
+                    AlcoholContentRaw>(
                 dtoMapper = AlcoholContentDtoMapper(), cacheMapper = AlcoholContentDbMapper()
             ) {
             override fun shouldGetNewDataFromNetwork(data: List<AlcoholContentDb>?): Boolean {
