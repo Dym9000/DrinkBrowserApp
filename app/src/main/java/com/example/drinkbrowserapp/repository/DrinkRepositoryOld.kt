@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DrinkRepository @Inject constructor(private val retrofitObject: DrinkService) {
+class DrinkRepositoryOld @Inject constructor(private val retrofitObject: DrinkService) {
 
 //    val mappper = DrinkDtoMapper()
 //    fun getDrinksByName(drinkName: String, key: String): LiveData<DataState<List<DrinkDb>>> {

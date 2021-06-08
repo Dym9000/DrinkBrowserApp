@@ -1,12 +1,12 @@
 package com.example.drinkbrowserapp.ui.search
 
 import androidx.lifecycle.ViewModel
-import com.example.drinkbrowserapp.repository.DrinkRepository
+import com.example.drinkbrowserapp.repository.DrinkRepositoryOld
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val drinkRepository: DrinkRepository) :
+class SearchViewModel @Inject constructor(private val drinkRepositoryOld: DrinkRepositoryOld) :
     ViewModel() {
 
 //    private val _drinkNameQuery = MutableLiveData<String?>()

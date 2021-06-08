@@ -41,6 +41,6 @@ interface DrinksDao {
      *      Common query for a drink's details
      */
     @Query("Select * from drinks where id = :id")
-    fun getDrinkDetails(id: Int): LiveData<DrinkDb>
+    fun getDrinkDetails(id: Int): LiveData<List<DrinkDb>>
 
 }
