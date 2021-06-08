@@ -14,6 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
+import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,9 +25,12 @@ class ChosenFilterResultFragment : Fragment() {
     lateinit var filterResultRepository: FilterResultRepository
 
     private lateinit var filterResultBinding: FragmentDisplayListBinding
+
     private val filterResultArgs: ChosenFilterResultFragmentArgs by navArgs()
+
     private lateinit var filterResultAdapter: FilterResultAdapter
-    val filterResultViewModel: ChosenFilterResultViewModel by viewModels {
+
+    private val filterResultViewModel: ChosenFilterResultViewModel by viewModels {
         FilterResultViewModelFactory(
             filterResultRepository, filterResultArgs.itemName, filterResultArgs.filterName
         )
@@ -49,6 +53,7 @@ class ChosenFilterResultFragment : Fragment() {
 
         setGlide()
         setRecyclerView()
+        setObservers()
 
         return filterResultBinding.root
     }
@@ -65,10 +70,18 @@ class ChosenFilterResultFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
+        val itemTopBottomSpacing = ItemTopBottomSpacing(20)
         filterResultAdapter = FilterResultAdapter(requestManager as RequestManager)
         filterResultBinding.drinksListRecView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = filterResultAdapter
+            addItemDecoration(itemTopBottomSpacing)
         }
+    }
+
+    private fun setObservers(){
+        filterResultViewModel.ingredients.observe(viewLifecycleOwner,{
+            it?.let {  filterResultAdapter.submitList(it.data)}
+        })
     }
 }
