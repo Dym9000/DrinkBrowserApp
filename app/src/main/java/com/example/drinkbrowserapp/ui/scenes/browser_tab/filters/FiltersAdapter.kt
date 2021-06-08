@@ -35,11 +35,12 @@ class FiltersAdapter(private val requestManager: RequestManager,
                 binding.carouselRecView.context, RecyclerView.HORIZONTAL, false
             )
 
-            childLayoutManager.initialPrefetchItemCount = 100
-            val itemDecoratorSideSpacing = ItemSideSpacing(30)
+            childLayoutManager.initialPrefetchItemCount = 4
+            val itemDecoratorSideSpacing = ItemSideSpacing(10)
 
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {
+                removeItemDecoration(itemDecoratorSideSpacing)
                 addItemDecoration(itemDecoratorSideSpacing)
                 adapter = SingleFilterAdapter(requestManager, onSingleFilterClickListener, item.name).apply {
                     submitList(item.filterDomainCriteria.data)

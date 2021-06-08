@@ -8,5 +8,22 @@
         android:id="@+id/filtersFragment"
         android:name="com.example.drinkbrowserapp.ui.scenes.browser_tab.filters.FiltersFragment"
         android:label="FiltersFragment"
-        />
+        >
+        <action
+            android:id="@+id/action_filtersFragment_to_chosenFilterResultFragment"
+            app:destination="@id/chosenFilterResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chosenFilterResultFragment"
+        android:name="com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment"
+        android:label="ChosenFilterResultFragment" >
+        <argument
+            android:name="filterName"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="itemName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

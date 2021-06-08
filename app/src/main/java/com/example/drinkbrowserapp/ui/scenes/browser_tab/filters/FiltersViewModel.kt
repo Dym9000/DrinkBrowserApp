@@ -34,11 +34,13 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
 
     val filters = MediatorLiveData<List<FilterDomain>>()
 
-    private val _itemClickedName = MutableLiveData<Map<String, String>>()
-    val itemClickedName:LiveData<Map<String,String>>
+    private val _itemClickedName = MutableLiveData<String?>()
+    val itemClickedName:LiveData<String?>
     get(){
         return _itemClickedName
     }
+
+    var mItemClickedFilterName: String? = null
 
     init {
         setFiltersSources()
@@ -105,6 +107,12 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
     }
 
     fun onItemClicked(filterTitle: String, item:FilterDomainCriteria){
-        _itemClickedName.value = mapOf(pair = Pair(filterTitle, item.name))
+        mItemClickedFilterName = filterTitle
+        _itemClickedName.value = item.name
+    }
+
+    fun navigatedToClickedItem(){
+        mItemClickedFilterName = null
+        _itemClickedName.value = null
     }
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -65,6 +66,7 @@ class FiltersFragment : Fragment() {
         filtersBinding.drinksListRecView.apply {
             layoutManager = manager
             adapter = recyclerViewAdapter
+            removeItemDecoration(itemDecorationSpacing)
             addItemDecoration(itemDecorationSpacing)
         }
     }
@@ -77,8 +79,20 @@ class FiltersFragment : Fragment() {
 
         filtersViewModel.itemClickedName.observe(viewLifecycleOwner, {
             itemClickedName ->
-                Log.d("MainActivity", "ITEM ${itemClickedName.values} ${itemClickedName.entries} CLICKED")
+                Log.d("MainActivity", "ITEM $itemClickedName ${filtersViewModel.mItemClickedFilterName} CLICKED")
+                itemClickedName?.let {
+                    this.findNavController().navigate(FiltersFragmentDirections
+                        .actionFiltersFragmentToChosenFilterResultFragment(
+                            filtersViewModel.mItemClickedFilterName, it))
+                    filtersViewModel.navigatedToClickedItem()
+                }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        filtersBinding.drinksListRecView.adapter = null
+        requestManager = null
     }
 
 }

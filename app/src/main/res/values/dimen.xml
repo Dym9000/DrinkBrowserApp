@@ -11,7 +11,7 @@
     <dimen name="item_list_title_text_size">26sp</dimen>
     <dimen name="item_list_text_size">16sp</dimen>
     <dimen name="carousel_list_title">24sp</dimen>
-    <dimen name="carousel_list_item_title">18sp</dimen>
+    <dimen name="carousel_list_item_title">17sp</dimen>
 
 <!--    carousel_list_view_sizes-->
     <dimen name="carousel_list_image_size">100dp</dimen>
