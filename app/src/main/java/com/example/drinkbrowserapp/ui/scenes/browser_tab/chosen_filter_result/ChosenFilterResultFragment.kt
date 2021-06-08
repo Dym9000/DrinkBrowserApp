@@ -80,7 +80,7 @@ class ChosenFilterResultFragment : Fragment() {
     }
 
     private fun setObservers(){
-        filterResultViewModel.ingredients.observe(viewLifecycleOwner,{
+        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner,{
             it?.let {  filterResultAdapter.submitList(it.data)}
         })
     }

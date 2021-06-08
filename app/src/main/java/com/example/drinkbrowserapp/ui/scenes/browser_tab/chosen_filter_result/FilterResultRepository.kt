@@ -11,6 +11,7 @@ import com.example.drinkbrowserapp.persistence.dao.DrinksDao
 import com.example.drinkbrowserapp.persistence.entity.FilterSearchDb
 import com.example.drinkbrowserapp.persistence.mapper.FilterSearchDbMapper
 import com.example.drinkbrowserapp.repository.NetworkDataStateRepository
+import com.example.drinkbrowserapp.util.Constants
 import com.example.drinkbrowserapp.util.DataState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,15 +28,15 @@ class FilterResultRepository @Inject constructor(
 
     private var query = ""
 
-    fun getIngredients(key: String, ingredient: String)
+    fun getDrinksByFilter(key: String, itemName: String, filterName: String)
             : LiveData<DataState<List<FilterSearchDomain>>> {
         return object : NetworkDataStateRepository<FilterSearchResponse, FilterSearchDomain,
                 FilterSearchDb, FilterSearchRaw>
             (dtoMapper = FilterSearchDtoMapper(), cacheMapper = FilterSearchDbMapper()) {
 
             override fun shouldGetNewDataFromNetwork(data: List<FilterSearchDb>?): Boolean {
-                if(ingredient != query) {
-                    query = ingredient
+                if(itemName != query) {
+                    query = itemName
                     GlobalScope.launch {
                         withContext(Dispatchers.IO){
                             drinksDao.clearDrinksByFilter()
@@ -47,7 +48,13 @@ class FilterResultRepository @Inject constructor(
             }
 
             override fun makeRequestCall(): LiveData<GenericApiResponse<FilterSearchResponse>> {
-                return drinkService.getDrinksByIngredient(key, ingredient)
+                return when(filterName){
+                    Constants.INGREDIENT -> drinkService.getDrinksByIngredient(key, itemName)
+                    Constants.CATEGORY -> drinkService.getDrinksByCategory(key, itemName)
+                    Constants.ALCOHOL_CONTENT -> drinkService.getDrinksByAlcoholContent(key, itemName)
+                    Constants.GLASS -> drinkService.getDrinksByGlassType(key, itemName)
+                    else -> throw IllegalArgumentException("Unknown FILTER")
+                }
             }
 
             override fun loadDataFromDatabase(): LiveData<List<FilterSearchDb>> {
