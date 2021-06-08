@@ -10,6 +10,10 @@
             name="viewModel"
             type="com.example.drinkbrowserapp.ui.scenes.common.DrinkDetailsViewModel" />
 
+        <variable
+            name="drinkModel"
+            type="com.example.drinkbrowserapp.domain.DrinkDomain" />
+
     </data>
 
 
@@ -55,6 +59,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toBottomOf="@+id/drink_detail_image_url"
+                android:text="@{drinkModel.name}"
                 tools:text="TextView" />
 
             <TextView
@@ -73,7 +78,8 @@
                 android:layout_marginTop="16dp"
                 tools:text="TextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/drink_detail_drink_name" />
+                app:layout_constraintTop_toBottomOf="@+id/drink_detail_drink_name"
+                android:text="@{drinkModel.alcoholContent}"/>
 
             <TextView
                 android:id="@+id/textView6"
@@ -91,7 +97,8 @@
                 android:layout_marginTop="16dp"
                 tools:text="TextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/drink_detail_alcohol_content" />
+                app:layout_constraintTop_toBottomOf="@+id/drink_detail_alcohol_content"
+                android:text="@{drinkModel.category}"/>
 
             <TextView
                 android:id="@+id/textView8"
@@ -109,7 +116,8 @@
                 android:layout_marginTop="16dp"
                 tools:text="TextView"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/drink_detail_category" />
+                app:layout_constraintTop_toBottomOf="@+id/drink_detail_category"
+                android:text="@{drinkModel.glass}"/>
 
             <TextView
                 android:id="@+id/textView10"
@@ -129,7 +137,8 @@
                 tools:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                android:text="@{drinkModel.englishInstruction}"/>
 
             <TextView
                 android:id="@+id/textView12"
@@ -151,7 +160,8 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                android:text="@{drinkModel.measures.toString()}"/>
 
             <TextView
                 android:id="@+id/drink_details_ingredients"
@@ -162,7 +172,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/drink_details_measures"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                android:text="@{drinkModel.ingredients.toString()}"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
