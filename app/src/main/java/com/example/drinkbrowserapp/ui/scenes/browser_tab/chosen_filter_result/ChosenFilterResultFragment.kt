@@ -7,17 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
-import com.example.drinkbrowserapp.util.Constants
 
 //@AndroidEntryPoint
 class ChosenFilterResultFragment: Fragment() {
 
     private lateinit var filterResultBinding: FragmentDisplayListBinding
     private val filterResultArgs: ChosenFilterResultFragmentArgs by navArgs()
-    private lateinit var ingredientResultAdapter: IngredientResultAdapter
     private lateinit var filterResultAdapter: FilterResultAdapter
+    private var requestManager: RequestManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +35,28 @@ class ChosenFilterResultFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        if(filterResultArgs.filterName == Constants.INGREDIENT){
-            TODO("set ingredient result adapter")
-        }else{
-            TODO("set filter result adapter")
-        }
+        setGlide()
+        setRecyclerView()
 
             return filterResultBinding.root
         }
+
+    private fun setGlide() {
+        val requestOptions = RequestOptions
+            .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
+            .error(R.drawable.ic_baseline_no_drinks_24)
+
+        activity?.let {
+            requestManager = Glide.with(it)
+                .applyDefaultRequestOptions(requestOptions)
+        }
+    }
+
+    private fun setRecyclerView() {
+        filterResultAdapter = FilterResultAdapter(requestManager as RequestManager)
+        filterResultBinding.drinksListRecView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = filterResultAdapter
+        }
+    }
 }
