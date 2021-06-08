@@ -24,7 +24,8 @@ import kotlinx.coroutines.withContext
 abstract class NetworkDataStateRepository<NetworkResponse, DomainList, CacheList,
         NetworkModel, CacheModel, DomainModel>(
     val dtoMapper: GenericMapper<NetworkModel, CacheModel>,
-    val cacheMapper: GenericMapper<CacheModel, DomainModel>) {
+    val cacheMapper: GenericMapper<CacheModel, DomainModel>
+) {
 
     protected val result = MediatorLiveData<DataState<DomainList>>()
 

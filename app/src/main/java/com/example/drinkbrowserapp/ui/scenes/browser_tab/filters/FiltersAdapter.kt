@@ -11,8 +11,10 @@ import com.example.drinkbrowserapp.databinding.CarouselListBinding
 import com.example.drinkbrowserapp.domain.FilterDomain
 import com.example.drinkbrowserapp.ui.common.ItemSideSpacing
 
-class FiltersAdapter(private val requestManager: RequestManager,
-                     private val onSingleFilterClickListener: OnSingleFilterClickListener) :
+class FiltersAdapter(
+    private val requestManager: RequestManager,
+    private val onSingleFilterClickListener: OnSingleFilterClickListener
+) :
     ListAdapter<FilterDomain, FiltersAdapter.FiltersViewHolder>(FiltersDiffCallback()) {
 
     private val viewPool = RecyclerView.RecycledViewPool()
@@ -42,7 +44,11 @@ class FiltersAdapter(private val requestManager: RequestManager,
             binding.carouselRecView.apply {
                 removeItemDecoration(itemDecoratorSideSpacing)
                 addItemDecoration(itemDecoratorSideSpacing)
-                adapter = SingleFilterAdapter(requestManager, onSingleFilterClickListener, item.name).apply {
+                adapter = SingleFilterAdapter(
+                    requestManager,
+                    onSingleFilterClickListener,
+                    item.name
+                ).apply {
                     submitList(item.filterDomainCriteria.data)
                 }
                 layoutManager = childLayoutManager

@@ -51,7 +51,8 @@ class FiltersRepository @Inject constructor(
         return object :
             NetworkDataStateRepository<IngredientResponse, List<FilterDomainCriteria>,
                     List<IngredientDb>, IngredientRaw, IngredientDb, FilterDomainCriteria>(
-                dtoMapper = IngredientDtoMapper(), cacheMapper = IngredientDbMapper()) {
+                dtoMapper = IngredientDtoMapper(), cacheMapper = IngredientDbMapper()
+            ) {
 
             override fun loadDataFromDatabase(): LiveData<List<IngredientDb>> {
                 return filterDao.getIngredients()
@@ -84,7 +85,7 @@ class FiltersRepository @Inject constructor(
             NetworkDataStateRepository<CategoryResponse, List<FilterDomainCriteria>, List<CategoryDb>,
                     CategoryRaw, CategoryDb, FilterDomainCriteria>(
                 dtoMapper = CategoryDtoMapper(), cacheMapper = CategoryDbMapper()
-                    ) {
+            ) {
             override fun shouldGetNewDataFromNetwork(data: List<CategoryDb>?): Boolean {
                 return (data == null || data.isEmpty())
             }
@@ -115,7 +116,8 @@ class FiltersRepository @Inject constructor(
         return object :
             NetworkDataStateRepository<GlassResponse, List<FilterDomainCriteria>, List<GlassDb>,
                     GlassRaw, GlassDb, FilterDomainCriteria>(
-                dtoMapper = GlassDtoMapper(), cacheMapper = GlassDbMapper()) {
+                dtoMapper = GlassDtoMapper(), cacheMapper = GlassDbMapper()
+            ) {
             override fun shouldGetNewDataFromNetwork(data: List<GlassDb>?): Boolean {
                 return (data == null || data.isEmpty())
             }
@@ -149,7 +151,8 @@ class FiltersRepository @Inject constructor(
         return object :
             NetworkDataStateRepository<AlcoholContentResponse, List<FilterDomainCriteria>, List<AlcoholContentDb>,
                     AlcoholContentRaw, AlcoholContentDb, FilterDomainCriteria>(
-                dtoMapper = AlcoholContentDtoMapper(), cacheMapper = AlcoholContentDbMapper()) {
+                dtoMapper = AlcoholContentDtoMapper(), cacheMapper = AlcoholContentDbMapper()
+            ) {
             override fun shouldGetNewDataFromNetwork(data: List<AlcoholContentDb>?): Boolean {
                 return (data == null || data.isEmpty())
             }

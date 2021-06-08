@@ -58,9 +58,9 @@ class FiltersFragment : Fragment() {
 
     private fun setRecyclerView() {
         recyclerViewAdapter = FiltersAdapter(requestManager as RequestManager,
-            OnSingleFilterClickListener {title, item ->
+            OnSingleFilterClickListener { title, item ->
                 filtersViewModel.onItemClicked(title, item)
-        })
+            })
         val manager = LinearLayoutManager(activity)
         val itemDecorationSpacing = ItemTopBottomSpacing(50)
         filtersBinding.drinksListRecView.apply {
@@ -77,15 +77,20 @@ class FiltersFragment : Fragment() {
             recyclerViewAdapter.notifyDataSetChanged()
         })
 
-        filtersViewModel.itemClickedName.observe(viewLifecycleOwner, {
-            itemClickedName ->
-                Log.d("MainActivity", "ITEM $itemClickedName ${filtersViewModel.mItemClickedFilterName} CLICKED")
-                itemClickedName?.let {
-                    this.findNavController().navigate(FiltersFragmentDirections
+        filtersViewModel.itemClickedName.observe(viewLifecycleOwner, { itemClickedName ->
+            Log.d(
+                "MainActivity",
+                "ITEM $itemClickedName ${filtersViewModel.mItemClickedFilterName} CLICKED"
+            )
+            itemClickedName?.let {
+                this.findNavController().navigate(
+                    FiltersFragmentDirections
                         .actionFiltersFragmentToChosenFilterResultFragment(
-                            filtersViewModel.mItemClickedFilterName, it))
-                    filtersViewModel.navigatedToClickedItem()
-                }
+                            filtersViewModel.mItemClickedFilterName, it
+                        )
+                )
+                filtersViewModel.navigatedToClickedItem()
+            }
         })
     }
 

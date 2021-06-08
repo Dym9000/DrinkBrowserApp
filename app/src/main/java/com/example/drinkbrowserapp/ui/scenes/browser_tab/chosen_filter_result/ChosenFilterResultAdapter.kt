@@ -37,7 +37,7 @@ class FilterResultAdapter(private val requestManager: RequestManager) :
     }
 }
 
-class FilterResultDiffCallback() : DiffUtil.ItemCallback<FilterSearchDomain>() {
+class FilterResultDiffCallback : DiffUtil.ItemCallback<FilterSearchDomain>() {
     override fun areItemsTheSame(
         oldItem: FilterSearchDomain,
         newItem: FilterSearchDomain
