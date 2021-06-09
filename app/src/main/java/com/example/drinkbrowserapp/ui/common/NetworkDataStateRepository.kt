@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.repository
+package com.example.drinkbrowserapp.ui.common
 
 
 import androidx.lifecycle.LiveData

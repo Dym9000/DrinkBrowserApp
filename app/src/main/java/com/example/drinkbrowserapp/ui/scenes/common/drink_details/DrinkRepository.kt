@@ -10,7 +10,7 @@ import com.example.drinkbrowserapp.network.responses.SearchByIdOrNameDrinkRespon
 import com.example.drinkbrowserapp.persistence.dao.DrinksDao
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.persistence.mapper.DrinkDbMapper
-import com.example.drinkbrowserapp.repository.NetworkDataStateRepository
+import com.example.drinkbrowserapp.ui.common.NetworkDataStateRepository
 import com.example.drinkbrowserapp.util.DataState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

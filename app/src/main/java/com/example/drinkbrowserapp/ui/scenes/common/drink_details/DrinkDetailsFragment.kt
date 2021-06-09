@@ -9,9 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDrinkDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,23 +47,9 @@ class DrinkDetailsFragment : Fragment() {
             viewModel = drinkDetailsViewModel
         }
 
-
-
-        setGlide()
         setObservers()
 
         return drinkDetailsBinding.root
-    }
-
-    private fun setGlide() {
-        val requestOptions = RequestOptions
-            .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
-            .error(R.drawable.ic_baseline_no_drinks_24)
-
-        activity?.let {
-            requestManager = Glide.with(it)
-                .applyDefaultRequestOptions(requestOptions)
-        }
     }
 
     private fun setObservers(){

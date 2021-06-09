@@ -13,9 +13,17 @@ data class DrinkDomain(
 ) {
     data class Ingredient(
         val ingredient: String
-    )
+    ){
+        override fun toString(): String {
+            return ingredient
+        }
+    }
 
     data class Measure(
         val measure: String
-    )
+    ){
+        override fun toString(): String {
+            return measure
+        }
+    }
 }

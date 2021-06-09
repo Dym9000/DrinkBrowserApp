@@ -40,6 +40,7 @@
                     android:contentDescription="@string/image_of_the_drink"
                     android:cropToPadding="true"
                     android:scaleType="centerInside"
+                    app:setImageFromUrl="@{viewModel.drinkDetails.imageUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -162,28 +163,27 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.drinkDetails.measures.toString()}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/drink_details_ingredients"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12"
+                    app:setMeasures="@{viewModel.drinkDetails.measures}"
                     tools:text="TextView" />
 
                 <TextView
                     android:id="@+id/drink_details_ingredients"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.drinkDetails.ingredients.toString()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/drink_details_measures"
                     app:layout_constraintTop_toBottomOf="@+id/textView12"
+                    app:setIngredients="@{viewModel.drinkDetails.ingredients}"
                     tools:text="TextView" />
 
                 <androidx.constraintlayout.widget.Guideline
