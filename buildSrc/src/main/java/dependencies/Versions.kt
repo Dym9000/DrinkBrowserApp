@@ -11,6 +11,7 @@ object Versions {
     const val constraint_layout = "2.0.4"
     const val ktx = "1.3.2"
     const val material_design = "1.3.0"
+    const val legacy = "1.0.0"
 
     //NAVIGATION
     const val navigation = "2.3.5"

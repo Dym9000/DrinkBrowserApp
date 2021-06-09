@@ -9,147 +9,147 @@ data class DrinkRaw(
     @Expose
     var idDrink: Int? = null,
 
-    @SerializedName("name")
+    @SerializedName("strDrink")
     @Expose
     val name: String? = null,
 
-    @SerializedName("category")
+    @SerializedName("strCategory")
     @Expose
     val category: String? = null,
 
-    @SerializedName("alcoholContent")
+    @SerializedName("strAlcoholic")
     @Expose
     val alcoholContent: String? = null,
 
-    @SerializedName("glass")
+    @SerializedName("strGlass")
     @Expose
     val glass: String? = null,
 
-    @SerializedName("englishInstruction")
+    @SerializedName("strInstructions")
     @Expose
     var englishInstruction: String? = null,
 
-    @SerializedName("imageUrl")
+    @SerializedName("strDrinkThumb")
     @Expose
     var imageUrl: String? = null,
 
-    @SerializedName("ingredient1")
+    @SerializedName("strIngredient1")
     @Expose
     var ingredient1: String? = null,
 
-    @SerializedName("ingredient2")
+    @SerializedName("strIngredient2")
     @Expose
     var ingredient2: String? = null,
 
-    @SerializedName("ingredient3")
+    @SerializedName("strIngredient3")
     @Expose
     var ingredient3: String? = null,
 
-    @SerializedName("ingredient4")
+    @SerializedName("strIngredient4")
     @Expose
     var ingredient4: String? = null,
 
-    @SerializedName("ingredient5")
+    @SerializedName("strIngredient5")
     @Expose
     var ingredient5: String? = null,
 
-    @SerializedName("ingredient6")
+    @SerializedName("strIngredient6")
     @Expose
     var ingredient6: String? = null,
 
-    @SerializedName("ingredient7")
+    @SerializedName("strIngredient7")
     @Expose
     var ingredient7: String? = null,
 
-    @SerializedName("ingredient8")
+    @SerializedName("strIngredient8")
     @Expose
     var ingredient8: String? = null,
 
-    @SerializedName("ingredient9")
+    @SerializedName("strIngredient9")
     @Expose
     var ingredient9: String? = null,
 
-    @SerializedName("ingredient10")
+    @SerializedName("strIngredient10")
     @Expose
     var ingredient10: String? = null,
 
-    @SerializedName("ingredient11")
+    @SerializedName("strIngredient11")
     @Expose
     var ingredient11: String? = null,
 
-    @SerializedName("ingredient12")
+    @SerializedName("strIngredient12")
     @Expose
     var ingredient12: String? = null,
 
-    @SerializedName("ingredient13")
+    @SerializedName("strIngredient13")
     @Expose
     var ingredient13: String? = null,
 
-    @SerializedName("ingredient14")
+    @SerializedName("strIngredient14")
     @Expose
     var ingredient14: String? = null,
 
-    @SerializedName("ingredient15")
+    @SerializedName("strIngredient15")
     @Expose
     var ingredient15: String? = null,
 
-    @SerializedName("measure1")
+    @SerializedName("strMeasure1")
     @Expose
     var measure1: String? = null,
 
-    @SerializedName("measure2")
+    @SerializedName("strMeasure2")
     @Expose
     var measure2: String? = null,
 
-    @SerializedName("measure3")
+    @SerializedName("strMeasure3")
     @Expose
     var measure3: String? = null,
 
-    @SerializedName("measure4")
+    @SerializedName("strMeasure4")
     @Expose
     var measure4: String? = null,
 
-    @SerializedName("measure5")
+    @SerializedName("strMeasure5")
     @Expose
     var measure5: String? = null,
 
-    @SerializedName("measure6")
+    @SerializedName("strMeasure6")
     @Expose
     var measure6: String? = null,
 
-    @SerializedName("measure7")
+    @SerializedName("strMeasure7")
     @Expose
     var measure7: String? = null,
 
-    @SerializedName("measure8")
+    @SerializedName("strMeasure8")
     @Expose
     var measure8: String? = null,
 
-    @SerializedName("measure9")
+    @SerializedName("strMeasure9")
     @Expose
     var measure9: String? = null,
 
-    @SerializedName("measure10")
+    @SerializedName("strMeasure10")
     @Expose
     var measure10: String? = null,
 
-    @SerializedName("measure11")
+    @SerializedName("strMeasure11")
     @Expose
     var measure11: String? = null,
 
-    @SerializedName("measure12")
+    @SerializedName("strMeasure12")
     @Expose
     var measure12: String? = null,
 
-    @SerializedName("measure13")
+    @SerializedName("strMeasure13")
     @Expose
     var measure13: String? = null,
 
-    @SerializedName("measure14")
+    @SerializedName("strMeasure14")
     @Expose
     var measure14: String? = null,
 
-    @SerializedName("measure15")
+    @SerializedName("strMeasure15")
     @Expose
     var measure15: String? = null
 

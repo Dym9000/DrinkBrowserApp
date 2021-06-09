@@ -3,4 +3,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_of_the_drink">Image of the drink</string>
+    <string name="carousel_item_image">Image of carousel list item</string>
+    <string name="drink_detail_drink_name">Name:</string>
+    <string name="drink_detail_alcohol_content">Alcohol Content:</string>
+    <string name="drink_detail_category">Category:</string>
+    <string name="drink_detail_glass_type">Glass Type:</string>
+    <string name="drink_detail_instruction">Instruction:</string>
+    <string name="drink_detail_ingredients">Ingredients:</string>
 </resources>

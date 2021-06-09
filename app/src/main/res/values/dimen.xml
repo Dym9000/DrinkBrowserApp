@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    paddings, margins-->
     <dimen name="padding_normal">8dp</dimen>
     <dimen name="padding_small">4dp</dimen>
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_big">16dp</dimen>
+
+<!--    font sizes-->
     <dimen name="item_list_title_text_size">26sp</dimen>
     <dimen name="item_list_text_size">16sp</dimen>
+    <dimen name="carousel_list_title">24sp</dimen>
+    <dimen name="carousel_list_item_title">17sp</dimen>
+
+<!--    carousel_list_view_sizes-->
+    <dimen name="carousel_list_image_size">100dp</dimen>
+    <dimen name="carousel_list_item_text_height">80dp</dimen>
+
+<!--    card view-->
     <dimen name="elevation_normal">20dp</dimen>
     <dimen name="corner_radius_normal">20dp</dimen>
+    <dimen name="corner_radius_carousel_list">6dp</dimen>
 </resources>

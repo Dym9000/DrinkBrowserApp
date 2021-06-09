@@ -12,7 +12,13 @@ interface DrinkService {
     fun getDrinksByName(
         @Path("key") key: String,
         @Query("s") query: String
-    ): LiveData<GenericApiResponse<SearchByNameDrinkResponse>>
+    ): LiveData<GenericApiResponse<SearchByIdOrNameDrinkResponse>>
+
+    @GET("{key}/lookup.php")
+    fun getDrinkDetailsById(
+        @Path("key") key: String,
+        @Query("i") query: String
+    ): LiveData<GenericApiResponse<SearchByIdOrNameDrinkResponse>>
 
     @GET("{key}/filter.php")
     fun getDrinksByIngredient(

@@ -10,6 +10,7 @@ object Dependencies {
     val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     val constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     val material_design = "com.google.android.material:material:${Versions.material_design}"
+    val legacy_support = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
 
     //ROOM
     val room_runtime = "androidx.room:room-runtime:${Versions.room}"

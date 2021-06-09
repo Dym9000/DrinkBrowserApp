@@ -55,6 +55,7 @@ dependencies {
     implementation Dependencies.appcompat
     implementation Dependencies.material_design
     implementation Dependencies.constraintlayout
+    implementation Dependencies.legacy_support
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
