@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.ui.scenes.common
+package com.example.drinkbrowserapp.ui.scenes.common.drink_details
 
 import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.domain.DrinkDomain
@@ -23,13 +23,13 @@ import javax.inject.Singleton
 class DrinkRepository @Inject constructor(
     private val drinksDao: DrinksDao,
     private val drinksService: DrinkService
-){
+) {
 
-    var query:Int = -1
+    var query: Int = -1
 
-    fun getDrinkDetails(key: String, drinkId:Int): LiveData<DataState<List<DrinkDomain>>>{
-        return object: NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
-                DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()){
+    fun getDrinkDetails(key: String, drinkId: Int): LiveData<DataState<List<DrinkDomain>>> {
+        return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
+                DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
             override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
                 if (drinkId != query) {
                     query = drinkId

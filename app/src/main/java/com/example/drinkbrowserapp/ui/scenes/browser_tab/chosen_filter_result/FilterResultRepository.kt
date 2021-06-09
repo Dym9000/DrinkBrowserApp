@@ -35,10 +35,10 @@ class FilterResultRepository @Inject constructor(
             (dtoMapper = FilterSearchDtoMapper(), cacheMapper = FilterSearchDbMapper()) {
 
             override fun shouldGetNewDataFromNetwork(data: List<FilterSearchDb>?): Boolean {
-                if(itemName != query) {
+                if (itemName != query) {
                     query = itemName
                     GlobalScope.launch {
-                        withContext(Dispatchers.IO){
+                        withContext(Dispatchers.IO) {
                             drinksDao.clearDrinksByFilter()
                         }
                     }
@@ -48,10 +48,13 @@ class FilterResultRepository @Inject constructor(
             }
 
             override fun makeRequestCall(): LiveData<GenericApiResponse<FilterSearchResponse>> {
-                return when(filterName){
+                return when (filterName) {
                     Constants.INGREDIENT -> drinkService.getDrinksByIngredient(key, itemName)
                     Constants.CATEGORY -> drinkService.getDrinksByCategory(key, itemName)
-                    Constants.ALCOHOL_CONTENT -> drinkService.getDrinksByAlcoholContent(key, itemName)
+                    Constants.ALCOHOL_CONTENT -> drinkService.getDrinksByAlcoholContent(
+                        key,
+                        itemName
+                    )
                     Constants.GLASS -> drinkService.getDrinksByGlassType(key, itemName)
                     else -> throw IllegalArgumentException("Unknown FILTER")
                 }

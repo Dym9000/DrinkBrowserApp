@@ -101,7 +101,10 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainModel, CacheMod
         }
     }
 
-    private fun onFailureResponse(errorMessage: String, databaseSource: LiveData<List<CacheModel>>) {
+    private fun onFailureResponse(
+        errorMessage: String,
+        databaseSource: LiveData<List<CacheModel>>
+    ) {
         GlobalScope.launch {
             withContext(Main) {
                 result.addSource(databaseSource) { cacheList ->

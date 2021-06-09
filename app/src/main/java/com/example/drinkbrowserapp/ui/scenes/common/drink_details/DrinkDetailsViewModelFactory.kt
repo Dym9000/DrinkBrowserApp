@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.ui.scenes.common
+package com.example.drinkbrowserapp.ui.scenes.common.drink_details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

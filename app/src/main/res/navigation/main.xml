@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/drinkDetailsFragment"
-        android:name="com.example.drinkbrowserapp.ui.scenes.common.DrinkDetailsFragment"
+        android:name="com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment"
         android:label="fragment_drink_details"
         tools:layout="@layout/fragment_drink_details" >
         <argument

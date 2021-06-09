@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -71,7 +72,10 @@ class ChosenFilterResultFragment : Fragment() {
 
     private fun setRecyclerView() {
         val itemTopBottomSpacing = ItemTopBottomSpacing(20)
-        filterResultAdapter = FilterResultAdapter(requestManager as RequestManager)
+        filterResultAdapter = FilterResultAdapter(requestManager as RequestManager,
+            OnDrinkClickListener { drinkId ->
+                filterResultViewModel.onClick(drinkId)
+            })
         filterResultBinding.drinksListRecView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = filterResultAdapter
@@ -79,9 +83,19 @@ class ChosenFilterResultFragment : Fragment() {
         }
     }
 
-    private fun setObservers(){
-        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner,{
-            it?.let {  filterResultAdapter.submitList(it.data)}
+    private fun setObservers() {
+        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, {
+            it?.let { filterResultAdapter.submitList(it.data) }
+        })
+
+        filterResultViewModel.drinkId.observe(viewLifecycleOwner, {
+            if (it != -1) {
+                this.findNavController().navigate(
+                    ChosenFilterResultFragmentDirections
+                        .actionChosenFilterResultFragmentToDrinkDetailsFragment(it)
+                )
+                filterResultViewModel.onNavigated()
+            }
         })
     }
 }

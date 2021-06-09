@@ -12,8 +12,9 @@ class FilterResultViewModelFactory(
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ChosenFilterResultViewModel::class.java)
-            && itemName != null && filterName != null) {
-            return ChosenFilterResultViewModel(repository, itemName , filterName) as T
+            && itemName != null && filterName != null
+        ) {
+            return ChosenFilterResultViewModel(repository, itemName, filterName) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
