@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), UIStateListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = DataBindingUtil.setContentView<ActivityMainBinding>(
+        mainBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
         )

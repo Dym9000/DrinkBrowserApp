@@ -109,4 +109,10 @@ class ChosenFilterResultFragment : Fragment() {
             }
         })
     }
+
+    override fun onDestroyView() {
+        requestManager = null
+        filterResultBinding.drinksListRecView.adapter = null
+        super.onDestroyView()
+    }
 }

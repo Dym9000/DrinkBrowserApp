@@ -108,8 +108,8 @@ class FiltersFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         filtersBinding.drinksListRecView.adapter = null
         requestManager = null
+        super.onDestroyView()
     }
 }
