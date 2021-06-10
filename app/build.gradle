@@ -103,5 +103,4 @@ dependencies {
     //GLIDE
     implementation Dependencies.glide
     kapt AnnotationProcessing.glide_compiler
-
 }
