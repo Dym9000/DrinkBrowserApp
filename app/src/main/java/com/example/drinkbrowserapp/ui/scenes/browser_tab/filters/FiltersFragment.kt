@@ -37,7 +37,7 @@ class FiltersFragment : Fragment() {
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-
+        
         setGlide()
         setRecyclerView()
         setObservers()
@@ -99,5 +99,4 @@ class FiltersFragment : Fragment() {
         filtersBinding.drinksListRecView.adapter = null
         requestManager = null
     }
-
 }
