@@ -12,13 +12,13 @@ class DrinkDetailsViewModel(drinkId: Int, drinkRepository: DrinkRepository) : Vi
 
     private val _drinkDetails = MutableLiveData<DrinkDomain>()
     val drinkDetails: LiveData<DrinkDomain>
-    get(){
-        return _drinkDetails
-    }
+        get() {
+            return _drinkDetails
+        }
 
 //    private val mediatorDrinkDetails: MediatorLiveData<DataState<List<DrinkDomain>>>
 
-    fun onDataFetched(data: DrinkDomain){
+    fun onDataFetched(data: DrinkDomain) {
         _drinkDetails.value = data
     }
 

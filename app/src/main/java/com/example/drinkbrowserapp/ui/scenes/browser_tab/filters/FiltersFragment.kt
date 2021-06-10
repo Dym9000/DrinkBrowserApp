@@ -1,5 +1,6 @@
 package com.example.drinkbrowserapp.ui.scenes.browser_tab.filters
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +28,13 @@ class FiltersFragment : Fragment() {
     private lateinit var filtersBinding: FragmentDisplayListBinding
     private lateinit var recyclerViewAdapter: FiltersAdapter
     private var requestManager: RequestManager? = null
+
+    private lateinit var filtersStateListener: UIStateListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        filtersStateListener = context as UIStateListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +46,7 @@ class FiltersFragment : Fragment() {
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-
+        
         setGlide()
         setRecyclerView()
         setObservers()
@@ -72,6 +81,10 @@ class FiltersFragment : Fragment() {
     }
 
     private fun setObservers() {
+        filtersViewModel.dataState.observe(viewLifecycleOwner, {
+            filtersStateListener.onDataStateChanged(it)
+        })
+
         filtersViewModel.filters.observe(viewLifecycleOwner, { filterDomainList ->
             recyclerViewAdapter.submitList(filterDomainList)
             recyclerViewAdapter.notifyDataSetChanged()
@@ -95,9 +108,8 @@ class FiltersFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         filtersBinding.drinksListRecView.adapter = null
         requestManager = null
+        super.onDestroyView()
     }
-
 }

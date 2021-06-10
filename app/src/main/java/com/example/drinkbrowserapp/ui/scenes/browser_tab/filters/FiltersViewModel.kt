@@ -14,6 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository) : ViewModel() {
 
+    /**
+     *  Fetching data from repository and setting the flags to true when data is fetched
+     */
     private val ingredients =
         filtersRepository.getIngredients(Constants.API_TOKEN_KEY, Constants.FILTERS_QUERY)
     private var mAreIngredientsFetched = false
@@ -30,21 +33,44 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
         filtersRepository.getAlcoholContents(Constants.API_TOKEN_KEY, Constants.FILTERS_QUERY)
     private var mAreAlcoholContentsFetched = false
 
+    /**
+     *  Mutable list gathering results from every query
+     */
     private val mFiltersCurrentList = mutableListOf<FilterDomain>()
 
+    /**
+     *  Observable list with results from queries
+     */
     val filters = MediatorLiveData<List<FilterDomain>>()
 
+    /**
+     *  Name of the clicked item
+     */
     private val _itemClickedName = MutableLiveData<String?>()
     val itemClickedName: LiveData<String?>
         get() {
             return _itemClickedName
         }
 
+    /**
+     *  Name of the filter in which the item is
+     */
     var mItemClickedFilterName: String? = null
 
+
+    /**
+     *  Setting sources for the filters MediatorLiveData observable list
+     */
     init {
         setFiltersSources()
     }
+
+    /**
+     *  Observable state of the queries' results. Set when the state of the data is LOADING or
+     *  ERROR and also when all the data is fetched
+     */
+    private val _dataState = MutableLiveData<DataState<List<FilterDomainCriteria>>>()
+    val dataState: LiveData<DataState<List<FilterDomainCriteria>>> = _dataState
 
     private fun setFiltersSources() {
 
@@ -55,7 +81,7 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
                 mAreIngredientsFetched = true
                 addToList(Constants.INGREDIENT, it)
             } else {
-                filters.value = listOf(FilterDomain(Constants.LOADING, it))
+                _dataState.value = it
             }
         }
 
@@ -66,7 +92,7 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
                 mAreCategoriesFetched = true
                 addToList(Constants.CATEGORY, it)
             } else {
-                filters.value = listOf(FilterDomain(Constants.LOADING, it))
+                _dataState.value = it
             }
         }
 
@@ -77,7 +103,7 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
                 mAreGlassesFetched = true
                 addToList(Constants.GLASS, it)
             } else {
-                filters.value = listOf(FilterDomain(Constants.LOADING, it))
+                _dataState.value = it
             }
         }
 
@@ -88,12 +114,16 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
                 mAreAlcoholContentsFetched = true
                 addToList(Constants.ALCOHOL_CONTENT, it)
             } else {
-                filters.value = listOf(FilterDomain(Constants.LOADING, it))
+                _dataState.value = it
             }
         }
 
     }
 
+    /**
+     *  Adding queries' results to the mutable list and setting the observable one only if all the
+     *  queries are finished
+     */
     private fun addToList(title: String, newList: DataState<List<FilterDomainCriteria>>) {
         mFiltersCurrentList.add(FilterDomain(title, newList))
         mFiltersCurrentList.sortBy {
@@ -103,16 +133,36 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
             && mAreAlcoholContentsFetched
         ) {
             filters.value = mFiltersCurrentList
+            _dataState.value = newList
         }
     }
 
+    /**
+     *  When user clicks an item, filter's name and item's name are set and sent to the next
+     *  fragment
+     */
     fun onItemClicked(filterTitle: String, item: FilterDomainCriteria) {
         mItemClickedFilterName = filterTitle
         _itemClickedName.value = item.name
     }
 
+    /**
+     *  Setting to null the names of the filter and item to prevent from bugs when clicking the
+     *  back button while in the next fragment
+     */
     fun navigatedToClickedItem() {
         mItemClickedFilterName = null
         _itemClickedName.value = null
+        resetFetchedDataFlags()
+    }
+
+    /**
+     *  Setting fetched data flags to false
+     */
+    private fun resetFetchedDataFlags(){
+        mAreIngredientsFetched = false
+        mAreAlcoholContentsFetched = false
+        mAreGlassesFetched = false
+        mAreCategoriesFetched = false
     }
 }
