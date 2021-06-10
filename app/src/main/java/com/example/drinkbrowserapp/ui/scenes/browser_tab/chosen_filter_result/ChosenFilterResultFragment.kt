@@ -1,5 +1,6 @@
 package com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,7 +38,15 @@ class ChosenFilterResultFragment : Fragment() {
             filterResultRepository, filterResultArgs.itemName, filterResultArgs.filterName
         )
     }
+
     private var requestManager: RequestManager? = null
+
+    private lateinit var filterResultStateListener: UIStateListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        filterResultStateListener = context as UIStateListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +95,7 @@ class ChosenFilterResultFragment : Fragment() {
 
     private fun setObservers() {
         filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, {
+            filterResultStateListener.onDataStateChanged(it)
             it?.let { filterResultAdapter.submitList(it.data) }
         })
 
