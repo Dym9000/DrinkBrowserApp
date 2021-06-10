@@ -6,6 +6,7 @@
     tools:context=".ui.scenes.common.drink_details.DrinkDetailsFragment">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsViewModel" />

@@ -26,6 +26,17 @@ class FilterResultAdapter(
         holder.bind(getItem(position))
     }
 
+    fun preloadGlideImages(
+        requestManager: RequestManager,
+        list: List<FilterSearchDomain>
+    ){
+        for(item in list){
+            requestManager
+                .load(item.imageUrl)
+                .preload()
+        }
+    }
+
     class FilterResultViewHolder(
         private val binding: ItemSearchByFilterBinding,
         private val requestManager: RequestManager,
