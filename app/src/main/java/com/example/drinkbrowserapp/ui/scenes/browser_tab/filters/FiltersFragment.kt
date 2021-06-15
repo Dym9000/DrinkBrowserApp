@@ -50,6 +50,7 @@ class FiltersFragment : Fragment() {
         setGlide()
         setRecyclerView()
         setObservers()
+        setHasOptionsMenu(true)
 
         return filtersBinding.root
     }

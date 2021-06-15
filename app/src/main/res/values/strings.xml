@@ -10,4 +10,7 @@
     <string name="drink_detail_glass_type">Glass Type:</string>
     <string name="drink_detail_instruction">Instruction:</string>
     <string name="drink_detail_ingredients">Ingredients:</string>
+    <string name="menu_browser">Browser</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_favourites">Favourites</string>
 </resources>

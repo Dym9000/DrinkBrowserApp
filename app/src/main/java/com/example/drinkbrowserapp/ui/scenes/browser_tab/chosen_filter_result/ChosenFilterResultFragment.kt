@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,9 +63,12 @@ class ChosenFilterResultFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+
         setGlide()
         setRecyclerView()
         setObservers()
+        setHasOptionsMenu(true)
 
         return filterResultBinding.root
     }
@@ -101,7 +105,7 @@ class ChosenFilterResultFragment : Fragment() {
             dataState?.data?.let {
                 list ->
                 filterResultAdapter.apply{
-                    preloadGlideImages(requestManager as RequestManager, list)
+//                    preloadGlideImages(requestManager as RequestManager, list)
                     submitList(list)
                 }
             }

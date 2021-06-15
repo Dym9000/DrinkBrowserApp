@@ -2,17 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/browser_tab_nav"
     app:startDestination="@id/filtersFragment">
+
     <fragment
         android:id="@+id/filtersFragment"
         android:name="com.example.drinkbrowserapp.ui.scenes.browser_tab.filters.FiltersFragment"
-        android:label="FiltersFragment"
-        >
+        android:label="FiltersFragment">
         <action
             android:id="@+id/action_filtersFragment_to_chosenFilterResultFragment"
             app:destination="@id/chosenFilterResultFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/chosenFilterResultFragment"
         android:name="com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment"
@@ -28,7 +30,14 @@
         <action
             android:id="@+id/action_chosenFilterResultFragment_to_drinkDetailsFragment"
             app:destination="@id/drinkDetailsFragment" />
+        <action
+            android:id="@+id/action_chosenFilterResultFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment"
+            app:popUpTo="@id/browser_tab_nav"
+            app:popUpToInclusive="true" />
     </fragment>
+
+
     <fragment
         android:id="@+id/drinkDetailsFragment"
         android:name="com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment"
@@ -37,5 +46,12 @@
         <argument
             android:name="drinkId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_drinkDetailsFragment_to_filtersFragment"
+            app:destination="@id/filtersFragment"
+            app:popUpTo="@id/browser_tab_nav"
+            app:popUpToInclusive="true" />
     </fragment>
+
+
 </navigation>

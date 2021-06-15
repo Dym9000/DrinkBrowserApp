@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_tab_nav"
+    app:startDestination="@id/searchFragment">
+
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.drinkbrowserapp.ui.scenes.search_tab.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_drinkDetailsFragment2"
+            app:destination="@id/drinkDetailsFragment2" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/drinkDetailsFragment2"
+        android:name="com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment"
+        android:label="fragment_drink_details"
+        tools:layout="@layout/fragment_drink_details" >
+        <action
+            android:id="@+id/action_drinkDetailsFragment2_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@id/search_tab_nav"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+</navigation>

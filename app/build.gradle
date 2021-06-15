@@ -8,6 +8,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
     id 'de.mannodermaus.android-junit5'
@@ -56,6 +57,8 @@ dependencies {
     implementation Dependencies.material_design
     implementation Dependencies.constraintlayout
     implementation Dependencies.legacy_support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //TEST
     testImplementation Testing.junit4

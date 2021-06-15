@@ -1,25 +1,49 @@
 package com.example.drinkbrowserapp
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
 import com.example.drinkbrowserapp.ui.common.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
+import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
+import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment
+import com.example.drinkbrowserapp.util.BottomNavController
+import com.example.drinkbrowserapp.util.BottomNavController.*
 import com.example.drinkbrowserapp.util.DataState
 import com.example.drinkbrowserapp.util.DataStateType
+import com.example.drinkbrowserapp.util.setUpNavigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), UIStateListener {
+class MainActivity : AppCompatActivity(),
+    UIStateListener,
+    NavGraphProvider,
+    OnNavigationGraphChanged,
+    OnNavigationReselectedListener {
 
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var mainProgressBar: ProgressBar
+
+    private lateinit var bottomNavigationView: BottomNavigationView
+
+    private val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {
+        BottomNavController(
+            this,
+            R.id.nav_host_fragment,
+            R.id.browser_tab_nav,
+            this,
+            this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +53,14 @@ class MainActivity : AppCompatActivity(), UIStateListener {
         )
         mainProgressBar = mainBinding.progressBar
 
-        setSupportActionBar(mainBinding.mainToolbar)
+        bottomNavigationView = mainBinding.bottomNavigationView
+        bottomNavigationView.setUpNavigation(bottomNavController, this)
+
+        if(savedInstanceState == null) {
+            bottomNavController.onNavigationItemSelected()
+        }
+
+        setupActionBar()
     }
 
     override fun onDataStateChanged(dataState: DataState<*>?) {
@@ -42,6 +73,10 @@ class MainActivity : AppCompatActivity(), UIStateListener {
                 }
             }
         }
+    }
+
+    private fun setupActionBar(){
+        setSupportActionBar(mainBinding.mainToolbar)
     }
 
     private fun displayErrorMessage(errorMessage: String?) {
@@ -61,4 +96,60 @@ class MainActivity : AppCompatActivity(), UIStateListener {
         }
     }
 
+    /**
+     *  BottomNavController
+     */
+    override fun getNavGraphId(itemId: Int) = when(itemId){
+        R.id.browser_tab_nav -> {
+            R.navigation.browser_tab_nav
+        }
+        R.id.search_tab_nav -> {
+            R.navigation.search_tab_nav
+        }
+        R.id.favourites_tab_nav -> {
+            R.navigation.favourites_tab_nav
+        }
+        else -> {
+            R.navigation.browser_tab_nav
+        }
+    }
+
+    override fun onGraphChange() {
+        expandAppBar()
+    }
+
+    fun expandAppBar() {
+        mainBinding.appBar.setExpanded(true)
+    }
+
+    override fun onReselectNavItem(
+        navController: NavController,
+        fragment: Fragment
+    ) = when(fragment){
+
+        is ChosenFilterResultFragment -> {
+            navController.navigate(R.id.action_chosenFilterResultFragment_to_filtersFragment)
+        }
+
+        is DrinkDetailsFragment -> {
+            navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+        }
+
+        else -> {
+            // do nothing
+        }
+    }
+    /**
+    /   End of BottomNavController
+     */
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() = bottomNavController.onBackPressed()
 }
