@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favourites_tab_nav"
+    app:startDestination="@id/favouriteDrinksFragment">
+
+    <fragment
+        android:id="@+id/favouriteDrinksFragment"
+        android:name="com.example.drinkbrowserapp.ui.scenes.favourites_tab.FavouriteDrinksFragment"
+        android:label="fragment_favourite_drinks"
+        tools:layout="@layout/fragment_favourite_drinks" />
+</navigation>

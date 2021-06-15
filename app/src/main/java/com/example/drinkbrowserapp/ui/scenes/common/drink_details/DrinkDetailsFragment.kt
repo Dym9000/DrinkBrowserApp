@@ -55,6 +55,8 @@ class DrinkDetailsFragment : Fragment() {
 
         setObservers()
 
+        setHasOptionsMenu(true)
+
         return drinkDetailsBinding.root
     }
 
