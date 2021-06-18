@@ -25,14 +25,15 @@ class DrinkRepository @Inject constructor(
     private val drinksService: DrinkService
 ) {
 
-    var query: Int = -1
+    var queryId: Int = -1
+    var queryName: String = ""
 
     fun getDrinkDetails(key: String, drinkId: Int): LiveData<DataState<List<DrinkDomain>>> {
         return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
                 DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
             override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
-                if (drinkId != query) {
-                    query = drinkId
+                if (drinkId != queryId) {
+                    queryId = drinkId
                     GlobalScope.launch {
                         withContext(Dispatchers.IO) {
                             drinksDao.clearDrinksByName()
@@ -49,6 +50,44 @@ class DrinkRepository @Inject constructor(
 
             override fun loadDataFromDatabase(): LiveData<List<DrinkDb>> {
                 return drinksDao.getDrinkDetails(drinkId)
+            }
+
+            override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
+                drinksDao.saveDrinksByNameResult(mapToCache(response))
+            }
+
+            override fun mapToDomain(data: List<DrinkDb>): List<DrinkDomain> {
+                return cacheMapper.mapFromList(data)
+            }
+
+            override fun mapToCache(data: SearchByIdOrNameDrinkResponse): List<DrinkDb> {
+                return dtoMapper.mapFromList(data.drinks)
+            }
+        }.returnAsLiveData()
+    }
+
+    fun getDrinksByName(key: String, query: String): LiveData<DataState<List<DrinkDomain>>> {
+        return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
+                DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
+            override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
+                if (query != queryName) {
+                    queryName = query
+                    GlobalScope.launch {
+                        withContext(Dispatchers.IO) {
+                            drinksDao.clearDrinksByName()
+                        }
+                    }
+                    return true
+                }
+                return data.isNullOrEmpty()
+            }
+
+            override fun makeRequestCall(): LiveData<GenericApiResponse<SearchByIdOrNameDrinkResponse>> {
+                return drinksService.getDrinksByName(key, query)
+            }
+
+            override fun loadDataFromDatabase(): LiveData<List<DrinkDb>> {
+                return drinksDao.getAllDrinksByName()
             }
 
             override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {

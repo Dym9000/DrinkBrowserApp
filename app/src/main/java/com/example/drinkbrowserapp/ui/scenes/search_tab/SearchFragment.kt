@@ -1,23 +1,167 @@
 package com.example.drinkbrowserapp.ui.scenes.search_tab
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Context.SEARCH_SERVICE
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.IBinder
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
+import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
+import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.UIStateListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
+
+    private lateinit var searchView: SearchView
+
+    private val searchViewModel: SearchViewModel by viewModels()
+
+    private lateinit var searchBinding: FragmentDisplayListBinding
+
+    private var requestManager: RequestManager? = null
+
+    private lateinit var searchAdapter: SearchAdapter
+
+    private lateinit var searchStateListener: UIStateListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        searchStateListener = context as UIStateListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
 
         setHasOptionsMenu(true)
 
-        return inflater.inflate(R.layout.fragment_display_list, container, false)
+        searchBinding = DataBindingUtil
+            .inflate(inflater, R.layout.fragment_display_list, container, false)
+
+        searchBinding.lifecycleOwner = viewLifecycleOwner
+
+        setGlide()
+        setRecyclerView()
+        setObservers()
+
+        return searchBinding.root
+    }
+
+    private fun setGlide() {
+        val requestOptions = RequestOptions
+            .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
+            .error(R.drawable.ic_baseline_no_drinks_24)
+
+        activity?.let {
+            requestManager = Glide.with(it)
+                .applyDefaultRequestOptions(requestOptions)
+        }
+    }
+
+    private fun setRecyclerView() {
+        searchAdapter = SearchAdapter(requestManager as RequestManager)
+        val manager = LinearLayoutManager(activity)
+        val itemDecorationSpacing = ItemTopBottomSpacing(50)
+        searchBinding.drinksListRecView.apply {
+            layoutManager = manager
+            adapter = searchAdapter
+            removeItemDecoration(itemDecorationSpacing)
+            addItemDecoration(itemDecorationSpacing)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.search_menu, menu)
+        initSearchView(menu)
+    }
+
+    private fun initSearchView(menu: Menu) {
+        activity?.apply {
+            val searchManager: SearchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+            searchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
+            val searchIcon: ImageView = searchView.findViewById(R.id.search_button) as ImageView
+            searchIcon.setImageDrawable(
+                ContextCompat.getDrawable(this, R.drawable.ic_menu_search_24)
+            )
+
+            searchView.apply {
+                setSearchableInfo(searchManager.getSearchableInfo(componentName))
+                maxWidth = Integer.MAX_VALUE
+                setIconifiedByDefault(true)
+                isSubmitButtonEnabled = true
+            }
+        }
+        val searchTextArea = searchView.findViewById(R.id.search_src_text) as EditText
+        searchTextArea.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+        searchTextArea.setHintTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+
+        searchTextArea.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED
+                || actionId == EditorInfo.IME_ACTION_SEARCH
+            ) {
+                val searchQuery = textView.text.toString()
+                onSearchOrFilter(searchQuery, textView)
+            }
+            true
+        }
+
+        // SEARCH BUTTON CLICKED (in toolbar)
+        val searchButton = searchView.findViewById(R.id.search_go_btn) as View
+        searchButton.setOnClickListener {
+            val searchQuery = searchTextArea.text.toString()
+            onSearchOrFilter(searchQuery, it)
+        }
+
+    }
+
+    private fun onSearchOrFilter(query: String?, view: View) {
+        query?.let {
+            dismissKeyboard(view.windowToken)
+            searchViewModel.setQuery(query)
+        }
+    }
+
+    private fun dismissKeyboard(windowToken: IBinder) {
+        val inputMethodManager = activity?.getSystemService(
+            Context.INPUT_METHOD_SERVICE
+        ) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    private fun setObservers() {
+        searchViewModel.searchResult.observe(viewLifecycleOwner, { searchResultList ->
+            searchStateListener.onDataStateChanged(searchResultList)
+            searchBinding.drinksListRecView.smoothScrollToPosition(0)
+            searchResultList?.data?.let {
+                if (!it.isNullOrEmpty()) {
+                    searchAdapter.submitList(it)
+                }
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        searchBinding.drinksListRecView.adapter = null
+        requestManager = null
+        super.onDestroyView()
     }
 
 }

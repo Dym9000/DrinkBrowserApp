@@ -100,8 +100,6 @@ class ChosenFilterResultFragment : Fragment() {
     private fun setObservers() {
         filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, {
                 dataState ->
-//            if(dataState.state != DataStateType.SUCCESS) filterResultStateListener
-//                .onDataStateChanged(dataState)
             dataState?.data?.let {
                 list ->
                 filterResultAdapter.apply{

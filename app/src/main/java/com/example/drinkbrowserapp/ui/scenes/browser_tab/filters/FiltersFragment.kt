@@ -45,7 +45,7 @@ class FiltersFragment : Fragment() {
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         
         setGlide()
         setRecyclerView()
