@@ -159,7 +159,7 @@ class FiltersViewModel @Inject constructor(filtersRepository: FiltersRepository)
     /**
      *  Setting fetched data flags to false
      */
-    private fun resetFetchedDataFlags(){
+    private fun resetFetchedDataFlags() {
         mAreIngredientsFetched = false
         mAreAlcoholContentsFetched = false
         mAreGlassesFetched = false

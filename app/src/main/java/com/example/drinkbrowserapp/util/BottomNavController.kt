@@ -64,7 +64,7 @@ class BottomNavController(
             .findNavController()
 
         when {
-            navController.backStack.size > 2 ->{
+            navController.backStack.size > 2 -> {
                 navController.popBackStack()
             }
 
@@ -125,11 +125,11 @@ class BottomNavController(
     // Execute when Navigation Graph changes.
     // ex: Select a new item on the bottom navigation
     // ex: Home -> Account
-    interface OnNavigationGraphChanged{
+    interface OnNavigationGraphChanged {
         fun onGraphChange()
     }
 
-    interface OnNavigationReselectedListener{
+    interface OnNavigationReselectedListener {
 
         fun onReselectNavItem(navController: NavController, fragment: Fragment)
     }

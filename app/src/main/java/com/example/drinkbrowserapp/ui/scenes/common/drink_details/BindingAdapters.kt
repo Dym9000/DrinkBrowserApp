@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.domain.DrinkDomain
 
@@ -37,6 +38,7 @@ fun setImage(view: ImageView, imageUrl: String?) {
             .centerInside()
             .error(R.drawable.ic_baseline_no_drinks_24)
             .placeholder(R.drawable.outline_liquor_black_48)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
     }
 }

@@ -51,4 +51,7 @@ object Versions {
 
     //GLIDE
     const val glide = "4.12.0"
+
+    //MATERIAL DIALOGS
+    const val material_dialogs = "3.3.0"
 }

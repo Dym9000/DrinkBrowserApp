@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -74,7 +75,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        searchAdapter = SearchAdapter(requestManager as RequestManager)
+        searchAdapter = SearchAdapter(requestManager as RequestManager, OnSearchItemClickListener {
+            searchViewModel.onClick(it)
+        })
         val manager = LinearLayoutManager(activity)
         val itemDecorationSpacing = ItemTopBottomSpacing(50)
         searchBinding.drinksListRecView.apply {
@@ -126,9 +129,9 @@ class SearchFragment : Fragment() {
 
     private fun onSearchOrFilter(query: String?, view: View) {
         query?.let {
-                    searchBinding.drinksListRecView.smoothScrollToPosition(0)
-                    dismissKeyboard(view.windowToken)
-                    searchViewModel.setQuery(query)
+            searchBinding.drinksListRecView.smoothScrollToPosition(0)
+            dismissKeyboard(view.windowToken)
+            searchViewModel.setQuery(query)
         }
     }
 
@@ -140,7 +143,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setObservers() {
-        searchViewModel.searchResult.observe(viewLifecycleOwner, { searchResultList ->
+        searchViewModel.searchByNameResult.observe(viewLifecycleOwner, { searchResultList ->
             searchResultList?.data?.let {
                 if (!it.isNullOrEmpty()) {
                     searchAdapter.submitList(it)
@@ -149,6 +152,15 @@ class SearchFragment : Fragment() {
             searchStateListener.onDataStateChanged(searchResultList)
         })
 
+        searchViewModel.drinkId.observe(viewLifecycleOwner, {
+            if (it != -1) {
+                this.findNavController().navigate(
+                    SearchFragmentDirections
+                        .actionSearchFragmentToDrinkDetailsFragment2(it)
+                )
+                searchViewModel.onNavigated()
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -156,6 +168,5 @@ class SearchFragment : Fragment() {
         searchBinding.drinksListRecView.adapter = null
         requestManager = null
     }
-
 
 }

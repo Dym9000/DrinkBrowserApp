@@ -10,10 +10,4 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/menu_search_filters"
-        android:icon="@drawable/ic_baseline_filter_list_24"
-        android:title="@string/menu_search_filters"
-        android:orderInCategory="100"
-        app:showAsAction="always" />
 </menu>

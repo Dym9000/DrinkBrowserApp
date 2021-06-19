@@ -54,6 +54,7 @@ class FiltersAdapter(
                 layoutManager = childLayoutManager
                 setRecycledViewPool(viewPool)
             }
+            binding.executePendingBindings()
         }
     }
 }

@@ -42,7 +42,8 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_host_fragment,
             R.id.browser_tab_nav,
             this,
-            this)
+            this
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity(),
         bottomNavigationView = mainBinding.bottomNavigationView
         bottomNavigationView.setUpNavigation(bottomNavController, this)
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             bottomNavController.onNavigationItemSelected()
         }
 
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setupActionBar(){
+    private fun setupActionBar() {
         setSupportActionBar(mainBinding.mainToolbar)
         this.supportActionBar?.setDisplayShowTitleEnabled(false)
     }
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity(),
     /**
      *  BottomNavController
      */
-    override fun getNavGraphId(itemId: Int) = when(itemId){
+    override fun getNavGraphId(itemId: Int) = when (itemId) {
         R.id.browser_tab_nav -> {
             R.navigation.browser_tab_nav
         }
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity(),
     override fun onReselectNavItem(
         navController: NavController,
         fragment: Fragment
-    ) = when(fragment){
+    ) = when (fragment) {
 
         is ChosenFilterResultFragment -> {
             navController.navigate(R.id.action_chosenFilterResultFragment_to_filtersFragment)
@@ -140,13 +141,14 @@ class MainActivity : AppCompatActivity(),
             // do nothing
         }
     }
+
     /**
     /   End of BottomNavController
      */
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)

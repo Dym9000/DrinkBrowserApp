@@ -44,7 +44,7 @@ class FiltersFragment : Fragment() {
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
-        
+
         setGlide()
         setRecyclerView()
         setObservers()

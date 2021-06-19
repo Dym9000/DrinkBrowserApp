@@ -98,11 +98,9 @@ class ChosenFilterResultFragment : Fragment() {
     }
 
     private fun setObservers() {
-        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, {
-                dataState ->
-            dataState?.data?.let {
-                list ->
-                filterResultAdapter.apply{
+        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, { dataState ->
+            dataState?.data?.let { list ->
+                filterResultAdapter.apply {
 //                    preloadGlideImages(requestManager as RequestManager, list)
                     submitList(list)
                 }

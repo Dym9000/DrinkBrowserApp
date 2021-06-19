@@ -106,4 +106,7 @@ dependencies {
     //GLIDE
     implementation Dependencies.glide
     kapt AnnotationProcessing.glide_compiler
+
+    //MATERIAL DIALOGS
+    implementation Dependencies.material_dialogs
 }
