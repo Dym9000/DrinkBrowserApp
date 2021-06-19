@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun setupActionBar(){
         setSupportActionBar(mainBinding.mainToolbar)
+        this.supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun displayErrorMessage(errorMessage: String?) {

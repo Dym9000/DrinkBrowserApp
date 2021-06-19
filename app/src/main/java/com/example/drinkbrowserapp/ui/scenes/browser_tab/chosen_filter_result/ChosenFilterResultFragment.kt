@@ -59,11 +59,11 @@ class ChosenFilterResultFragment : Fragment() {
             inflater, R.layout.fragment_display_list, container, false
         )
 
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
         filterResultBinding.apply {
             lifecycleOwner = viewLifecycleOwner
         }
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         setGlide()
         setRecyclerView()

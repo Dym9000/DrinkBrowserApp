@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,7 +44,6 @@ class FiltersFragment : Fragment() {
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
         
         setGlide()
         setRecyclerView()
@@ -109,8 +107,8 @@ class FiltersFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        super.onDestroyView()
         filtersBinding.drinksListRecView.adapter = null
         requestManager = null
-        super.onDestroyView()
     }
 }

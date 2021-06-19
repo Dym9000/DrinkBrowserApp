@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
 import com.example.drinkbrowserapp.domain.DrinkDomain
 
@@ -34,22 +35,23 @@ class SearchAdapter(
 
                 requestManager
                     .load(item.imageUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.drinkImage)
 
                 binding.executePendingBindings()
             }
 
     }
-}
 
+}
 
 class SearchDiffCallback: DiffUtil.ItemCallback<DrinkDomain>(){
 
     override fun areItemsTheSame(oldItem: DrinkDomain, newItem: DrinkDomain): Boolean {
-        return oldItem.id == newItem.id
+        return false
     }
 
     override fun areContentsTheSame(oldItem: DrinkDomain, newItem: DrinkDomain): Boolean {
-        return oldItem.name == newItem.name || oldItem.imageUrl == newItem.imageUrl
+        return false
     }
 }

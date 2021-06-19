@@ -2,6 +2,7 @@ package com.example.drinkbrowserapp.di
 
 import com.example.drinkbrowserapp.network.api.DrinkService
 import com.example.drinkbrowserapp.network.util.LiveDataCallAdapterFactory
+import com.example.drinkbrowserapp.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ object NetworkModule {
     @Singleton
     fun provideDrinkService(): DrinkService {
         return Retrofit.Builder()
-            .baseUrl(ConstantsDi.BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()

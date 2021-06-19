@@ -9,9 +9,7 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -97,10 +95,6 @@ class SearchFragment : Fragment() {
         activity?.apply {
             val searchManager: SearchManager = getSystemService(SEARCH_SERVICE) as SearchManager
             searchView = menu.findItem(R.id.app_bar_search).actionView as SearchView
-            val searchIcon: ImageView = searchView.findViewById(R.id.search_button) as ImageView
-            searchIcon.setImageDrawable(
-                ContextCompat.getDrawable(this, R.drawable.ic_menu_search_24)
-            )
 
             searchView.apply {
                 setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -110,8 +104,6 @@ class SearchFragment : Fragment() {
             }
         }
         val searchTextArea = searchView.findViewById(R.id.search_src_text) as EditText
-        searchTextArea.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
-        searchTextArea.setHintTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
 
         searchTextArea.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED
@@ -134,8 +126,9 @@ class SearchFragment : Fragment() {
 
     private fun onSearchOrFilter(query: String?, view: View) {
         query?.let {
-            dismissKeyboard(view.windowToken)
-            searchViewModel.setQuery(query)
+                    searchBinding.drinksListRecView.smoothScrollToPosition(0)
+                    dismissKeyboard(view.windowToken)
+                    searchViewModel.setQuery(query)
         }
     }
 
@@ -148,20 +141,21 @@ class SearchFragment : Fragment() {
 
     private fun setObservers() {
         searchViewModel.searchResult.observe(viewLifecycleOwner, { searchResultList ->
-            searchStateListener.onDataStateChanged(searchResultList)
-            searchBinding.drinksListRecView.smoothScrollToPosition(0)
             searchResultList?.data?.let {
                 if (!it.isNullOrEmpty()) {
                     searchAdapter.submitList(it)
                 }
             }
+            searchStateListener.onDataStateChanged(searchResultList)
         })
+
     }
 
     override fun onDestroyView() {
+        super.onDestroyView()
         searchBinding.drinksListRecView.adapter = null
         requestManager = null
-        super.onDestroyView()
     }
+
 
 }
