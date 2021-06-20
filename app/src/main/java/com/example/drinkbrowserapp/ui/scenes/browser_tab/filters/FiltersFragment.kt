@@ -2,7 +2,6 @@ package com.example.drinkbrowserapp.ui.scenes.browser_tab.filters
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,10 +89,6 @@ class FiltersFragment : Fragment() {
         })
 
         filtersViewModel.itemClickedName.observe(viewLifecycleOwner, { itemClickedName ->
-            Log.d(
-                "MainActivity",
-                "ITEM $itemClickedName ${filtersViewModel.mItemClickedFilterName} CLICKED"
-            )
             itemClickedName?.let {
                 this.findNavController().navigate(
                     FiltersFragmentDirections
