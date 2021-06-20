@@ -11,7 +11,11 @@
         android:label="FiltersFragment">
         <action
             android:id="@+id/action_filtersFragment_to_chosenFilterResultFragment"
-            app:destination="@id/chosenFilterResultFragment" />
+            app:destination="@id/chosenFilterResultFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 
@@ -29,10 +33,18 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_chosenFilterResultFragment_to_drinkDetailsFragment"
-            app:destination="@id/drinkDetailsFragment" />
+            app:destination="@id/drinkDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_chosenFilterResultFragment_to_filtersFragment"
             app:destination="@id/filtersFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/browser_tab_nav"
             app:popUpToInclusive="true" />
     </fragment>
@@ -49,6 +61,10 @@
         <action
             android:id="@+id/action_drinkDetailsFragment_to_filtersFragment"
             app:destination="@id/filtersFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/browser_tab_nav"
             app:popUpToInclusive="true" />
     </fragment>

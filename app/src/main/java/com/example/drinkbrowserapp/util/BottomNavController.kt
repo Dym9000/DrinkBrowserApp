@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.util.BottomNavController.OnNavigationReselectedListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -42,6 +43,12 @@ class BottomNavController(
         val fragment = fragmentManager.findFragmentByTag(itemId.toString())
             ?: NavHostFragment.create(navGraphProvider.getNavGraphId(itemId))
         fragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
+            )
             .replace(containerId, fragment, itemId.toString())
             .addToBackStack(null)
             .commit()

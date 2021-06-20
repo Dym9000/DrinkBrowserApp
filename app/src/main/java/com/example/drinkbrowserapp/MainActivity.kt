@@ -134,7 +134,12 @@ class MainActivity : AppCompatActivity(),
         }
 
         is DrinkDetailsFragment -> {
-            navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+            if(bottomNavigationView.selectedItemId == R.id.search_tab_nav){
+                navController.navigate(R.id.action_drinkDetailsFragment2_to_searchFragment)
+            }
+                        else{
+                navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+            }
         }
 
         else -> {
