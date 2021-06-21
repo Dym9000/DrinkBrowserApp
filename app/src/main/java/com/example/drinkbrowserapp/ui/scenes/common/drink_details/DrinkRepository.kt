@@ -36,10 +36,10 @@ class DrinkRepository @Inject constructor(
                     queryId = drinkId
                     GlobalScope.launch {
                         withContext(Dispatchers.IO) {
-                            drinksDao.clearDrinksByName()
+                                val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
+                                isInDatabase != 1
                         }
                     }
-                    return true
                 }
                 return data.isNullOrEmpty()
             }
