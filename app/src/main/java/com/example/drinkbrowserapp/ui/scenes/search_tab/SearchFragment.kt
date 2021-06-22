@@ -9,11 +9,14 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -57,11 +60,21 @@ class SearchFragment : Fragment() {
 
         searchBinding.lifecycleOwner = viewLifecycleOwner
 
+        setupActionBarWithNavController(R.id.searchFragment, activity as AppCompatActivity)
         setGlide()
         setRecyclerView()
         setObservers()
 
         return searchBinding.root
+    }
+
+    fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun setGlide() {

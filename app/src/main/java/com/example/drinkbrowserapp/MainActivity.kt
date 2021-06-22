@@ -13,11 +13,8 @@ import com.example.drinkbrowserapp.ui.common.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
 import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
 import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment
-import com.example.drinkbrowserapp.util.BottomNavController
+import com.example.drinkbrowserapp.util.*
 import com.example.drinkbrowserapp.util.BottomNavController.*
-import com.example.drinkbrowserapp.util.DataState
-import com.example.drinkbrowserapp.util.DataStateType
-import com.example.drinkbrowserapp.util.setUpNavigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -55,13 +52,32 @@ class MainActivity : AppCompatActivity(),
         mainProgressBar = mainBinding.progressBar
 
         bottomNavigationView = mainBinding.bottomNavigationView
-        bottomNavigationView.setUpNavigation(bottomNavController, this)
 
+        setupBottomNavigationBar(savedInstanceState)
+        setupActionBar()
+    }
+
+    private fun setupBottomNavigationBar(savedInstanceState: Bundle?){
+        bottomNavigationView.setUpNavigation(bottomNavController, this)
         if (savedInstanceState == null) {
+            bottomNavController.setupBottomNavigationBackStack(null)
             bottomNavController.onNavigationItemSelected()
         }
+        else{
+            (savedInstanceState[Constants.BOTTOM_NAV_BACKSTACK_KEY] as IntArray?)?.let{
+                items ->
+                    val backstack = BackStack()
+                    backstack.addAll(items.toTypedArray())
+                bottomNavController.setupBottomNavigationBackStack(backstack)
+            }
+        }
+    }
 
-        setupActionBar()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putIntArray(Constants.BOTTOM_NAV_BACKSTACK_KEY,
+            bottomNavController.navigationBackStack.toIntArray())
+
     }
 
     override fun onDataStateChanged(dataState: DataState<*>?) {
@@ -160,4 +176,5 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() = bottomNavController.onBackPressed()
+
 }

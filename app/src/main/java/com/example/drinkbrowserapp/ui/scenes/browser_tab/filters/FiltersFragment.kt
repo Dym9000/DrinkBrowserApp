@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -44,12 +47,22 @@ class FiltersFragment : Fragment() {
 
         filtersBinding.lifecycleOwner = this.viewLifecycleOwner
 
+        setupActionBarWithNavController(R.id.filtersFragment, activity as AppCompatActivity)
         setGlide()
         setRecyclerView()
         setObservers()
         setHasOptionsMenu(true)
 
         return filtersBinding.root
+    }
+
+    fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun setGlide() {

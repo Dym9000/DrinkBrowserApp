@@ -3,6 +3,7 @@ package com.example.drinkbrowserapp.util
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.os.Parcelable
 import androidx.annotation.IdRes
 import androidx.annotation.NavigationRes
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.util.BottomNavController.OnNavigationReselectedListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.parcel.Parcelize
 
 class BottomNavController(
     val context: Context,
@@ -24,7 +26,7 @@ class BottomNavController(
     val navGraphProvider: NavGraphProvider
 ) {
 
-    private val navigationBackStack = BackStack.of(appStartDestinationId)
+    lateinit var navigationBackStack: BackStack
     lateinit var activity: Activity
     lateinit var fragmentManager: FragmentManager
     lateinit var navItemChangeListener: OnNavigationItemChanged
@@ -35,6 +37,12 @@ class BottomNavController(
             activity = context
             fragmentManager = (activity as FragmentActivity).supportFragmentManager
         }
+    }
+
+    fun setupBottomNavigationBackStack(backstack: BackStack?){
+        navigationBackStack = backstack?.let {
+            it
+        }?: BackStack.of(appStartDestinationId)
     }
 
     fun onNavigationItemSelected(itemId: Int = navigationBackStack.last()): Boolean {
@@ -98,7 +106,8 @@ class BottomNavController(
         }
     }
 
-    private class BackStack : ArrayList<Int>() {
+    @Parcelize
+    class BackStack : ArrayList<Int>(), Parcelable {
         companion object {
             fun of(vararg elements: Int): BackStack {
                 val b = BackStack()
@@ -114,7 +123,6 @@ class BottomNavController(
             add(item) // add to end of list
         }
     }
-
 
     // For setting the checked icon in the bottom nav
     interface OnNavigationItemChanged {
