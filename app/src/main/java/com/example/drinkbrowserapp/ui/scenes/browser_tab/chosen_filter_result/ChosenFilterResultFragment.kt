@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -73,6 +75,20 @@ class ChosenFilterResultFragment : Fragment() {
         return filterResultBinding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupActionBarWithNavController(R.id.filtersFragment, activity as AppCompatActivity)
+    }
+
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
+    }
+
     private fun setGlide() {
         val requestOptions = RequestOptions
             .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
@@ -112,7 +128,8 @@ class ChosenFilterResultFragment : Fragment() {
             if (it != -1) {
                 this.findNavController().navigate(
                     ChosenFilterResultFragmentDirections
-                        .actionChosenFilterResultFragmentToDrinkDetailsFragment(it)
+                        .actionChosenFilterResultFragmentToDrinkDetailsFragment(
+                            it, R.id.chosenFilterResultFragment)
                 )
                 filterResultViewModel.onNavigated()
             }

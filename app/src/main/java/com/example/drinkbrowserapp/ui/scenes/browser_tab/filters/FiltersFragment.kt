@@ -56,7 +56,7 @@ class FiltersFragment : Fragment() {
         return filtersBinding.root
     }
 
-    fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,

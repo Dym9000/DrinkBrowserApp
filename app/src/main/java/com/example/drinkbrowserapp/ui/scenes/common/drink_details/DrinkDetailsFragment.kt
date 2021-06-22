@@ -5,10 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDrinkDetailsBinding
 import com.example.drinkbrowserapp.ui.common.UIStateListener
@@ -50,11 +54,21 @@ class DrinkDetailsFragment : Fragment() {
             viewModel = drinkDetailsViewModel
         }
 
+        setupActionBarWithNavController(drinkDetailsArgs.fragmentId, activity as AppCompatActivity)
         setObservers()
 
         setHasOptionsMenu(true)
 
         return drinkDetailsBinding.root
+    }
+
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun setObservers() {

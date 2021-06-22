@@ -37,6 +37,9 @@
         <argument
             android:name="drinkId"
             app:argType="integer" />
+        <argument
+            android:name="fragmentId"
+            app:argType="integer" />
     </fragment>
 
 

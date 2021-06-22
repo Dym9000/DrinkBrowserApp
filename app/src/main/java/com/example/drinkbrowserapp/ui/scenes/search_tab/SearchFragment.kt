@@ -68,7 +68,7 @@ class SearchFragment : Fragment() {
         return searchBinding.root
     }
 
-    fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,
@@ -170,7 +170,7 @@ class SearchFragment : Fragment() {
             if (it != -1) {
                 this.findNavController().navigate(
                     SearchFragmentDirections
-                        .actionSearchFragmentToDrinkDetailsFragment2(it)
+                        .actionSearchFragmentToDrinkDetailsFragment2(it, R.id.searchFragment)
                 )
                 searchViewModel.onNavigated()
             }
