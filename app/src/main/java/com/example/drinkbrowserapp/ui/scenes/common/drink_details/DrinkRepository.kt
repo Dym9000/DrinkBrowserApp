@@ -61,7 +61,7 @@ class DrinkRepository @Inject constructor(
             }
 
             override fun mapToCache(data: SearchByIdOrNameDrinkResponse): List<DrinkDb> {
-                return dtoMapper.mapFromList(data.drinks)
+                return data.drinks?.let { dtoMapper.mapFromList(it) }!!
             }
         }.returnAsLiveData()
     }
@@ -91,7 +91,11 @@ class DrinkRepository @Inject constructor(
             }
 
             override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
-                drinksDao.saveDrinksByNameResult(mapToCache(response))
+                if(response.drinks == null){
+                    drinksDao.clearDrinksByName()
+                }else {
+                    drinksDao.saveDrinksByNameResult(mapToCache(response))
+                }
             }
 
             override fun mapToDomain(data: List<DrinkDb>): List<DrinkDomain> {
@@ -99,7 +103,10 @@ class DrinkRepository @Inject constructor(
             }
 
             override fun mapToCache(data: SearchByIdOrNameDrinkResponse): List<DrinkDb> {
-                return dtoMapper.mapFromList(data.drinks)
+                if(data.drinks != null){
+                    return data.drinks?.let { dtoMapper.mapFromList(it) }!!
+                }
+                return emptyList()
             }
         }.returnAsLiveData()
     }

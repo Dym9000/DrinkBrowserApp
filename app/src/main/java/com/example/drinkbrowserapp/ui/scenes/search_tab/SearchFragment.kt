@@ -159,9 +159,7 @@ class SearchFragment : Fragment() {
     private fun setObservers() {
         searchViewModel.searchByNameResult.observe(viewLifecycleOwner, { searchResultList ->
             searchResultList?.data?.let {
-                if (!it.isNullOrEmpty()) {
                     searchAdapter.submitList(it)
-                }
             }
             searchStateListener.onDataStateChanged(searchResultList)
         })

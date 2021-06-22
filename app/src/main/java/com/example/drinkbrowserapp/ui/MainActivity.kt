@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp
+package com.example.drinkbrowserapp.ui
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
 import com.example.drinkbrowserapp.ui.common.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
