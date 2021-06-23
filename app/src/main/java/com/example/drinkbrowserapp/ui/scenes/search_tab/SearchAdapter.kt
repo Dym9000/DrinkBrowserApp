@@ -8,26 +8,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
+import com.example.drinkbrowserapp.databinding.LayoutNoResultBinding
 import com.example.drinkbrowserapp.domain.DrinkDomain
 
 class SearchAdapter(
     private val requestManager: RequestManager,
     private val onSearchItemClickListener: OnSearchItemClickListener
-) : ListAdapter<DrinkDomain, SearchAdapter.SearchViewHolder>
+) : ListAdapter<DrinkDomain, RecyclerView.ViewHolder>
     (SearchDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchByNameBinding.inflate(inflater, parent, false)
         return SearchViewHolder(binding, onSearchItemClickListener)
     }
 
-    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as SearchViewHolder).bind(currentList[position])
     }
 
-    inner class SearchViewHolder(private val binding: ItemSearchByNameBinding,
-    private val onSearchItemClickListener: OnSearchItemClickListener) :
+    inner class NoResultViewHolder(noResultBinding: LayoutNoResultBinding) :
+        RecyclerView.ViewHolder(noResultBinding.root)
+
+    inner class SearchViewHolder(
+        private val binding: ItemSearchByNameBinding,
+        private val onSearchItemClickListener: OnSearchItemClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: DrinkDomain) {
@@ -44,7 +50,6 @@ class SearchAdapter(
 
             binding.executePendingBindings()
         }
-
     }
 
 }

@@ -15,4 +15,5 @@
     <string name="menu_favourites">Favourites</string>
     <string name="menu_search_item">Search</string>
     <string name="menu_search_filters">Filters</string>
+    <string name="no_results_found">No results found</string>
 </resources>

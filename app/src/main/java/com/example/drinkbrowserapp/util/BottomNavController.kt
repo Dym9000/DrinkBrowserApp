@@ -39,10 +39,10 @@ class BottomNavController(
         }
     }
 
-    fun setupBottomNavigationBackStack(backstack: BackStack?){
+    fun setupBottomNavigationBackStack(backstack: BackStack?) {
         navigationBackStack = backstack?.let {
             it
-        }?: BackStack.of(appStartDestinationId)
+        } ?: BackStack.of(appStartDestinationId)
     }
 
     fun onNavigationItemSelected(itemId: Int = navigationBackStack.last()): Boolean {

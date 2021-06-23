@@ -80,7 +80,7 @@ class ChosenFilterResultFragment : Fragment() {
         setupActionBarWithNavController(R.id.filtersFragment, activity as AppCompatActivity)
     }
 
-    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,
@@ -129,7 +129,8 @@ class ChosenFilterResultFragment : Fragment() {
                 this.findNavController().navigate(
                     ChosenFilterResultFragmentDirections
                         .actionChosenFilterResultFragmentToDrinkDetailsFragment(
-                            it, R.id.chosenFilterResultFragment)
+                            it, R.id.chosenFilterResultFragment
+                        )
                 )
                 filterResultViewModel.onNavigated()
             }

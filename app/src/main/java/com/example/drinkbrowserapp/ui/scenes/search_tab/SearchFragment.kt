@@ -25,6 +25,7 @@ import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 import com.example.drinkbrowserapp.ui.common.UIStateListener
+import com.example.drinkbrowserapp.util.DataStateType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,7 +69,7 @@ class SearchFragment : Fragment() {
         return searchBinding.root
     }
 
-    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,
@@ -158,8 +159,14 @@ class SearchFragment : Fragment() {
 
     private fun setObservers() {
         searchViewModel.searchByNameResult.observe(viewLifecycleOwner, { searchResultList ->
+            if (searchResultList.state == DataStateType.SUCCESS && searchResultList.data.isNullOrEmpty()) {
+                searchBinding.displayNoResult.visibility = View.VISIBLE
+            } else {
+                searchBinding.displayNoResult.visibility = View.GONE
+            }
+
             searchResultList?.data?.let {
-                    searchAdapter.submitList(it)
+                searchAdapter.submitList(it)
             }
             searchStateListener.onDataStateChanged(searchResultList)
         })

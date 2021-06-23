@@ -36,8 +36,8 @@ class DrinkRepository @Inject constructor(
                     queryId = drinkId
                     GlobalScope.launch {
                         withContext(Dispatchers.IO) {
-                                val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
-                                isInDatabase != 1
+                            val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
+                            isInDatabase != 1
                         }
                     }
                 }
@@ -69,6 +69,7 @@ class DrinkRepository @Inject constructor(
     fun getDrinksByName(key: String, query: String): LiveData<DataState<List<DrinkDomain>>> {
         return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
                 DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
+
             override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
                 if (query != queryName) {
                     queryName = query
@@ -91,9 +92,9 @@ class DrinkRepository @Inject constructor(
             }
 
             override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
-                if(response.drinks == null){
+                if (response.drinks == null) {
                     drinksDao.clearDrinksByName()
-                }else {
+                } else {
                     drinksDao.saveDrinksByNameResult(mapToCache(response))
                 }
             }
@@ -103,7 +104,7 @@ class DrinkRepository @Inject constructor(
             }
 
             override fun mapToCache(data: SearchByIdOrNameDrinkResponse): List<DrinkDb> {
-                if(data.drinks != null){
+                if (data.drinks != null) {
                     return data.drinks?.let { dtoMapper.mapFromList(it) }!!
                 }
                 return emptyList()

@@ -37,11 +37,7 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainModel, CacheMod
         result.addSource(databaseSource) {
             result.removeSource(databaseSource)
             if (shouldGetNewDataFromNetwork(it)) {
-//                GlobalScope.launch(IO) {
-//                    withContext(Main) {
                 getDataFromNetwork(databaseSource)
-//                    }
-//                }
             } else {
                 result.addSource(databaseSource) { cacheList ->
                     setValue(DataState.success(mapToDomain(cacheList)))
@@ -52,12 +48,12 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainModel, CacheMod
 
     private fun getDataFromNetwork(databaseSource: LiveData<List<CacheModel>>) {
         val response = makeRequestCall()
-        result.addSource(databaseSource) { cacheList ->
-            setValue(DataState.loading(mapToDomain(cacheList)))
-        }
+//        result.addSource(databaseSource) { cacheList ->
+//            setValue(DataState.loading(mapToDomain(cacheList)))
+//        }
         result.addSource(response) {
             result.apply {
-                removeSource(databaseSource)
+//                removeSource(databaseSource)
                 removeSource(response)
                 handleRequestCall(it, databaseSource)
             }
@@ -88,14 +84,17 @@ abstract class NetworkDataStateRepository<NetworkResponse, DomainModel, CacheMod
     private fun onSuccessResponse(
         response: ApiSuccessResponse<NetworkResponse>,
         databaseSource: LiveData<List<CacheModel>>
-    ) {
-        GlobalScope.launch {
-            withContext(IO) {
-                saveDataToDatabase(response.body)
-            }
-            withContext(Main) {
-                result.addSource(databaseSource) { cacheList ->
-                    setValue(DataState.success(mapToDomain(cacheList)))
+    ){
+            GlobalScope.launch {
+                withContext(IO) {
+                    saveDataToDatabase(response.body)
+                }
+
+            GlobalScope.launch {
+                withContext(Main) {
+                    result.addSource(databaseSource) { cacheList ->
+                        setValue(DataState.success(mapToDomain(cacheList)))
+                    }
                 }
             }
         }

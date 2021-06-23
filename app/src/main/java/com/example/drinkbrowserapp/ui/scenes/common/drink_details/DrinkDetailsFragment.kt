@@ -62,7 +62,7 @@ class DrinkDetailsFragment : Fragment() {
         return drinkDetailsBinding.root
     }
 
-    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,

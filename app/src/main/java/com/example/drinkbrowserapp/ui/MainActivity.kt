@@ -58,17 +58,15 @@ class MainActivity : AppCompatActivity(),
         setupActionBar()
     }
 
-    private fun setupBottomNavigationBar(savedInstanceState: Bundle?){
+    private fun setupBottomNavigationBar(savedInstanceState: Bundle?) {
         bottomNavigationView.setUpNavigation(bottomNavController, this)
         if (savedInstanceState == null) {
             bottomNavController.setupBottomNavigationBackStack(null)
             bottomNavController.onNavigationItemSelected()
-        }
-        else{
-            (savedInstanceState[Constants.BOTTOM_NAV_BACKSTACK_KEY] as IntArray?)?.let{
-                items ->
-                    val backstack = BackStack()
-                    backstack.addAll(items.toTypedArray())
+        } else {
+            (savedInstanceState[Constants.BOTTOM_NAV_BACKSTACK_KEY] as IntArray?)?.let { items ->
+                val backstack = BackStack()
+                backstack.addAll(items.toTypedArray())
                 bottomNavController.setupBottomNavigationBackStack(backstack)
             }
         }
@@ -76,8 +74,10 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putIntArray(Constants.BOTTOM_NAV_BACKSTACK_KEY,
-            bottomNavController.navigationBackStack.toIntArray())
+        outState.putIntArray(
+            Constants.BOTTOM_NAV_BACKSTACK_KEY,
+            bottomNavController.navigationBackStack.toIntArray()
+        )
 
     }
 
@@ -151,10 +151,9 @@ class MainActivity : AppCompatActivity(),
         }
 
         is DrinkDetailsFragment -> {
-            if(bottomNavigationView.selectedItemId == R.id.search_tab_nav){
+            if (bottomNavigationView.selectedItemId == R.id.search_tab_nav) {
                 navController.navigate(R.id.action_drinkDetailsFragment2_to_searchFragment)
-            }
-                        else{
+            } else {
                 navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
             }
         }
