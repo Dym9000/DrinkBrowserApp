@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDrinkDetailsBinding
 import com.example.drinkbrowserapp.ui.common.UIStateListener
@@ -46,18 +49,26 @@ class DrinkDetailsFragment : Fragment() {
             inflater, R.layout.fragment_drink_details, container, false
         )
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-
         drinkDetailsBinding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = drinkDetailsViewModel
         }
 
+        setupActionBarWithNavController(drinkDetailsArgs.fragmentId, activity as AppCompatActivity)
         setObservers()
 
         setHasOptionsMenu(true)
 
         return drinkDetailsBinding.root
+    }
+
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun setObservers() {

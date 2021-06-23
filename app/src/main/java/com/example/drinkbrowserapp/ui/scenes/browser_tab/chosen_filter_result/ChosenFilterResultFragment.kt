@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -59,11 +61,11 @@ class ChosenFilterResultFragment : Fragment() {
             inflater, R.layout.fragment_display_list, container, false
         )
 
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
         filterResultBinding.apply {
             lifecycleOwner = viewLifecycleOwner
         }
-
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
 
         setGlide()
         setRecyclerView()
@@ -71,6 +73,20 @@ class ChosenFilterResultFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return filterResultBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupActionBarWithNavController(R.id.filtersFragment, activity as AppCompatActivity)
+    }
+
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 
     private fun setGlide() {
@@ -98,13 +114,9 @@ class ChosenFilterResultFragment : Fragment() {
     }
 
     private fun setObservers() {
-        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, {
-                dataState ->
-//            if(dataState.state != DataStateType.SUCCESS) filterResultStateListener
-//                .onDataStateChanged(dataState)
-            dataState?.data?.let {
-                list ->
-                filterResultAdapter.apply{
+        filterResultViewModel.drinksByFilter.observe(viewLifecycleOwner, { dataState ->
+            dataState?.data?.let { list ->
+                filterResultAdapter.apply {
 //                    preloadGlideImages(requestManager as RequestManager, list)
                     submitList(list)
                 }
@@ -116,7 +128,9 @@ class ChosenFilterResultFragment : Fragment() {
             if (it != -1) {
                 this.findNavController().navigate(
                     ChosenFilterResultFragmentDirections
-                        .actionChosenFilterResultFragmentToDrinkDetailsFragment(it)
+                        .actionChosenFilterResultFragmentToDrinkDetailsFragment(
+                            it, R.id.chosenFilterResultFragment
+                        )
                 )
                 filterResultViewModel.onNavigated()
             }

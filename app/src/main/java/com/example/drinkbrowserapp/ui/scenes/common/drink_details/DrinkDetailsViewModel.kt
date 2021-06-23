@@ -16,8 +16,6 @@ class DrinkDetailsViewModel(drinkId: Int, drinkRepository: DrinkRepository) : Vi
             return _drinkDetails
         }
 
-//    private val mediatorDrinkDetails: MediatorLiveData<DataState<List<DrinkDomain>>>
-
     fun onDataFetched(data: DrinkDomain) {
         _drinkDetails.value = data
     }

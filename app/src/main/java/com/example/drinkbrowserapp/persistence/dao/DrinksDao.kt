@@ -3,6 +3,7 @@ package com.example.drinkbrowserapp.persistence.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.persistence.entity.FilterSearchDb
@@ -28,7 +29,7 @@ interface DrinksDao {
     /**
      *      DrinkDB Entity
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveDrinksByNameResult(drinks: List<DrinkDb>)
 
     @Query("Delete from drinks")
@@ -36,6 +37,9 @@ interface DrinksDao {
 
     @Query("Select * from drinks")
     fun getAllDrinksByName(): LiveData<List<DrinkDb>>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM drinks WHERE id = :id)")
+    suspend fun isDrinkInDatabase(id: Int): Int
 
     /**
      *      Common query for a drink's details

@@ -3,6 +3,7 @@ package com.example.drinkbrowserapp.util
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.os.Parcelable
 import androidx.annotation.IdRes
 import androidx.annotation.NavigationRes
 import androidx.fragment.app.Fragment
@@ -12,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.util.BottomNavController.OnNavigationReselectedListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.parcel.Parcelize
 
 class BottomNavController(
     val context: Context,
@@ -23,7 +26,7 @@ class BottomNavController(
     val navGraphProvider: NavGraphProvider
 ) {
 
-    private val navigationBackStack = BackStack.of(appStartDestinationId)
+    lateinit var navigationBackStack: BackStack
     lateinit var activity: Activity
     lateinit var fragmentManager: FragmentManager
     lateinit var navItemChangeListener: OnNavigationItemChanged
@@ -36,12 +39,24 @@ class BottomNavController(
         }
     }
 
+    fun setupBottomNavigationBackStack(backstack: BackStack?) {
+        navigationBackStack = backstack?.let {
+            it
+        } ?: BackStack.of(appStartDestinationId)
+    }
+
     fun onNavigationItemSelected(itemId: Int = navigationBackStack.last()): Boolean {
 
         // Replace fragment representing a navigation item
         val fragment = fragmentManager.findFragmentByTag(itemId.toString())
             ?: NavHostFragment.create(navGraphProvider.getNavGraphId(itemId))
         fragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
+            )
             .replace(containerId, fragment, itemId.toString())
             .addToBackStack(null)
             .commit()
@@ -64,7 +79,7 @@ class BottomNavController(
             .findNavController()
 
         when {
-            navController.backStack.size > 2 ->{
+            navController.backStack.size > 2 -> {
                 navController.popBackStack()
             }
 
@@ -91,7 +106,8 @@ class BottomNavController(
         }
     }
 
-    private class BackStack : ArrayList<Int>() {
+    @Parcelize
+    class BackStack : ArrayList<Int>(), Parcelable {
         companion object {
             fun of(vararg elements: Int): BackStack {
                 val b = BackStack()
@@ -107,7 +123,6 @@ class BottomNavController(
             add(item) // add to end of list
         }
     }
-
 
     // For setting the checked icon in the bottom nav
     interface OnNavigationItemChanged {
@@ -125,11 +140,11 @@ class BottomNavController(
     // Execute when Navigation Graph changes.
     // ex: Select a new item on the bottom navigation
     // ex: Home -> Account
-    interface OnNavigationGraphChanged{
+    interface OnNavigationGraphChanged {
         fun onGraphChange()
     }
 
-    interface OnNavigationReselectedListener{
+    interface OnNavigationReselectedListener {
 
         fun onReselectNavItem(navController: NavController, fragment: Fragment)
     }

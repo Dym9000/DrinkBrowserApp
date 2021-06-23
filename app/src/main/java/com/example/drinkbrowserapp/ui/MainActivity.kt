@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp
+package com.example.drinkbrowserapp.ui
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,16 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
 import com.example.drinkbrowserapp.ui.common.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
 import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
 import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment
-import com.example.drinkbrowserapp.util.BottomNavController
+import com.example.drinkbrowserapp.util.*
 import com.example.drinkbrowserapp.util.BottomNavController.*
-import com.example.drinkbrowserapp.util.DataState
-import com.example.drinkbrowserapp.util.DataStateType
-import com.example.drinkbrowserapp.util.setUpNavigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +40,8 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_host_fragment,
             R.id.browser_tab_nav,
             this,
-            this)
+            this
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +53,32 @@ class MainActivity : AppCompatActivity(),
         mainProgressBar = mainBinding.progressBar
 
         bottomNavigationView = mainBinding.bottomNavigationView
-        bottomNavigationView.setUpNavigation(bottomNavController, this)
 
-        if(savedInstanceState == null) {
-            bottomNavController.onNavigationItemSelected()
-        }
-
+        setupBottomNavigationBar(savedInstanceState)
         setupActionBar()
+    }
+
+    private fun setupBottomNavigationBar(savedInstanceState: Bundle?) {
+        bottomNavigationView.setUpNavigation(bottomNavController, this)
+        if (savedInstanceState == null) {
+            bottomNavController.setupBottomNavigationBackStack(null)
+            bottomNavController.onNavigationItemSelected()
+        } else {
+            (savedInstanceState[Constants.BOTTOM_NAV_BACKSTACK_KEY] as IntArray?)?.let { items ->
+                val backstack = BackStack()
+                backstack.addAll(items.toTypedArray())
+                bottomNavController.setupBottomNavigationBackStack(backstack)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putIntArray(
+            Constants.BOTTOM_NAV_BACKSTACK_KEY,
+            bottomNavController.navigationBackStack.toIntArray()
+        )
+
     }
 
     override fun onDataStateChanged(dataState: DataState<*>?) {
@@ -75,8 +93,9 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setupActionBar(){
+    private fun setupActionBar() {
         setSupportActionBar(mainBinding.mainToolbar)
+        this.supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun displayErrorMessage(errorMessage: String?) {
@@ -99,7 +118,7 @@ class MainActivity : AppCompatActivity(),
     /**
      *  BottomNavController
      */
-    override fun getNavGraphId(itemId: Int) = when(itemId){
+    override fun getNavGraphId(itemId: Int) = when (itemId) {
         R.id.browser_tab_nav -> {
             R.navigation.browser_tab_nav
         }
@@ -125,31 +144,37 @@ class MainActivity : AppCompatActivity(),
     override fun onReselectNavItem(
         navController: NavController,
         fragment: Fragment
-    ) = when(fragment){
+    ) = when (fragment) {
 
         is ChosenFilterResultFragment -> {
             navController.navigate(R.id.action_chosenFilterResultFragment_to_filtersFragment)
         }
 
         is DrinkDetailsFragment -> {
-            navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+            if (bottomNavigationView.selectedItemId == R.id.search_tab_nav) {
+                navController.navigate(R.id.action_drinkDetailsFragment2_to_searchFragment)
+            } else {
+                navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+            }
         }
 
         else -> {
             // do nothing
         }
     }
+
     /**
     /   End of BottomNavController
      */
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() = bottomNavController.onBackPressed()
+
 }

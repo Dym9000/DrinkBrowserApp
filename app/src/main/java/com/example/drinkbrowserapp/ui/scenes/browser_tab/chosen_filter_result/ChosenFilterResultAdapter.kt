@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.databinding.ItemSearchByFilterBinding
 import com.example.drinkbrowserapp.domain.FilterSearchDomain
 
@@ -29,8 +30,8 @@ class FilterResultAdapter(
     fun preloadGlideImages(
         requestManager: RequestManager,
         list: List<FilterSearchDomain>
-    ){
-        for(item in list){
+    ) {
+        for (item in list) {
             requestManager
                 .load(item.imageUrl)
                 .preload()
@@ -50,6 +51,7 @@ class FilterResultAdapter(
 
             requestManager
                 .load(item.imageUrl)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.drinkImageFilter)
             binding.executePendingBindings()
         }

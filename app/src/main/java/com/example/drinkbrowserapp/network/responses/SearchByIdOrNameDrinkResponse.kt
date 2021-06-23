@@ -7,5 +7,5 @@ import com.google.gson.annotations.SerializedName
 data class SearchByIdOrNameDrinkResponse(
     @SerializedName("drinks")
     @Expose
-    var drinks: List<DrinkRaw>
+    var drinks: List<DrinkRaw>?
 )

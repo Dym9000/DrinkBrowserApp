@@ -41,4 +41,7 @@ object Dependencies {
 
     //GLIDE
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+
+    //MATERIAL DIALOGS
+    val material_dialogs = "com.afollestad.material-dialogs:core:${Versions.material_dialogs}"
 }
