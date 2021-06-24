@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.ui.scenes.common.drink_details
+package com.example.drinkbrowserapp.ui.common.repository
 
 import androidx.lifecycle.LiveData
 import com.example.drinkbrowserapp.domain.DrinkDomain
@@ -10,7 +10,6 @@ import com.example.drinkbrowserapp.network.responses.SearchByIdOrNameDrinkRespon
 import com.example.drinkbrowserapp.persistence.dao.DrinksDao
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.persistence.mapper.DrinkDbMapper
-import com.example.drinkbrowserapp.ui.common.NetworkDataStateRepository
 import com.example.drinkbrowserapp.util.DataState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -108,6 +107,35 @@ class DrinkRepository @Inject constructor(
                 if (data.drinks != null) {
                     return data.drinks?.let { dtoMapper.mapFromList(it) }!!
                 }
+                return emptyList()
+            }
+        }.returnAsLiveData()
+    }
+
+    fun getFavouriteDrinks(): LiveData<DataState<List<DrinkDomain>>> {
+        return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
+                DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
+
+            override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
+                return false
+            }
+
+            override fun makeRequestCall(): LiveData<GenericApiResponse<SearchByIdOrNameDrinkResponse>> {
+                return drinksService.getDrinksByName("","")
+            }
+
+            override fun loadDataFromDatabase(): LiveData<List<DrinkDb>> {
+                return drinksDao.getAllDrinksByName()
+            }
+
+            override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
+            }
+
+            override fun mapToDomain(data: List<DrinkDb>): List<DrinkDomain> {
+                return cacheMapper.mapFromList(data)
+            }
+
+            override fun mapToCache(data: SearchByIdOrNameDrinkResponse): List<DrinkDb> {
                 return emptyList()
             }
         }.returnAsLiveData()

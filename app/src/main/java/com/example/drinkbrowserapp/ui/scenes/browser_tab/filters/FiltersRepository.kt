@@ -25,7 +25,7 @@ import com.example.drinkbrowserapp.persistence.mapper.AlcoholContentDbMapper
 import com.example.drinkbrowserapp.persistence.mapper.CategoryDbMapper
 import com.example.drinkbrowserapp.persistence.mapper.GlassDbMapper
 import com.example.drinkbrowserapp.persistence.mapper.IngredientDbMapper
-import com.example.drinkbrowserapp.ui.common.NetworkDataStateRepository
+import com.example.drinkbrowserapp.ui.common.repository.NetworkDataStateRepository
 import com.example.drinkbrowserapp.util.DataState
 import javax.inject.Inject
 import javax.inject.Singleton

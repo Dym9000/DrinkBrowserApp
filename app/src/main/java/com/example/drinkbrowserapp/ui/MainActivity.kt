@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
-import com.example.drinkbrowserapp.ui.common.UIStateListener
+import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
 import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
 import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment

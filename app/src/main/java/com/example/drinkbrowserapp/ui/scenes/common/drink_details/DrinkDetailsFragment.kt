@@ -15,7 +15,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDrinkDetailsBinding
-import com.example.drinkbrowserapp.ui.common.UIStateListener
+import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
+import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

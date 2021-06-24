@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.ui.common
+package com.example.drinkbrowserapp.ui.common.interfaces
 
 import com.example.drinkbrowserapp.util.DataState
 

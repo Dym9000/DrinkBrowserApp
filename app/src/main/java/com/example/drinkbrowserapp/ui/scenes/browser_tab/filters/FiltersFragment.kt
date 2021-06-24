@@ -19,7 +19,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
-import com.example.drinkbrowserapp.ui.common.UIStateListener
+import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

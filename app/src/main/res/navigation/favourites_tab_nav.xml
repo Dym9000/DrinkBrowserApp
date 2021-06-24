@@ -8,6 +8,29 @@
     <fragment
         android:id="@+id/favouriteDrinksFragment"
         android:name="com.example.drinkbrowserapp.ui.scenes.favourites_tab.FavouriteDrinksFragment"
-        android:label="fragment_favourite_drinks"
-        tools:layout="@layout/fragment_favourite_drinks" />
+        android:label="fragment_favourite_drinks">
+    <action
+        android:id="@+id/action_favouriteDrinksFragment_to_drinkDetailsFragment3"
+        app:destination="@id/drinkDetailsFragment3"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/drinkDetailsFragment3"
+        android:name="com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment"
+        android:label="fragment_drink_details"
+        tools:layout="@layout/fragment_drink_details" >
+        <argument
+            android:name="drinkId"
+            app:argType="integer" />
+        <argument
+            android:name="fragmentId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_drinkDetailsFragment3_to_favouriteDrinksFragment"
+            app:destination="@id/favouriteDrinksFragment" />
+    </fragment>
 </navigation>

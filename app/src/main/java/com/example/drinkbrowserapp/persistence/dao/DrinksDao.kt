@@ -55,4 +55,8 @@ interface DrinksDao {
     @Query("SELECT EXISTS(SELECT 1 FROM drinks WHERE id = :id)")
     suspend fun isDrinkInDatabase(id: Int): Int
 
+    //  FAVORITE SCENE
+    @Query("SELECT * from drinks where isFavourite = 1")
+    fun getFavoriteDrinks(): LiveData<List<DrinkDb>>
+
 }

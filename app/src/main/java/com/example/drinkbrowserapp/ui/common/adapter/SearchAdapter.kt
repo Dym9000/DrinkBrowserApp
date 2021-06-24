@@ -1,4 +1,4 @@
-package com.example.drinkbrowserapp.ui.scenes.search_tab
+package com.example.drinkbrowserapp.ui.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.databinding.ItemSearchByNameBinding
-import com.example.drinkbrowserapp.databinding.LayoutNoResultBinding
 import com.example.drinkbrowserapp.domain.DrinkDomain
 
 class SearchAdapter(
@@ -26,9 +25,6 @@ class SearchAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as SearchViewHolder).bind(currentList[position])
     }
-
-    inner class NoResultViewHolder(noResultBinding: LayoutNoResultBinding) :
-        RecyclerView.ViewHolder(noResultBinding.root)
 
     inner class SearchViewHolder(
         private val binding: ItemSearchByNameBinding,

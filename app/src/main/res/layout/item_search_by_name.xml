@@ -6,7 +6,7 @@
 <data>
     <variable
         name="onSearchItemClickListener"
-        type="com.example.drinkbrowserapp.ui.scenes.search_tab.OnSearchItemClickListener" />
+        type="com.example.drinkbrowserapp.ui.common.adapter.OnSearchItemClickListener" />
 
     <variable
         name="drinkModel"
