@@ -1,10 +1,7 @@
 package com.example.drinkbrowserapp.persistence.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.drinkbrowserapp.persistence.entity.DrinkDb
 import com.example.drinkbrowserapp.persistence.entity.FilterSearchDb
 
@@ -32,19 +29,30 @@ interface DrinksDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveDrinksByNameResult(drinks: List<DrinkDb>)
 
-    @Query("Delete from drinks")
+    //  DRINK DETAILS SCENE
+    @Query("Select * from drinks where id = :id")
+    fun getDrinkDetails(id: Int): LiveData<List<DrinkDb>>
+
+    @Query("UPDATE drinks SET isDrinkDetailsScene = 1 , isSearchResult = -1 where id = :id")
+    suspend fun setDrinkAsDrinkDetail(id: Int)
+
+    @Query("Delete from drinks where isDrinkDetailsScene = 1 and isSearchResult = -1 and id = :id")
+    suspend fun clearDrinkDetails(id: Int)
+
+    @Transaction
+    suspend fun saveDrinkDetails(drinks: List<DrinkDb>, id: Int){
+        saveDrinksByNameResult(drinks)
+        setDrinkAsDrinkDetail(id)
+    }
+
+    //  SEARCH SCENE
+    @Query("Delete from drinks where isSearchResult = 1")
     suspend fun clearDrinksByName()
 
-    @Query("Select * from drinks")
+    @Query("Select * from drinks where isSearchResult = 1")
     fun getAllDrinksByName(): LiveData<List<DrinkDb>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM drinks WHERE id = :id)")
     suspend fun isDrinkInDatabase(id: Int): Int
-
-    /**
-     *      Common query for a drink's details
-     */
-    @Query("Select * from drinks where id = :id")
-    fun getDrinkDetails(id: Int): LiveData<List<DrinkDb>>
 
 }

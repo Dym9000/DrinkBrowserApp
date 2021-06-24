@@ -55,7 +55,6 @@ class SearchFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-
         searchBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 

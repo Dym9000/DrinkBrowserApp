@@ -33,9 +33,10 @@ class DrinkRepository @Inject constructor(
                 DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
             override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
                 if (drinkId != queryId) {
-                    queryId = drinkId
                     GlobalScope.launch {
-                        withContext(Dispatchers.IO) {
+                        withContext(Dispatchers.IO){
+                            drinksDao.clearDrinkDetails(queryId)
+                            queryId = drinkId
                             val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
                             isInDatabase != 1
                         }
@@ -53,7 +54,7 @@ class DrinkRepository @Inject constructor(
             }
 
             override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
-                drinksDao.saveDrinksByNameResult(mapToCache(response))
+                drinksDao.saveDrinkDetails(mapToCache(response), drinkId)
             }
 
             override fun mapToDomain(data: List<DrinkDb>): List<DrinkDomain> {

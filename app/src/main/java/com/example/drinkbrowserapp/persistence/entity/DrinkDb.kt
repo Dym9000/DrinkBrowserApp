@@ -121,5 +121,14 @@ data class DrinkDb(
     var measure14: String,
 
     @ColumnInfo(name = "measure15")
-    var measure15: String
+    var measure15: String,
+
+    @ColumnInfo(name = "isFavourite")
+    var isFavourite: Int = -1,
+
+    @ColumnInfo(name = "isSearchResult")
+    var isSearchResult: Int = 1,
+
+    @ColumnInfo(name = "isDrinkDetailsScene")
+    var isDrinkDetailsScene: Int = -1
 )
