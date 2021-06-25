@@ -3,16 +3,14 @@ package com.example.drinkbrowserapp.ui.scenes.favourites_tab
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.drinkbrowserapp.domain.DrinkDomain
 import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
-import com.example.drinkbrowserapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FavouriteViewModel @Inject constructor(private val drinkRepository: DrinkRepository): ViewModel() {
 
-    val favoriteList: LiveData<DataState<List<DrinkDomain>>> = drinkRepository.getFavouriteDrinks()
+    val favouriteList = drinkRepository.getFavouriteDrinks()
 
     private val _drinkId = MutableLiveData<Int>()
     val drinkId: LiveData<Int>

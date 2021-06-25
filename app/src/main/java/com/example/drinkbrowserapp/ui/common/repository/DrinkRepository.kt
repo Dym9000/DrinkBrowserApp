@@ -125,7 +125,7 @@ class DrinkRepository @Inject constructor(
             }
 
             override fun loadDataFromDatabase(): LiveData<List<DrinkDb>> {
-                return drinksDao.getAllDrinksByName()
+                return drinksDao.getFavoriteDrinks()
             }
 
             override suspend fun saveDataToDatabase(response: SearchByIdOrNameDrinkResponse) {
@@ -141,4 +141,20 @@ class DrinkRepository @Inject constructor(
         }.returnAsLiveData()
     }
 
+    fun addOrRemoveFromFavList(drinkId: Int){
+        GlobalScope.launch {
+            withContext(Dispatchers.IO){
+                val isFavourite = isDrinkInFavourites(drinkId)
+                if(isFavourite == 1){
+                    drinksDao.removeFromFavourites(drinkId)
+                }else{
+                    drinksDao.addToFavourites(drinkId)
+                }
+            }
+        }
+    }
+
+    suspend fun isDrinkInFavourites(drinkId: Int): Int{
+        return drinksDao.isInFavourites(drinkId)
+    }
 }

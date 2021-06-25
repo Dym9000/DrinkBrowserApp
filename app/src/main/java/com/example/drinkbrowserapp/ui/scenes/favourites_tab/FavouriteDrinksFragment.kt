@@ -106,6 +106,9 @@ class FavouriteDrinksFragment : Fragment() {
                 favouriteViewModel.onNavigated()
             }
         })
+        favouriteViewModel.favouriteList.observe(viewLifecycleOwner, {
+            favouriteAdapter.submitList(it.data)
+        })
     }
 
     override fun onDestroyView() {

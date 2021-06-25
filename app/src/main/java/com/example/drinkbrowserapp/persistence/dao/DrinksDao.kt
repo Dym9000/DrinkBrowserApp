@@ -29,6 +29,7 @@ interface DrinksDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveDrinksByNameResult(drinks: List<DrinkDb>)
 
+
     //  DRINK DETAILS SCENE
     @Query("Select * from drinks where id = :id")
     fun getDrinkDetails(id: Int): LiveData<List<DrinkDb>>
@@ -36,14 +37,15 @@ interface DrinksDao {
     @Query("UPDATE drinks SET isDrinkDetailsScene = 1 , isSearchResult = -1 where id = :id")
     suspend fun setDrinkAsDrinkDetail(id: Int)
 
-    @Query("Delete from drinks where isDrinkDetailsScene = 1 and isSearchResult = -1 and id = :id")
+    @Query("Delete from drinks where isDrinkDetailsScene = 1 and isFavourite = -1 and isSearchResult = -1 and id = :id")
     suspend fun clearDrinkDetails(id: Int)
 
     @Transaction
-    suspend fun saveDrinkDetails(drinks: List<DrinkDb>, id: Int){
+    suspend fun saveDrinkDetails(drinks: List<DrinkDb>, id: Int) {
         saveDrinksByNameResult(drinks)
         setDrinkAsDrinkDetail(id)
     }
+
 
     //  SEARCH SCENE
     @Query("Delete from drinks where isSearchResult = 1")
@@ -55,8 +57,18 @@ interface DrinksDao {
     @Query("SELECT EXISTS(SELECT 1 FROM drinks WHERE id = :id)")
     suspend fun isDrinkInDatabase(id: Int): Int
 
+
     //  FAVORITE SCENE
     @Query("SELECT * from drinks where isFavourite = 1")
     fun getFavoriteDrinks(): LiveData<List<DrinkDb>>
+
+    @Query("SELECT EXISTS (SELECT 1 from drinks where id = :id and isFavourite = 1)")
+    suspend fun isInFavourites(id: Int): Int
+
+    @Query("UPDATE drinks SET isFavourite = 1 where id = :id")
+    suspend fun addToFavourites(id: Int)
+
+    @Query("UPDATE drinks SET isFavourite = -1 where id = :id")
+    suspend fun removeFromFavourites(id: Int)
 
 }

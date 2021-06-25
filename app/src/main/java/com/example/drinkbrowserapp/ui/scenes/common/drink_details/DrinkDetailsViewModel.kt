@@ -7,7 +7,7 @@ import com.example.drinkbrowserapp.domain.DrinkDomain
 import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
 import com.example.drinkbrowserapp.util.Constants
 
-class DrinkDetailsViewModel(drinkId: Int, drinkRepository: DrinkRepository) : ViewModel() {
+class DrinkDetailsViewModel(private val drinkId: Int, private val drinkRepository: DrinkRepository) : ViewModel() {
 
     val drinkDetailsList = drinkRepository.getDrinkDetails(Constants.API_TOKEN_KEY, drinkId)
 
@@ -16,6 +16,10 @@ class DrinkDetailsViewModel(drinkId: Int, drinkRepository: DrinkRepository) : Vi
         get() {
             return _drinkDetails
         }
+
+    fun onFabClicked(){
+        drinkRepository.addOrRemoveFromFavList(drinkId)
+    }
 
     fun onDataFetched(data: DrinkDomain) {
         _drinkDetails.value = data
