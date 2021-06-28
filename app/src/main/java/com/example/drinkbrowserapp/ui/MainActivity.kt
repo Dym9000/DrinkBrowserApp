@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
-import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
+import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
 import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment
 import com.example.drinkbrowserapp.util.*
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity(),
         expandAppBar()
     }
 
-    fun expandAppBar() {
+    private fun expandAppBar() {
         mainBinding.appBar.setExpanded(true)
     }
 
@@ -151,13 +151,15 @@ class MainActivity : AppCompatActivity(),
         }
 
         is DrinkDetailsFragment -> {
-            if (bottomNavigationView.selectedItemId == R.id.search_tab_nav) {
-                navController.navigate(R.id.action_drinkDetailsFragment2_to_searchFragment)
-            } else {
-                navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+            when (bottomNavigationView.selectedItemId) {
+                R.id.search_tab_nav ->
+                    navController.navigate(R.id.action_drinkDetailsFragment2_to_searchFragment)
+                R.id.browser_tab_nav ->
+                    navController.navigate(R.id.action_drinkDetailsFragment_to_filtersFragment)
+                else ->
+                    navController.navigate(R.id.action_drinkDetailsFragment3_to_favouriteDrinksFragment)
             }
         }
-
         else -> {
             // do nothing
         }

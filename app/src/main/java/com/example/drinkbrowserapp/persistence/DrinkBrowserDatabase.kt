@@ -14,7 +14,7 @@ import com.example.drinkbrowserapp.persistence.entity.*
         IngredientDb::class,
         FilterSearchDb::class,
         DrinkDb::class,
-    ], version = 2, exportSchema = false
+    ], version = 3, exportSchema = false
 )
 abstract class DrinkBrowserDatabase : RoomDatabase() {
     abstract val drinksDao: DrinksDao

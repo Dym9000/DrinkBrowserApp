@@ -25,7 +25,7 @@ interface FilterDao {
     @Query("Delete from categories")
     suspend fun clearCategories()
 
-    @Query("Select * from categories")
+    @Query("Select * from categories ORDER by category")
     fun getCategories(): LiveData<List<CategoryDb>>
 
     /**
@@ -37,7 +37,7 @@ interface FilterDao {
     @Query("Delete from ingredients")
     suspend fun clearIngredients()
 
-    @Query("Select * from ingredients")
+    @Query("Select * from ingredients ORDER by ingredient")
     fun getIngredients(): LiveData<List<IngredientDb>>
 
     /**
@@ -49,7 +49,7 @@ interface FilterDao {
     @Query("Delete from glasses")
     suspend fun clearGlasses()
 
-    @Query("Select * from glasses")
+    @Query("Select * from glasses ORDER by glassType")
     fun getGlasses(): LiveData<List<GlassDb>>
 
     /**

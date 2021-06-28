@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -31,7 +32,8 @@ class DrinkDetailsFragment : Fragment() {
     private val drinkDetailsArgs: DrinkDetailsFragmentArgs by navArgs()
 
     private val drinkDetailsViewModel: DrinkDetailsViewModel by viewModels {
-        DrinkDetailsViewModelFactory(drinkDetailsArgs.drinkId, drinkRepository)
+        DrinkDetailsViewModelFactory(drinkDetailsArgs.drinkId, drinkRepository,
+            if (drinkDetailsArgs.fragmentId == R.id.filtersFragment) 1 else 0)
     }
 
     private lateinit var drinkDetailsStateListener: UIStateListener
@@ -77,6 +79,19 @@ class DrinkDetailsFragment : Fragment() {
             drinkDetailsStateListener.onDataStateChanged(it)
             if (!it.data.isNullOrEmpty()) {
                 drinkDetailsViewModel.onDataFetched(it.data[0])
+            }
+        })
+
+        drinkDetailsViewModel.isFavouriteToastMessage.observe(viewLifecycleOwner,{
+            it?.let{
+                when(it){
+                    true ->{
+                        Toast.makeText(activity, "Drink added to favourites successfully", Toast.LENGTH_SHORT).show()
+                    drinkDetailsViewModel.messageShown()}
+                    false ->{
+                        Toast.makeText(activity, "Drink removed from favourites successfully", Toast.LENGTH_SHORT).show()
+                    drinkDetailsViewModel.messageShown()}
+                }
             }
         })
     }

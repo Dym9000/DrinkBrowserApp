@@ -124,11 +124,11 @@ data class DrinkDb(
     var measure15: String,
 
     @ColumnInfo(name = "isFavourite")
-    var isFavourite: Int = -1,
+    var isFavourite: Int = 0,
 
     @ColumnInfo(name = "isSearchResult")
     var isSearchResult: Int = 1,
 
     @ColumnInfo(name = "isDrinkDetailsScene")
-    var isDrinkDetailsScene: Int = -1
+    var isDrinkDetailsScene: Int = 0
 )

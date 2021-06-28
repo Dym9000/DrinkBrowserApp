@@ -34,10 +34,10 @@ interface DrinksDao {
     @Query("Select * from drinks where id = :id")
     fun getDrinkDetails(id: Int): LiveData<List<DrinkDb>>
 
-    @Query("UPDATE drinks SET isDrinkDetailsScene = 1 , isSearchResult = -1 where id = :id")
+    @Query("UPDATE drinks SET isDrinkDetailsScene = 1 , isSearchResult = 0 where id = :id")
     suspend fun setDrinkAsDrinkDetail(id: Int)
 
-    @Query("Delete from drinks where isDrinkDetailsScene = 1 and isFavourite = -1 and isSearchResult = -1 and id = :id")
+    @Query("Delete from drinks where isDrinkDetailsScene = 1 and isFavourite = 0 and isSearchResult = 0 and id = :id")
     suspend fun clearDrinkDetails(id: Int)
 
     @Transaction
@@ -48,10 +48,10 @@ interface DrinksDao {
 
 
     //  SEARCH SCENE
-    @Query("Delete from drinks where isSearchResult = 1")
+    @Query("Delete from drinks where isSearchResult = 1 and isFavourite = 0 and isDrinkDetailsScene = 0")
     suspend fun clearDrinksByName()
 
-    @Query("Select * from drinks where isSearchResult = 1")
+    @Query("Select * from drinks where isSearchResult = 1 and isFavourite = 0 ORDER by drinkName")
     fun getAllDrinksByName(): LiveData<List<DrinkDb>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM drinks WHERE id = :id)")
@@ -59,16 +59,17 @@ interface DrinksDao {
 
 
     //  FAVORITE SCENE
-    @Query("SELECT * from drinks where isFavourite = 1")
+    @Query("SELECT * from drinks where isFavourite = 1 ORDER by drinkName")
     fun getFavoriteDrinks(): LiveData<List<DrinkDb>>
 
     @Query("SELECT EXISTS (SELECT 1 from drinks where id = :id and isFavourite = 1)")
     suspend fun isInFavourites(id: Int): Int
 
-    @Query("UPDATE drinks SET isFavourite = 1 where id = :id")
+    @Query("UPDATE drinks SET isFavourite = 1 , isDrinkDetailsScene = 0 where id = :id")
     suspend fun addToFavourites(id: Int)
 
-    @Query("UPDATE drinks SET isFavourite = -1 where id = :id")
+    @Query("DELETE from drinks where id = :id")
     suspend fun removeFromFavourites(id: Int)
+
 
 }

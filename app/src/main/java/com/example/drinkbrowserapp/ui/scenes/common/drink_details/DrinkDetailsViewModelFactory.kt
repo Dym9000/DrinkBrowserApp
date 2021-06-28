@@ -6,13 +6,14 @@ import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
 
 class DrinkDetailsViewModelFactory(
     private val drinkId: Int,
-    private val drinkRepository: DrinkRepository
+    private val drinkRepository: DrinkRepository,
+    private val fragment: Int
 ) :
     ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DrinkDetailsViewModel::class.java)) {
-            return DrinkDetailsViewModel(drinkId, drinkRepository) as T
+            return DrinkDetailsViewModel(drinkId, drinkRepository, fragment) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

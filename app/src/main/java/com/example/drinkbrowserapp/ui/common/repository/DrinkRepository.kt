@@ -27,17 +27,19 @@ class DrinkRepository @Inject constructor(
     var queryId: Int = -1
     var queryName: String = ""
 
-    fun getDrinkDetails(key: String, drinkId: Int): LiveData<DataState<List<DrinkDomain>>> {
+    fun getDrinkDetails(key: String, drinkId: Int, fragment: Int): LiveData<DataState<List<DrinkDomain>>> {
         return object : NetworkDataStateRepository<SearchByIdOrNameDrinkResponse, DrinkDomain,
                 DrinkDb, DrinkRaw>(dtoMapper = DrinkDtoMapper(), cacheMapper = DrinkDbMapper()) {
             override fun shouldGetNewDataFromNetwork(data: List<DrinkDb>?): Boolean {
-                if (drinkId != queryId) {
-                    GlobalScope.launch {
-                        withContext(Dispatchers.IO){
-                            drinksDao.clearDrinkDetails(queryId)
-                            queryId = drinkId
-                            val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
-                            isInDatabase != 1
+                if(fragment == 1) {
+                    if (drinkId != queryId) {
+                        GlobalScope.launch {
+                            withContext(Dispatchers.IO) {
+                                drinksDao.clearDrinkDetails(queryId)
+                                queryId = drinkId
+                                val isInDatabase = drinksDao.isDrinkInDatabase(queryId)
+                                isInDatabase != 1
+                            }
                         }
                     }
                 }
