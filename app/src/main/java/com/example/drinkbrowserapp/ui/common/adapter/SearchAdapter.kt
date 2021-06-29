@@ -16,6 +16,10 @@ class SearchAdapter(
 ) : ListAdapter<DrinkDomain, RecyclerView.ViewHolder>
     (SearchDiffCallback()) {
 
+    fun getItemIdAtPosition(position: Int): Int{
+        return getItem(position).id
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchByNameBinding.inflate(inflater, parent, false)

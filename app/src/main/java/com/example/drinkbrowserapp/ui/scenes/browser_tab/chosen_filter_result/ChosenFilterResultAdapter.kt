@@ -17,6 +17,11 @@ class FilterResultAdapter(
     ListAdapter<FilterSearchDomain, FilterResultAdapter.FilterResultViewHolder>(
         FilterResultDiffCallback()
     ) {
+
+    fun getItemIdAtPosition(position: Int): Int{
+        return getItem(position).drinkId
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemSearchByFilterBinding.inflate(inflater, parent, false)

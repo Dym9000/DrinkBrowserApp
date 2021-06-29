@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.widget.ImageViewCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.domain.DrinkDomain
@@ -40,6 +41,7 @@ fun setImage(view: ImageView, imageUrl: String?) {
         Glide.with(view)
             .load(imageUrl)
             .centerInside()
+            .transform(RoundedCorners(20))
             .error(R.drawable.ic_baseline_no_drinks_24)
             .placeholder(R.drawable.outline_liquor_black_48)
             .transition(DrawableTransitionOptions.withCrossFade())

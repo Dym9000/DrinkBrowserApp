@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -19,13 +21,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTouchHelperHandler
 import com.example.drinkbrowserapp.ui.common.adapter.OnSearchItemClickListener
 import com.example.drinkbrowserapp.ui.common.adapter.SearchAdapter
+import com.example.drinkbrowserapp.ui.common.interfaces.CustomItemTouchHelper
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavouriteDrinksFragment : Fragment() {
+class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
 
     private val favouriteViewModel: FavouriteViewModel by viewModels()
 
@@ -57,6 +61,7 @@ class FavouriteDrinksFragment : Fragment() {
         setupActionBarWithNavController(R.id.favouriteDrinksFragment, activity as AppCompatActivity)
         setGlide()
         setRecyclerView()
+        setItemTouchHelper()
         setObservers()
 
         return favouriteBinding.root
@@ -86,6 +91,8 @@ class FavouriteDrinksFragment : Fragment() {
         favouriteAdapter = SearchAdapter(requestManager as RequestManager, OnSearchItemClickListener {
             favouriteViewModel.onClick(it)
         })
+
+
         val manager = LinearLayoutManager(activity)
         val itemDecorationSpacing = ItemTopBottomSpacing(50)
         favouriteBinding.drinksListRecView.apply {
@@ -94,6 +101,18 @@ class FavouriteDrinksFragment : Fragment() {
             removeItemDecoration(itemDecorationSpacing)
             addItemDecoration(itemDecorationSpacing)
         }
+    }
+
+    private fun setItemTouchHelper(){
+        val swipeHandler = ItemTouchHelperHandler(this)
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(favouriteBinding.drinksListRecView)
+    }
+
+    override fun onSwiped(position: Int){
+        val id = favouriteAdapter.getItemIdAtPosition(position)
+        favouriteViewModel.onSwiped(id)
+        Toast.makeText(activity, "Removed from favourites", Toast.LENGTH_SHORT).show()
     }
 
     private fun setObservers() {

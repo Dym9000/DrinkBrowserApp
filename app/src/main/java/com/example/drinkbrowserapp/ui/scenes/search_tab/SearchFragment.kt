@@ -9,6 +9,7 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -17,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -24,14 +26,16 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTouchHelperHandler
 import com.example.drinkbrowserapp.ui.common.adapter.OnSearchItemClickListener
 import com.example.drinkbrowserapp.ui.common.adapter.SearchAdapter
+import com.example.drinkbrowserapp.ui.common.interfaces.CustomItemTouchHelper
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.util.DataStateType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), CustomItemTouchHelper {
 
     private lateinit var searchView: SearchView
 
@@ -65,6 +69,7 @@ class SearchFragment : Fragment() {
         setupActionBarWithNavController(R.id.searchFragment, activity as AppCompatActivity)
         setGlide()
         setRecyclerView()
+        setItemTouchHelper()
         setObservers()
 
         return searchBinding.root
@@ -156,6 +161,18 @@ class SearchFragment : Fragment() {
             Context.INPUT_METHOD_SERVICE
         ) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    private fun setItemTouchHelper(){
+        val swipeHandler = ItemTouchHelperHandler(this)
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(searchBinding.drinksListRecView)
+    }
+
+    override fun onSwiped(position: Int) {
+        val id = searchAdapter.getItemIdAtPosition(position)
+        searchViewModel.onSwiped(id)
+        Toast.makeText(activity, "Added to favourites", Toast.LENGTH_SHORT).show()
     }
 
     private fun setObservers() {

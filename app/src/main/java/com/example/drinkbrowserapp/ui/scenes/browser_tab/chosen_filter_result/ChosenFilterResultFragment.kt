@@ -37,8 +37,8 @@ class ChosenFilterResultFragment : Fragment() {
     private lateinit var filterResultAdapter: FilterResultAdapter
 
     private val filterResultViewModel: ChosenFilterResultViewModel by viewModels {
-        FilterResultViewModelFactory(
-            filterResultRepository, filterResultArgs.itemName, filterResultArgs.filterName
+        FilterResultViewModelFactory(filterResultRepository,
+            filterResultArgs.itemName, filterResultArgs.filterName
         )
     }
 

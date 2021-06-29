@@ -25,4 +25,8 @@ class FavouriteViewModel @Inject constructor(private val drinkRepository: DrinkR
     fun onNavigated() {
         _drinkId.value = -1
     }
+
+    fun onSwiped(id: Int){
+        drinkRepository.addOrRemoveFromFavList(id)
+    }
 }

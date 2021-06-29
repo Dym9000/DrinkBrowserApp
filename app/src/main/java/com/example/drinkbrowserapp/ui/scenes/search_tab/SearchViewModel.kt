@@ -43,4 +43,8 @@ class SearchViewModel @Inject constructor(
     fun onNavigated() {
         _drinkId.value = -1
     }
+
+    fun onSwiped(id: Int){
+        drinkRepository.addOrRemoveFromFavList(id)
+    }
 }

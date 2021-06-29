@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.example.drinkbrowserapp.util.Constants
 
 class ChosenFilterResultViewModel(
-    repository: FilterResultRepository,
-    itemName: String, filterName: String
+    private val repository: FilterResultRepository,
+    private val itemName: String,
+    private val filterName: String
 ) : ViewModel() {
 
     val drinksByFilter = repository.getDrinksByFilter(Constants.API_TOKEN_KEY, itemName, filterName)
@@ -25,4 +26,5 @@ class ChosenFilterResultViewModel(
     fun onNavigated() {
         _drinkId.value = -1
     }
+
 }

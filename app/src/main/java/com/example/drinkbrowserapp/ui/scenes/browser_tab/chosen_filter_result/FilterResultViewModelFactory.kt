@@ -2,6 +2,7 @@ package com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
 
 class FilterResultViewModelFactory(
     private val repository: FilterResultRepository,
