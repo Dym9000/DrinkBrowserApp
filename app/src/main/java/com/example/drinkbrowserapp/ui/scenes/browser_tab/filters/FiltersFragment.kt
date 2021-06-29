@@ -82,7 +82,7 @@ class FiltersFragment : Fragment() {
                 filtersViewModel.onItemClicked(title, item)
             })
         val manager = LinearLayoutManager(activity)
-        val itemDecorationSpacing = ItemTopBottomSpacing(50)
+        val itemDecorationSpacing = ItemTopBottomSpacing(5)
         filtersBinding.drinksListRecView.apply {
             layoutManager = manager
             adapter = recyclerViewAdapter

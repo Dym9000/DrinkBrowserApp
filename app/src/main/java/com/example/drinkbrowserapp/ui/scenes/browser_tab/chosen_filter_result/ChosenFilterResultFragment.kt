@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
@@ -93,6 +94,7 @@ class ChosenFilterResultFragment : Fragment() {
         val requestOptions = RequestOptions
             .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
             .error(R.drawable.ic_baseline_no_drinks_24)
+            .transform(RoundedCorners(5))
 
         activity?.let {
             requestManager = Glide.with(it)
@@ -101,7 +103,7 @@ class ChosenFilterResultFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        val itemTopBottomSpacing = ItemTopBottomSpacing(20)
+        val itemTopBottomSpacing = ItemTopBottomSpacing(2)
         filterResultAdapter = FilterResultAdapter(requestManager as RequestManager,
             OnDrinkClickListener { drinkId ->
                 filterResultViewModel.onClick(drinkId)

@@ -10,6 +10,7 @@ import com.bumptech.glide.RequestManager
 import com.example.drinkbrowserapp.databinding.CarouselListBinding
 import com.example.drinkbrowserapp.domain.FilterDomain
 import com.example.drinkbrowserapp.ui.common.ItemSideSpacing
+import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
 
 class FiltersAdapter(
     private val requestManager: RequestManager,
@@ -38,12 +39,14 @@ class FiltersAdapter(
             )
 
             childLayoutManager.initialPrefetchItemCount = 4
-            val itemDecoratorSideSpacing = ItemSideSpacing(10)
+            val itemDecoratorSideSpacing = ItemSideSpacing(2)
+            val itemDecoratorTopBottomSpacing = ItemTopBottomSpacing(4)
 
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {
                 removeItemDecoration(itemDecoratorSideSpacing)
                 addItemDecoration(itemDecoratorSideSpacing)
+                addItemDecoration(itemDecoratorTopBottomSpacing)
                 adapter = SingleFilterAdapter(
                     requestManager,
                     onSingleFilterClickListener,

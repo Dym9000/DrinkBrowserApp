@@ -17,7 +17,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/corner_radius_carousel_list"
         app:cardElevation="@dimen/elevation_normal"
         app:contentPadding="@dimen/padding_small"
         android:clipToPadding="true"
@@ -36,9 +35,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_baseline_no_drinks_24">
-
+                app:layout_constraintTop_toTopOf="parent">
             </ImageView>
 
             <TextView

@@ -12,11 +12,16 @@ class ItemTouchHelperHandler(private val itemTouchHelper: CustomItemTouchHelper)
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        return true
+        return false
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
         itemTouchHelper.onSwiped(position)
     }
+
+    override fun isItemViewSwipeEnabled(): Boolean {
+        return true
+    }
+
 }

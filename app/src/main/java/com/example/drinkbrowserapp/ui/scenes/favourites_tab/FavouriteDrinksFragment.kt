@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
@@ -80,6 +81,7 @@ class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
         val requestOptions = RequestOptions
             .placeholderOf(R.drawable.ic_baseline_hourglass_top_24)
             .error(R.drawable.ic_baseline_no_drinks_24)
+            .transform(RoundedCorners(5))
 
         activity?.let {
             requestManager = Glide.with(it)
@@ -92,9 +94,8 @@ class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
             favouriteViewModel.onClick(it)
         })
 
-
         val manager = LinearLayoutManager(activity)
-        val itemDecorationSpacing = ItemTopBottomSpacing(50)
+        val itemDecorationSpacing = ItemTopBottomSpacing(2)
         favouriteBinding.drinksListRecView.apply {
             layoutManager = manager
             adapter = favouriteAdapter

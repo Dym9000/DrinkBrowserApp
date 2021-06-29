@@ -57,7 +57,7 @@ class SearchAdapter(
 class SearchDiffCallback : DiffUtil.ItemCallback<DrinkDomain>() {
 
     override fun areItemsTheSame(oldItem: DrinkDomain, newItem: DrinkDomain): Boolean {
-        return false
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: DrinkDomain, newItem: DrinkDomain): Boolean {

@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.CarouselListItemBinding
 import com.example.drinkbrowserapp.domain.FilterDomainCriteria
 
@@ -38,7 +37,7 @@ class SingleFilterAdapter(
             binding.onClickListener = onSingleFilterClickListener
 
             requestManager
-                .load(R.drawable.outline_liquor_black_48)
+                .load("https://www.thecocktaildb.com/images/media/drink/8oxlqf1606772765.jpg")
                 .into(binding.carouselItemImage)
         }
     }
