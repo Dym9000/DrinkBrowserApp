@@ -124,6 +124,7 @@ class ChosenFilterResultFragment : Fragment() {
                 }
             }
             filterResultStateListener.onDataStateChanged(dataState)
+            filterResultBinding.drinksListRecView.smoothScrollToPosition(0)
         })
 
         filterResultViewModel.drinkId.observe(viewLifecycleOwner, {

@@ -39,8 +39,8 @@ class FiltersAdapter(
             )
 
             childLayoutManager.initialPrefetchItemCount = 4
-            val itemDecoratorSideSpacing = ItemSideSpacing(2)
-            val itemDecoratorTopBottomSpacing = ItemTopBottomSpacing(4)
+            val itemDecoratorSideSpacing = ItemSideSpacing(5)
+            val itemDecoratorTopBottomSpacing = ItemTopBottomSpacing(8)
 
             binding.carouselListTitle.text = item.name
             binding.carouselRecView.apply {

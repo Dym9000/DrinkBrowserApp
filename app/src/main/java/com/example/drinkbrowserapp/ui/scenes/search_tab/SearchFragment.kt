@@ -36,7 +36,7 @@ import com.example.drinkbrowserapp.util.DataStateType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), CustomItemTouchHelper {
+class SearchFragment : Fragment(), CustomItemTouchHelper{
 
     private lateinit var searchView: SearchView
 
@@ -136,7 +136,7 @@ class SearchFragment : Fragment(), CustomItemTouchHelper {
                 || actionId == EditorInfo.IME_ACTION_SEARCH
             ) {
                 val searchQuery = textView.text.toString()
-                onSearchOrFilter(searchQuery, textView)
+                onSearch(searchQuery, textView)
             }
             true
         }
@@ -145,12 +145,12 @@ class SearchFragment : Fragment(), CustomItemTouchHelper {
         val searchButton = searchView.findViewById(R.id.search_go_btn) as View
         searchButton.setOnClickListener {
             val searchQuery = searchTextArea.text.toString()
-            onSearchOrFilter(searchQuery, it)
+            onSearch(searchQuery, it)
         }
 
     }
 
-    private fun onSearchOrFilter(query: String?, view: View) {
+    private fun onSearch(query: String?, view: View) {
         query?.let {
             searchBinding.drinksListRecView.smoothScrollToPosition(0)
             dismissKeyboard(view.windowToken)
@@ -186,7 +186,7 @@ class SearchFragment : Fragment(), CustomItemTouchHelper {
             }
 
             searchResultList?.data?.let {
-                searchAdapter.submitList(it)
+                    searchAdapter.submitList(it)
             }
             searchStateListener.onDataStateChanged(searchResultList)
         })
