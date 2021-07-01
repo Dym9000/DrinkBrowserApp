@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.ActivityMainBinding
 import com.example.drinkbrowserapp.ui.common.displayToastMessage
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.ui.scenes.browser_tab.chosen_filter_result.ChosenFilterResultFragment
 import com.example.drinkbrowserapp.ui.scenes.common.drink_details.DrinkDetailsFragment
@@ -27,7 +28,8 @@ class MainActivity : AppCompatActivity(),
     UIStateListener,
     NavGraphProvider,
     OnNavigationGraphChanged,
-    OnNavigationReselectedListener {
+    OnNavigationReselectedListener,
+    OnSceneChanged{
 
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var mainProgressBar: ProgressBar
@@ -96,6 +98,10 @@ class MainActivity : AppCompatActivity(),
     private fun setupActionBar() {
         setSupportActionBar(mainBinding.mainToolbar)
         this.supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun setToolbarTitle(title: String) {
+        mainBinding.mainToolbarTitle.text = title
     }
 
     private fun displayErrorMessage(errorMessage: String?) {

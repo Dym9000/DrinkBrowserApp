@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,10 +32,12 @@ class FiltersFragment : Fragment() {
     private var requestManager: RequestManager? = null
 
     private lateinit var filtersStateListener: UIStateListener
+    private lateinit var onSceneChangeListener: OnSceneChanged
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         filtersStateListener = context as UIStateListener
+        onSceneChangeListener = context as OnSceneChanged
     }
 
     override fun onCreateView(
@@ -112,6 +115,11 @@ class FiltersFragment : Fragment() {
                 filtersViewModel.navigatedToClickedItem()
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onSceneChangeListener.setToolbarTitle(getString(R.string.catalog_toolbar_title))
     }
 
     override fun onDestroyView() {

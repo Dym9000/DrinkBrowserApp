@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDisplayListBinding
 import com.example.drinkbrowserapp.ui.common.ItemTopBottomSpacing
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,10 +47,12 @@ class ChosenFilterResultFragment : Fragment() {
     private var requestManager: RequestManager? = null
 
     private lateinit var filterResultStateListener: UIStateListener
+    private lateinit var onSceneChangeListener: OnSceneChanged
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         filterResultStateListener = context as UIStateListener
+        onSceneChangeListener = context as OnSceneChanged
     }
 
     override fun onCreateView(
@@ -79,6 +82,7 @@ class ChosenFilterResultFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setupActionBarWithNavController(R.id.filtersFragment, activity as AppCompatActivity)
+        onSceneChangeListener.setToolbarTitle(filterResultArgs.itemName.toString())
     }
 
     private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {

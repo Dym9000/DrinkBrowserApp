@@ -31,6 +31,7 @@ import com.example.drinkbrowserapp.ui.common.ItemTouchHelperHandler
 import com.example.drinkbrowserapp.ui.common.adapter.OnSearchItemClickListener
 import com.example.drinkbrowserapp.ui.common.adapter.SearchAdapter
 import com.example.drinkbrowserapp.ui.common.interfaces.CustomItemTouchHelper
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.util.DataStateType
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,10 +50,12 @@ class SearchFragment : Fragment(), CustomItemTouchHelper{
     private lateinit var searchAdapter: SearchAdapter
 
     private lateinit var searchStateListener: UIStateListener
+    private lateinit var onChangedSceneListener: OnSceneChanged
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         searchStateListener = context as UIStateListener
+        onChangedSceneListener = context as OnSceneChanged
     }
 
     override fun onCreateView(
@@ -200,6 +203,11 @@ class SearchFragment : Fragment(), CustomItemTouchHelper{
                 searchViewModel.onNavigated()
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onChangedSceneListener.setToolbarTitle("")
     }
 
     override fun onDestroyView() {

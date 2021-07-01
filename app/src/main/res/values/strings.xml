@@ -17,4 +17,6 @@
     <string name="menu_search_filters">Filters</string>
     <string name="no_results_found">No results found</string>
     <string name="drink_detail_floating_action_button">Button adding or removing drinks to favorites</string>
+    <string name="catalog_toolbar_title">Catalog</string>
+    <string name="favourites_toolbar_title">Favourites</string>
 </resources>

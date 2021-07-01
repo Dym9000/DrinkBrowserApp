@@ -16,6 +16,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.drinkbrowserapp.R
 import com.example.drinkbrowserapp.databinding.FragmentDrinkDetailsBinding
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import com.example.drinkbrowserapp.ui.common.repository.DrinkRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,10 +38,12 @@ class DrinkDetailsFragment : Fragment() {
     }
 
     private lateinit var drinkDetailsStateListener: UIStateListener
+    private lateinit var onSceneChangedListener: OnSceneChanged
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         drinkDetailsStateListener = context as UIStateListener
+        onSceneChangedListener = context as OnSceneChanged
     }
 
     override fun onCreateView(
@@ -78,6 +81,7 @@ class DrinkDetailsFragment : Fragment() {
         drinkDetailsViewModel.drinkDetailsList.observe(viewLifecycleOwner, {
             drinkDetailsStateListener.onDataStateChanged(it)
             if (!it.data.isNullOrEmpty()) {
+                onSceneChangedListener.setToolbarTitle(it.data[0].name)
                 drinkDetailsViewModel.onDataFetched(it.data[0])
             }
         })

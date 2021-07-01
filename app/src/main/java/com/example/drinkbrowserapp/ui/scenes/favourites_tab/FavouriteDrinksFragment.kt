@@ -26,6 +26,7 @@ import com.example.drinkbrowserapp.ui.common.ItemTouchHelperHandler
 import com.example.drinkbrowserapp.ui.common.adapter.OnSearchItemClickListener
 import com.example.drinkbrowserapp.ui.common.adapter.SearchAdapter
 import com.example.drinkbrowserapp.ui.common.interfaces.CustomItemTouchHelper
+import com.example.drinkbrowserapp.ui.common.interfaces.OnSceneChanged
 import com.example.drinkbrowserapp.ui.common.interfaces.UIStateListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,10 +42,12 @@ class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
     private lateinit var favouriteAdapter: SearchAdapter
 
     private lateinit var favouriteStateListener: UIStateListener
+    private lateinit var onSceneChangedListener: OnSceneChanged
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         favouriteStateListener = context as UIStateListener
+        onSceneChangedListener = context as OnSceneChanged
     }
 
     override fun onCreateView(
@@ -53,7 +56,6 @@ class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
     ): View {
 
         setHasOptionsMenu(true)
-
         favouriteBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_display_list, container, false)
 
@@ -129,6 +131,11 @@ class FavouriteDrinksFragment : Fragment(), CustomItemTouchHelper {
         favouriteViewModel.favouriteList.observe(viewLifecycleOwner, {
             favouriteAdapter.submitList(it.data)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onSceneChangedListener.setToolbarTitle(getString(R.string.favourites_toolbar_title))
     }
 
     override fun onDestroyView() {
