@@ -54,4 +54,7 @@ object Versions {
 
     //MATERIAL DIALOGS
     const val material_dialogs = "3.3.0"
+
+    //HAMCREST
+    const val hamcrest = "2.2"
 }

@@ -44,4 +44,7 @@ object Dependencies {
 
     //MATERIAL DIALOGS
     val material_dialogs = "com.afollestad.material-dialogs:core:${Versions.material_dialogs}"
+
+    //HAMCREST
+    val hamcrest = "org.hamcrest:hamcrest-all:${Versions.hamcrest}"
 }
